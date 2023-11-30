@@ -1,0 +1,121 @@
+﻿@model List<DegitalDelight.Models.Product>
+
+@{
+    ViewData["Title"] = "Product Order Form";
+}
+
+<!-- Style for the payment options -->
+<style>
+    .product {
+        border: 1px solid #eee;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px;
+        text-align: center;
+        position: relative;
+    }
+
+        .product h3 {
+            margin-bottom: 10px;
+            font-weight: normal; /* Set font weight to normal */
+            text-align: left; /* Align text to the left */
+        }
+
+    .product-image {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .checkbox-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        transform: scale(1.5);
+    }
+
+    .total-cost {
+        margin-top: 20px;
+        font-weight: bold;
+        text-align: right;
+    }
+
+    .payment-methods {
+        margin-top: 20px;
+    }
+
+    .payment-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+        .payment-option input {
+            margin-right: 10px;
+        }
+
+    .submit-button {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+        .submit-button button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .submit-button button:hover {
+                background-color: #0056b3;
+            }
+</style>
+
+<!-- Product Order Form -->
+<h2>Đặt hàng</h2>
+<form id="createOrderForm" method="post" action="/Order/CreateOrder">
+    <!-- Replace with the actual action URL -->
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3">
+                <div class="product">
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="selectedProducts" value="@product.Id" />
+                    </div>
+                    <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:80/plain/https://cellphones.com.vn/media/wysiwyg/laptop/laptop-1.jpg" class="product-image" />
+                    <h3>@product.Name</h3>
+                    <p>Giá: @product.Price</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <hr /> <!-- Horizontal line -->
+
+    <p class="total-cost">Tổng tiền: 100000 VND <!-- Add logic to calculate and display total cost here --></p>
+
+    <div class="payment-methods">
+        <h2>Hình thức thanh toán</h2>
+        <!-- Add your payment options here -->
+        <div class="payment-option">
+            <input type="radio" name="paymentMethod" value="creditCard" id="creditCard" />
+            <label for="creditCard">Thẻ ngân hàng</label>
+        </div>
+        <div class="payment-option">
+            <input type="radio" name="paymentMethod" value="paypal" id="paypal" />
+            <label for="paypal">Momo</label>
+        </div>
+        <div class="payment-option">
+            <input type="radio" name="paymentMethod" value="cashOnDelivery" id="cashOnDelivery" />
+            <label for="cashOnDelivery">Thanh toán trực tiếp</label>
+        </div>
+    </div>
+
+    <div class="submit-button">
+        <button type="submit">Xác nhận đặt hàng</button>
+    </div>
+</form>

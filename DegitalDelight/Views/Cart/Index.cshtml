@@ -1,0 +1,109 @@
+﻿
+
+<h1>@ViewData["Title"]</h1>
+<!DOCTYPE html>
+<html lang="vi" class="h-100">
+
+<body>
+    <main role="main">
+        <div style="text-align: center;">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid  #ccc;">
+                <h1 style="color: #333; padding-bottom: 10px;">Digital Delight</h1>
+                <div>
+                    <input type="text" placeholder="Search..." style="padding: 5px; width: 200px;">
+                    <button style="padding: 5px;">Search</button>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 20px; margin-top: 10px; justify-content: center; height: 5vh;">
+                <a href="#" style="text-decoration: none; color: #333; font-size: 18px;">Laptop</a>
+                <span style="border-right: 1px solid #ccc; height: 20px;"></span>
+                <a href="#" style="text-decoration: none; color: #333; font-size: 18px;">Điện thoại</a>
+                <span style="border-right: 1px solid #ccc; height: 20px;"></span>
+                <a href="#" style="text-decoration: none; color: #333; font-size: 18px;">Bàn phím</a>
+                <span style="border-right: 1px solid #ccc; height: 20px;"></span>
+                <a href="#" style="text-decoration: none; color: #333; font-size: 18px;">Linh kiện</a>
+                <span style="border-right: 1px solid #ccc; height: 20px;"></span>
+                <a href="#" style="text-decoration: none; color: #333; font-size: 18px;">Khác</a>
+            </div>
+        </div>
+        <div class="container mt-4">
+            <div id="thongbao" class="alert alert-danger d-none face" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <h1 class="text-center">Giỏ hàng</h1>
+            <div class="row">
+                <div class="col col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th> <!-- Checkbox Column -->
+                                <th>Ảnh đại diện</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Mô tả</th>
+                                <th>Số lượng</th>
+                                <th>Đơn giá</th>
+                                <th>Thành tiền</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="datarow">
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><img src="https://topthuthuat.com/wp/wp-content/uploads/2020/05/ban-phim-laptop-bi-loi.jpg" alt="Product Image" class="product-image" style="max-width: 150px; max-height: 200px;" /></td>
+                                <td>Laptop thông minh</td>
+                                <td>Mô tả Laptop thông minh.</td>
+                                <td>1</td>
+                                <td>100</td>
+                                <td>100</td>
+                                <td><a class="text-danger" href="#">Xóa</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><img src="https://topthuthuat.com/wp/wp-content/uploads/2020/05/ban-phim-laptop-bi-loi.jpg" alt="Product Image" class="product-image" style="max-width: 150px; max-height: 200px;" /></td>
+                                <td>Laptop đa năng</td>
+                                <td>Mô tả Laptop.</td>
+                                <td>2</td>
+                                <td>150</td>
+                                <td>300</td>
+                                <td><a class="text-danger" href="#">Xóa</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><img src="https://topthuthuat.com/wp/wp-content/uploads/2020/05/ban-phim-laptop-bi-loi.jpg" alt="Product Image" class="product-image" style="max-width: 150px; max-height: 200px;" /></td>
+                                <td>Laptop mini</td>
+                                <td>Mô tả Laptop mini.</td>
+                                <td>3</td>
+                                <td>50</td>
+                                <td>150</td>
+                                <td><a class="text-danger" href="#">Xóa</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><img src="https://topthuthuat.com/wp/wp-content/uploads/2020/05/ban-phim-laptop-bi-loi.jpg" alt="Product Image" class="product-image" style="max-width: 150px; max-height: 200px;" /></td>
+                                <td>Laptop mới</td>
+                                <td>Mô tả Laptop mới.</td>
+                                <td>1</td>
+                                <td>200</td>
+                                <td>200</td>
+                                <td><a class="text-danger" href="#">Xóa</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div style="display: flex; justify-content: center; margin-top: 10px;">
+        <a class="btn btn-success" asp-action="Index" asp-controller="Order">Tiến hành đặt hàng</a>
+    </div>
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/popperjs/popper.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/app.js"></script>
+</body>
+
+</html>
