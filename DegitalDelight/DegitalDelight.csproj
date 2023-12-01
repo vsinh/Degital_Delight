@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\assets\**" />
+    <Content Remove="Views\assets\**" />
+    <EmbeddedResource Remove="Views\assets\**" />
+    <None Remove="Views\assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.6" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.8.6" />
     <PackageReference Include="MailKit" Version="4.3.0" />
@@ -22,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Pic\" />
+    <Folder Include="wwwroot\eTrade\assets\images\" />
   </ItemGroup>
 
 </Project>
