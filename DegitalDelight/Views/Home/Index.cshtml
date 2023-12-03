@@ -63,6 +63,26 @@
     Bắt đầu chuyến hành trình công nghệ cùng chúng tôi! Là điểm đến dành cho những người đam mê laptop, chúng tôi mang đến cho bạn một lựa chọn tinh tế của những thiết bị hàng đầu. Khám phá sự đổi mới, hiệu suất và phong cách tất cả tại một địa điểm, nơi chiếc laptop tiếp theo của bạn đang chờ đợi.
 </p>
 
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-3">
+            <div class="product">
+                <h3>@product.Name</h3>
+                <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:80/plain/https://cellphones.com.vn/media/wysiwyg/laptop/laptop-1.jpg" class="product-image" />
+            </div>
+        </div>
+    }
+</div>
+
+
+
+<div style="text-align: center;">
+    <h1 style="border-bottom: 1px solid #ccc; padding-bottom: 10px;margin-bottom: 50px; margin-top: 50px;">
+        Sản phẩm vừa ra mắt
+    </h1>
+</div>
 <div class="row">
     @foreach (var product in Model)
     {
