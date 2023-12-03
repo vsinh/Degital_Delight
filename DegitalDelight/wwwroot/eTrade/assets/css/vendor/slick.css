@@ -27,14 +27,14 @@
     padding: 0;
 }
 
-.slick-list:focus {
-    outline: none;
-}
+    .slick-list:focus {
+        outline: none;
+    }
 
-.slick-list.dragging {
-    cursor: pointer;
-    cursor: hand;
-}
+    .slick-list.dragging {
+        cursor: pointer;
+        cursor: hand;
+    }
 
 .slick-slider .slick-track,
 .slick-slider .slick-list {
@@ -55,16 +55,16 @@
     margin-right: auto;
 }
 
-.slick-track:before,
-.slick-track:after {
-    display: table;
+    .slick-track:before,
+    .slick-track:after {
+        display: table;
 
-    content: '';
-}
+        content: '';
+    }
 
-.slick-track:after {
-    clear: both;
-}
+    .slick-track:after {
+        clear: both;
+    }
 
 .slick-loading .slick-track {
     visibility: hidden;

@@ -29,6 +29,63 @@
 
   <ItemGroup>
     <Folder Include="Pic\" />
+    <Folder Include="Views\Catelogy\" />
+    <Folder Include="wwwroot\eTrade\assets\images\product\product-thumb\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\eTrade\assets\css\style.min.css" />
+    <None Include="wwwroot\eTrade\assets\css\vendor\base.css" />
+    <None Include="wwwroot\eTrade\assets\css\vendor\bootstrap.min.css" />
+    <None Include="wwwroot\eTrade\assets\css\vendor\flaticon\flaticon.css" />
+    <None Include="wwwroot\eTrade\assets\css\vendor\font-awesome.css" />
+    <None Include="wwwroot\eTrade\assets\css\vendor\jquery-ui.min.css" />
+    <None Include="wwwroot\eTrade\assets\css\vendor\magnific-popup.css" />
+    <None Include="wwwroot\eTrade\assets\css\vendor\sal.css" />
+    <None Include="wwwroot\eTrade\assets\css\vendor\slick-theme.css" />
+    <None Include="wwwroot\eTrade\assets\css\vendor\slick.css" />
+    <None Include="wwwroot\eTrade\assets\images\bg\bg-image-5.jpg" />
+    <None Include="wwwroot\eTrade\assets\images\blog\author-image-4.png" />
+    <None Include="wwwroot\eTrade\assets\images\blog\author-image-5.png" />
+    <None Include="wwwroot\eTrade\assets\images\icons\cart\cart-1.png" />
+    <None Include="wwwroot\eTrade\assets\images\icons\cart\cart-2.png" />
+    <None Include="wwwroot\eTrade\assets\images\icons\cart\cart-5.png" />
+    <None Include="wwwroot\eTrade\assets\images\icons\rate.png" />
+    <None Include="wwwroot\eTrade\assets\images\icons\service1.png" />
+    <None Include="wwwroot\eTrade\assets\images\icons\service2.png" />
+    <None Include="wwwroot\eTrade\assets\images\icons\service3.png" />
+    <None Include="wwwroot\eTrade\assets\images\icons\service4.png" />
+    <None Include="wwwroot\eTrade\assets\images\logo\logo-light.png" />
+    <None Include="wwwroot\eTrade\assets\images\logo\logo.png" />
+    <None Include="wwwroot\eTrade\assets\images\others\app-store.png" />
+    <None Include="wwwroot\eTrade\assets\images\others\campaign-bg3.png" />
+    <None Include="wwwroot\eTrade\assets\images\others\play-store.png" />
+    <None Include="wwwroot\eTrade\assets\images\others\qr.png" />
+    <None Include="wwwroot\eTrade\assets\images\product\electric\product-01.png" />
+    <None Include="wwwroot\eTrade\assets\images\product\electric\product-02.png" />
+    <None Include="wwwroot\eTrade\assets\images\product\electric\product-03.png" />
+    <None Include="wwwroot\eTrade\assets\images\product\electric\product-04.png" />
+    <None Include="wwwroot\eTrade\assets\images\product\electric\product-05.png" />
+    <None Include="wwwroot\eTrade\assets\images\product\electric\product-09.png" />
+    <None Include="wwwroot\eTrade\assets\images\product\product-big-01.png" />
+    <None Include="wwwroot\eTrade\assets\images\product\product-big-02.png" />
+    <None Include="wwwroot\eTrade\assets\images\product\product-big-03.png" />
+    <None Include="wwwroot\eTrade\assets\images\send-mail.png" />
+    <None Include="wwwroot\eTrade\assets\js\main.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\bootstrap.min.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\counterup.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\imagesloaded.pkgd.min.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\isotope.pkgd.min.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\jquery-ui.min.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\jquery.countdown.min.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\jquery.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\js.cookie.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\modernizr.min.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\popper.min.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\sal.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\slick.min.js" />
+    <None Include="wwwroot\eTrade\assets\js\vendor\waypoints.min.js" />
     <Folder Include="wwwroot\eTrade\assets\images\" />
   </ItemGroup>
 
