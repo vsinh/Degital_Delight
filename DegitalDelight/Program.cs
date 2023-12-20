@@ -6,6 +6,10 @@ using Hangfire;
 using DegitalDelight.Services.Interfaces;
 using DegitalDelight.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using DegitalDelight.Areas.Admin.Services.Interfaces;
+using DegitalDelight.Areas.Admin.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +48,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddScoped<IProduct, ProductService>();
 
 var app = builder.Build();
 
@@ -67,10 +72,17 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseHangfireDashboard();
 
+app.MapAreaControllerRoute(
+    name: "Admin",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Products}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
+
 
 RecurringJob.AddOrUpdate<DiscountService>("SundayDiscount", x => x.SundayDiscount(), "0 0 * * 0");
 

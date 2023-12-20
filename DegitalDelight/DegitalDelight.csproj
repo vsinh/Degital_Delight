@@ -28,6 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Pic\" />
     <Folder Include="Views\Catelogy\" />
     <Folder Include="wwwroot\eTrade\assets\images\product\product-thumb\" />
