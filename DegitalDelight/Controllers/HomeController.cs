@@ -19,7 +19,7 @@ namespace DegitalDelight.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Homepage()
         {
             // Lấy danh sách sản phẩm từ cơ sở dữ liệu
             //var products = _context.Products.ToList();
@@ -45,7 +45,22 @@ namespace DegitalDelight.Controllers
             return View(products);
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult myAccount()
+        {
+            return View();
+        }
+
+        public IActionResult Order()
+        {
+            return View();
+        }
+
+        public IActionResult Search()
         {
             return View();
         }

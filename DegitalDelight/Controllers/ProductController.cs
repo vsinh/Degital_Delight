@@ -7,12 +7,12 @@ namespace DegitalDelight.Controllers
 {
     public class ProductController : Controller
     {
-        public IActionResult Index(int productId)
+        public IActionResult Product(int productId)
         {
             var product = GetProductById(productId);
 
             // Pass the product details to the CartView
-            return View("Index", product);
+            return View(product);
         }
 
 

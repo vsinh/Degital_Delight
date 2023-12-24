@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="Views\assets\**" />
+    <Compile Remove="Views\Catelogy\**" />
     <Content Remove="Views\assets\**" />
+    <Content Remove="Views\Catelogy\**" />
     <EmbeddedResource Remove="Views\assets\**" />
+    <EmbeddedResource Remove="Views\Catelogy\**" />
     <None Remove="Views\assets\**" />
+    <None Remove="Views\Catelogy\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +35,8 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Pic\" />
-    <Folder Include="Views\Catelogy\" />
+    <Folder Include="Views\myAccount\" />
+    <Folder Include="Views\Order\" />
     <Folder Include="wwwroot\eTrade\assets\images\product\product-thumb\" />
   </ItemGroup>
 
