@@ -10,7 +10,7 @@
         public bool IsDeleted { get; set; } = false;
         public ProductType? ProductType { get; set; }
         public Warranty? Warranty { get; set; }
-        public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>(); 
+        public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public virtual ICollection<Discount> Discounts { get; set; } = new List<Discount>();
         public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
