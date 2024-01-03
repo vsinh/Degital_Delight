@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\myAccount\**" />
-    <Content Remove="Views\myAccount\**" />
-    <EmbeddedResource Remove="Views\myAccount\**" />
-    <None Remove="Views\myAccount\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.6" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.8.6" />
     <PackageReference Include="MailKit" Version="4.3.0" />
