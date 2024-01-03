@@ -75,7 +75,7 @@ app.UseHangfireDashboard();
 app.MapAreaControllerRoute(
     name: "Admin",
     areaName: "Admin",
-    pattern: "Admin/{controller=Products}/{action=Index}/{id?}");
+    pattern: "Admin/{controller=Dashboard}/{action=Dashboard}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
