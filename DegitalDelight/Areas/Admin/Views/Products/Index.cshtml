@@ -1,955 +1,243 @@
 ﻿
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Add Product - Dashboard HTML Template</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700"
+    />
+    <!-- https://fonts.google.com/specimen/Roboto -->
+    <link rel="stylesheet" href="~/css/fontawesome.min.css" />
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="~/jquery-ui-datepicker/jquery-ui.min.css" type="text/css" />
+    <!-- http://api.jqueryui.com/datepicker/ -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="~/css/templatemo-style.css">
+    <!--
+	Product Admin CSS Template
+	https://templatemo.com/tm-524-product-admin
+	-->
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=5xQ1KunSL2hPKTX_XeLlPhgDDlEWR4D2Gz8jpBaUGxyBhic30Nw4GCnlx4Bz2uI8y2P0LeABBaeFqXuMhb7tugaVxul88D6HSjdsNWjcVEE" charset="UTF-8"></script></head>
 
+  <body>
+    <nav class="navbar navbar-expand-xl">
+      <div class="container h-100">
+        <a class="navbar-brand" href="index.html">
+          <h1 class="tm-site-title mb-0">Product Admin</h1>
+        </a>
+        <button
+          class="navbar-toggler ml-auto mr-0"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars tm-nav-icon"></i>
+        </button>
 
-<title>Products / nopCommerce administration</title>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto h-100">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="far fa-file-alt"></i>
+                <span> Reports <i class="fas fa-angle-down"></i> </span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Daily Report</a>
+                <a class="dropdown-item" href="#">Weekly Report</a>
+                <a class="dropdown-item" href="#">Yearly Report</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="products.html">
+                <i class="fas fa-shopping-cart"></i> Products
+              </a>
+            </li>
 
-<body class="hold-transition sidebar-mini layout-fixed control-sidebar-slide-open">
-<div class="throbber">
-<div class="curtain">
-</div>
-<div class="curtain-content">
-<div>
-<h1 class="throbber-header">Wait...</h1>
-<p>
-<img src="/css/admin/images/throbber-synchronizing.gif" alt />
-</p>
-</div>
-</div>
-</div>
-<div id="ajaxBusy">
-<span>&nbsp;</span>
-</div>
-<div class="wrapper">
-<nav class="main-header navbar navbar-expand-md navbar-dark bg-dark">
-<ul class="navbar-nav pl-2 pl-md-0">
-<li class="nav-item">
-<a class="nav-link" id="nopSideBarPusher" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-</li>
-</ul>
-<a href="/Admin" class="brand-link navbar-dark">
-<img src="/css/admin/images/logo.png" alt="logo.png" class="brand-image logo d-block d-md-none d-sm-block d-sm-none">
-</a>
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarText">
-<ul class="navbar-nav ml-auto pl-2">
-<li class="nav-item">
-</li>
-<li class="nav-item">
-<a href="#" class="nav-link disabled">John Smith</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/logout">Logout</a>
-</li>
-<li class="nav-item">
-</li>
-<li class="nav-item dropdown">
-<a class="nav-link" href="#" data-toggle="dropdown">
-<i class="fas fa-cogs"></i>
-</a>
-<ul class="maintenance-menu dropdown-menu dropdown-menu-right" role="menu">
-<li class="dropdown-item">
-<form action="/Admin/Common/ClearCache" method="post">
-<input name="returnurl" type="hidden" value="/Admin/Product/List">
-<div class="input-group-append">
-<button type="submit" style="width:210px;background-color: Transparent;">
-<span>Clear cache</span>
-</button>
-</div>
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8ClxmnlNlXFJlNczOji4vXmSdh0IGk0XNVvD563NeITIr8j1pQLCyC0eOtMr1Ms4QsJEYlXO7QYdc1wreqFO3MYHVj1cczoxpHDXLeRz7XQHulkgPYTVPswkY1_E_ot2PEwjIlkHsd03quWTdChNSP0uOdS3IUKVvt4Br60wbCXpnQ027OQnPsknll329NZjDg" /></form>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</nav>
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-
-<a href="/Admin" class="brand-link navbar-dark logo-switch">
-<img src="/css/admin/images/logo.png" alt="logo.png" class="brand-image-xl logo-xl">
-<img src="/css/admin/images/logo-mini.png" alt="logo.png" class="brand-image-xs logo-xs">
-</a>
-<div class="sidebar">
-<div class="sidebar-form">
-<div id="search-box">
-<input type="text" class="form-control admin-search-box typeahead" placeholder="Search">
-</div>
-</div>
-<nav class="mt-2">
-<ul class="nav nav-pills nav-sidebar flex-column nav-legacy" data-widget="treeview" role="menu">
-<li class="nav-item">
-<a href="/Admin" class="nav-link">
-<i class="nav-icon fas fa-desktop"></i>
-<p> Dashboard</p>
-</a>
-</li>
-<li class="nav-item has-treeview menu-open">
-<a href="#" class="nav-link active">
-<i class="nav-icon fas fa-book"></i>
-<p>
-Catalog
-<i class="right fas fa-angle-left "></i>
-</p>
-</a>
-<ul class="nav nav-treeview">
-<li class="nav-item">
-<a href="/Admin/Product/List" class="nav-link active">
-<i class="nav-icon far fa-dot-circle"></i>
-<p> Products</p>
-</a>
-</li>
-<li class="nav-item">
-<a href="/Admin/Category/List" class="nav-link">
-<i class="nav-icon far fa-dot-circle"></i>
-<p> Categories</p>
-</a>
-</li>
-<li class="nav-item">
-<a href="/Admin/Manufacturer/List" class="nav-link">
-<i class="nav-icon far fa-dot-circle"></i>
-<p> Manufacturers</p>
-</a>
-</li>
-<li class="nav-item">
-<a href="/Admin/ProductReview/List" class="nav-link">
-<i class="nav-icon far fa-dot-circle"></i>
-<p> Product reviews</p>
-</a>
-</li>
-<li class="nav-item">
-<a href="/Admin/Product/ProductTags" class="nav-link">
-<i class="nav-icon far fa-dot-circle"></i>
-<p> Product tags</p>
-</a>
-</li>
-<li class="nav-item has-treeview">
-<a href="#" class="nav-link">
-<i class="nav-icon far fa-dot-circle"></i>
-<p>
-Attributes
-<i class="right fas fa-angle-left "></i>
-</p>
-</a>
-<ul class="nav nav-treeview">
-<li class="nav-item">
-<a href="/Admin/ProductAttribute/List" class="nav-link">
-<i class="nav-icon far fa-circle"></i>
-<p> Product attributes</p>
-</a>
-</li>
-<li class="nav-item">
-<a href="/Admin/SpecificationAttribute/List" class="nav-link">
-<i class="nav-icon far fa-circle"></i>
-<p> Specification attributes</p>
-</a>
-</li>
-<li class="nav-item">
-<a href="/Admin/CheckoutAttribute/List" class="nav-link">
-<i class="nav-icon far fa-circle"></i>
-<p> Checkout attributes</p>
-</a>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</nav>
-</div>
-</aside>
-<div class="content-wrapper">
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8ClxmnlNlXFJlNczOji4vXmSdh0IGk0XNVvD563NeITIr8j1pQLCyC0eOtMr1Ms4QsJEYlXO7QYdc1wreqFO3MYHVj1cczoxpHDXLeRz7XQHulkgPYTVPswkY1_E_ot2PEwjIlkHsd03quWTdChNSP0uOdS3IUKVvt4Br60wbCXpnQ027OQnPsknll329NZjDg" />
-<form method="post" action="/Admin/Product/List">
-<div class="content-header clearfix">
-<h1 class="float-left">
-Products
-</h1>
-<div class="float-right">
-<a class="btn btn-primary" href="/Admin/Product/Create">
-<i class="fas fa-plus-square"></i>
-Add new
-</a>
-<button type="submit" name="download-catalog-pdf" class="btn bg-purple" formaction="/Admin/Product/DownloadCatalogPDF">
-<i class="far fa-file-pdf"></i>
-Download catalog as PDF
-</button>
-<div class="btn-group">
-<button type="button" class="btn btn-success">
-<i class="fas fa-download"></i>
-Export
-</button>
-<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-<span class="caret"></span>
-<span class="sr-only">&nbsp;</span>
-</button>
-<ul class="dropdown-menu" role="menu">
-<li class="dropdown-item">
-<button type="submit" name="exportxml-all" formaction="/Admin/Product/ExportToXml">
-<i class="far fa-file-code"></i>
-Export to XML (all found)
-</button>
-</li>
-<li class="dropdown-item">
-<button type="button" id="exportxml-selected">
-<i class="far fa-file-code"></i>
-Export to XML (selected)
-</button>
-</li>
-<li class="dropdown-divider"></li>
-<li class="dropdown-item">
-<button type="submit" name="exportexcel-all" formaction="/Admin/Product/ExportToExcel">
-<i class="far fa-file-excel"></i>
-Export to Excel (all found)
-</button>
-</li>
-<li class="dropdown-item">
-<button type="button" id="exportexcel-selected">
-<i class="far fa-file-excel"></i>
-Export to Excel (selected)
-</button>
-</li>
-</ul>
-</div>
-<button type="button" name="importexcel" class="btn bg-olive" data-toggle="modal" data-target="#importexcel-window">
-<i class="fas fa-upload"></i>
-Import
-</button>
-<button type="button" id="delete-selected" class="btn btn-danger">
-<i class="far fa-trash-alt"></i>
-Delete (selected)
-</button>
-<div id="delete-selected-action-confirmation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="delete-selected-action-confirmation-title">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="delete-selected-action-confirmation-title">Are you sure?</h4>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-</div>
-<div class="modal-body">
-Are you sure you want to perform this action?
-</div>
-<div class="modal-footer">
-<button type="submit" id="delete-selected-action-confirmation-submit-button" class="btn btn-primary float-right">
-Yes
-</button>
-<span class="btn btn-default float-right margin-r-5" data-dismiss="modal">No, cancel</span>
-</div>
-</div>
-</div> <script type="cdc95ed82d453b61da671cf8-text/javascript">$(document).ready(function () {$('#delete-selected').attr("data-toggle", "modal").attr("data-target", "#delete-selected-action-confirmation");$('#delete-selected-action-confirmation-submit-button').attr("name", $("#delete-selected").attr("name"));$("#delete-selected").attr("name", "");if($("#delete-selected").attr("type") == "submit")$("#delete-selected").attr("type", "button");});</script></div>
-</div>
-</div>
-<section class="content">
-<div class="container-fluid">
-<div class="form-horizontal">
-<div class="cards-group">
-<div class="card card-default card-search">
-<div class="card-body">
-<div class="row search-row opened" data-hideAttribute="ProductListPage.HideSearchBlock">
-<div class="search-text">Search</div>
-<div class="icon-search"><i class="fas fa-search" aria-hidden="true"></i></div>
-<div class="icon-collapse"><i class="far fa-angle-up" aria-hidden="true"></i></div>
-</div>
-<div class="search-body ">
-<div class="row">
-<div class="col-md-5">
-<div class="form-group row">
-<div class="col-md-4">
-<div class="label-wrapper"><label class="col-form-label" for="SearchProductName">Product name</label><div title="A product name." data-toggle="tooltip" class="ico-help"><i class="fas fa-question-circle"></i></div></div>
-</div>
-<div class="col-md-8">
-<input class="form-control text-box single-line" id="SearchProductName" name="SearchProductName" type="text" value />
-</div>
-</div>
-<div class="form-group row">
-<div class="col-md-4">
-<div class="label-wrapper"><label class="col-form-label" for="SearchCategoryId">Category</label><div title="Search by a specific category." data-toggle="tooltip" class="ico-help"><i class="fas fa-question-circle"></i></div></div>
-</div>
-<div class="col-md-8">
-<select class="form-control" data-val="true" data-val-required="The Category field is required." id="SearchCategoryId" name="SearchCategoryId"><option selected="selected" value="0">All</option>
-<option value="1">Computers</option>
-<option value="2">Computers &gt;&gt; Desktops</option>
-<option value="3">Computers &gt;&gt; Notebooks</option>
-<option value="4">Computers &gt;&gt; Software</option>
-<option value="5">Electronics</option>
-<option value="6">Electronics &gt;&gt; Camera &amp; photo</option>
-<option value="7">Electronics &gt;&gt; Cell phones</option>
-<option value="8">Electronics &gt;&gt; Others</option>
-<option value="9">Apparel</option>
-<option value="10">Apparel &gt;&gt; Shoes</option>
-<option value="11">Apparel &gt;&gt; Clothing</option>
-<option value="12">Apparel &gt;&gt; Accessories</option>
-<option value="13">Digital downloads</option>
-<option value="14">Books</option>
-<option value="15">Jewelry</option>
-<option value="16">Gift Cards</option>
-</select>
-</div>
-</div>
-<div class="form-group row">
-<div class="col-md-4">
-<div class="label-wrapper"><label class="col-form-label" for="SearchIncludeSubCategories">Search subcategories</label><div title="Check to search in subcategories." data-toggle="tooltip" class="ico-help"><i class="fas fa-question-circle"></i></div></div>
-</div>
-<div class="col-md-8">
-<input class="check-box" data-val="true" data-val-required="The Search subcategories field is required." id="SearchIncludeSubCategories" name="SearchIncludeSubCategories" type="checkbox" value="true" />
-</div>
-</div>
-<div class="form-group row">
-<div class="col-md-4">
-<div class="label-wrapper"><label class="col-form-label" for="SearchManufacturerId">Manufacturer</label><div title="Search by a specific manufacturer." data-toggle="tooltip" class="ico-help"><i class="fas fa-question-circle"></i></div></div>
-</div>
-<div class="col-md-8">
-<select class="form-control" data-val="true" data-val-required="The Manufacturer field is required." id="SearchManufacturerId" name="SearchManufacturerId"><option selected="selected" value="0">All</option>
-<option value="1">Apple</option>
-<option value="2">HP</option>
-<option value="3">Nike</option>
-</select>
-</div>
-</div>
-<div class="form-group row">
-<div class="col-md-4">
-<div class="label-wrapper"><label class="col-form-label" for="SearchVendorId">Vendor</label><div title="Search by a specific vendor." data-toggle="tooltip" class="ico-help"><i class="fas fa-question-circle"></i></div></div>
-</div>
-<div class="col-md-8">
-<select class="form-control" data-val="true" data-val-required="The Vendor field is required." id="SearchVendorId" name="SearchVendorId"><option selected="selected" value="0">All</option>
-<option value="1">Vendor 1</option>
-<option value="2">Vendor 2</option>
-</select>
-</div>
-</div>
-</div>
-<div class="col-md-7">
-<div class="form-group row" style="display:none">
-<div class="col-md-4">
-<div class="label-wrapper"><label class="col-form-label" for="SearchStoreId">Store</label><div title="Search by a specific store." data-toggle="tooltip" class="ico-help"><i class="fas fa-question-circle"></i></div></div>
-</div>
-<div class="col-md-8">
-<select class="form-control" data-val="true" data-val-required="The Store field is required." id="SearchStoreId" name="SearchStoreId"><option selected="selected" value="0">All</option>
-<option value="1">Your store name</option>
-<option value="2">Test store 2</option>
-</select>
-</div>
-</div>
-<div class="form-group row">
-<div class="col-md-4">
-<div class="label-wrapper"><label class="col-form-label" for="SearchWarehouseId">Warehouse</label><div title="Search by a specific warehouse." data-toggle="tooltip" class="ico-help"><i class="fas fa-question-circle"></i></div></div>
-</div>
-<div class="col-md-8">
-<select class="form-control" data-val="true" data-val-required="The Warehouse field is required." id="SearchWarehouseId" name="SearchWarehouseId"><option selected="selected" value="0">All</option>
-<option value="1">Warehouse 1 (New York)</option>
-<option value="2">Warehouse 2 (Los Angeles)</option>
-</select>
-</div>
-</div>
-<div class="form-group row">
-<div class="col-md-4">
-<div class="label-wrapper"><label class="col-form-label" for="SearchProductTypeId">Product type</label><div title="Search by a product type." data-toggle="tooltip" class="ico-help"><i class="fas fa-question-circle"></i></div></div>
-</div>
-<div class="col-md-8">
-<select class="form-control" data-val="true" data-val-required="The Product type field is required." id="SearchProductTypeId" name="SearchProductTypeId"><option selected="selected" value="0">All</option>
-<option value="5">Simple</option>
-<option value="10">Grouped (product with variants)</option>
-</select>
-</div>
-</div>
-<div class="form-group row">
-<div class="col-md-4">
-<div class="label-wrapper"><label class="col-form-label" for="SearchPublishedId">Published</label><div title="Search by a &quot;Published&quot; property." data-toggle="tooltip" class="ico-help"><i class="fas fa-question-circle"></i></div></div>
-</div>
-<div class="col-md-8">
-<select class="form-control" data-val="true" data-val-required="The Published field is required." id="SearchPublishedId" name="SearchPublishedId"><option selected="selected" value="0">All</option>
-<option value="1">Published only</option>
-<option value="2">Unpublished only</option>
-</select>
-</div>
-</div>
-<div class="form-group row">
-<div class="col-md-4">
-<div class="label-wrapper"><label class="col-form-label" for="GoDirectlyToSku">Go directly to product SKU</label><div title="Enter product SKU and click Go." data-toggle="tooltip" class="ico-help"><i class="fas fa-question-circle"></i></div></div>
-</div>
-<div class="col-md-8">
-<div class="input-group input-group-short">
-<input class="form-control text-box single-line" id="GoDirectlyToSku" name="GoDirectlyToSku" type="text" value />
-<span class="input-group-append">
-<button type="submit" id="go-to-product-by-sku" name="go-to-product-by-sku" class="btn btn-info btn-flat">
-Go
-</button>
-</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="text-center col-12">
-<button type="button" id="search-products" class="btn btn-primary btn-search">
-<i class="fas fa-search"></i>
-Search
-</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="card card-default">
-<div class="card-body">
-<div class="documentation-reference"><span>Learn more about <a target="_blank" href="https://docs.nopcommerce.com/running-your-store/catalog/products/index.html?utm_source=demo-admin-panel&utm_medium=admin-page&utm_campaign=documentation&utm_content=doc-reference">products</a></span></div>
-<table class="table table-bordered table-hover table-striped dataTable" width="100%" id="products-grid">
-</table>
-<div id="deleteSelectedFailed-action-alert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteSelectedFailed-action-alert-title">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="deleteSelectedFailed-action-alert-title">Information</h4>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-</div>
-<div class="modal-body">
-<div class="additional-text" id="deleteSelectedFailed-info"></div>
-</div>
-<div class="modal-footer">
-<span class="btn btn-primary float-right" data-dismiss="modal">Ok</span>
-</div>
-</div>
-</div>
-<div class="btn btn-default" id="deleteSelectedFailed" style="display:none"></div><script type="cdc95ed82d453b61da671cf8-text/javascript">$(document).ready(function () {$('#deleteSelectedFailed').attr("data-toggle", "modal").attr("data-target", "#deleteSelectedFailed-action-alert")});</script></div>
-<div id="nothingSelectedAlert-action-alert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nothingSelectedAlert-action-alert-title">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="nothingSelectedAlert-action-alert-title">Information</h4>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-</div>
-<div class="modal-body">
-<div class="additional-text" id="nothingSelectedAlert-info"></div>
-</div>
-<div class="modal-footer">
-<span class="btn btn-primary float-right" data-dismiss="modal">Ok</span>
-</div>
-</div>
-</div>
-<div class="btn btn-default" id="nothingSelectedAlert" style="display:none"></div><script type="cdc95ed82d453b61da671cf8-text/javascript">$(document).ready(function () {$('#nothingSelectedAlert').attr("data-toggle", "modal").attr("data-target", "#nothingSelectedAlert-action-alert")});</script></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8ClxmnlNlXFJlNczOji4vXmSdh0IGk0XNVvD563NeITIr8j1pQLCyC0eOtMr1Ms4QsJEYlXO7QYdc1wreqFO3MYHVj1cczoxpHDXLeRz7XQHulkgPYTVPswkY1_E_ot2PEwjIlkHsd03quWTdChNSP0uOdS3IUKVvt4Br60wbCXpnQ027OQnPsknll329NZjDg" /><input name="SearchIncludeSubCategories" type="hidden" value="false" /></form>
-<div id="license-window" class="modal fade" tabindex="-1" role="dialog">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-</div>
-</div>
-</div>
-<div id="importexcel-window" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="importexcel-window-title">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="importexcel-window-title">Import from Excel</h4>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-</div>
-<form method="post" enctype="multipart/form-data" action="/Admin/Product/ImportExcel">
-<div class="form-horizontal">
-<div class="modal-body">
-<ul class="common-list">
-<li>
-<em>Imported products are distinguished by SKU. If the SKU already exists, then its corresponding product will be updated.</em>
-</li>
-<li>
-<em>Import requires a lot of memory resources. That's why it's not recommended to import more than 500 - 1,000 records at once. If you have more records, it's better to split them to multiple Excel files and import separately.</em>
-</li>
-</ul>
-<div class="form-group row">
-<div class="col-md-2">
-<div class="label-wrapper">
-<label class="col-form-label">
-Excel file
-</label>
-</div>
-</div>
-<div class="col-md-10">
-<input type="file" id="importexcelfile" name="importexcelfile" class="form-control" />
-</div>
-</div>
-</div>
-<div class="modal-footer">
-<button type="submit" class="btn btn-primary">
-Import from Excel
-</button>
-</div>
-</div>
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8ClxmnlNlXFJlNczOji4vXmSdh0IGk0XNVvD563NeITIr8j1pQLCyC0eOtMr1Ms4QsJEYlXO7QYdc1wreqFO3MYHVj1cczoxpHDXLeRz7XQHulkgPYTVPswkY1_E_ot2PEwjIlkHsd03quWTdChNSP0uOdS3IUKVvt4Br60wbCXpnQ027OQnPsknll329NZjDg" /></form>
-</div>
-</div>
-</div>
-<form method="post" id="export-xml-selected-form" action="/Admin/Product/ExportXmlSelected">
-<input type="hidden" id="selectedIds" name="selectedIds" value />
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8ClxmnlNlXFJlNczOji4vXmSdh0IGk0XNVvD563NeITIr8j1pQLCyC0eOtMr1Ms4QsJEYlXO7QYdc1wreqFO3MYHVj1cczoxpHDXLeRz7XQHulkgPYTVPswkY1_E_ot2PEwjIlkHsd03quWTdChNSP0uOdS3IUKVvt4Br60wbCXpnQ027OQnPsknll329NZjDg" /></form>
-<div id="exportXmlSelected-action-alert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exportXmlSelected-action-alert-title">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="exportXmlSelected-action-alert-title">Information</h4>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-</div>
-<div class="modal-body">
-<div class="additional-text" id="exportXmlSelected-info"></div>
-</div>
-<div class="modal-footer">
-<span class="btn btn-primary float-right" data-dismiss="modal">Ok</span>
-</div>
-</div>
-</div>
-<div class="btn btn-default" id="exportXmlSelected" style="display:none"></div><script type="cdc95ed82d453b61da671cf8-text/javascript">$(document).ready(function () {$('#exportXmlSelected').attr("data-toggle", "modal").attr("data-target", "#exportXmlSelected-action-alert")});</script></div>
-<form method="post" id="export-excel-selected-form" action="/Admin/Product/ExportExcelSelected">
-<input type="hidden" id="selectedIds" name="selectedIds" value />
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8ClxmnlNlXFJlNczOji4vXmSdh0IGk0XNVvD563NeITIr8j1pQLCyC0eOtMr1Ms4QsJEYlXO7QYdc1wreqFO3MYHVj1cczoxpHDXLeRz7XQHulkgPYTVPswkY1_E_ot2PEwjIlkHsd03quWTdChNSP0uOdS3IUKVvt4Br60wbCXpnQ027OQnPsknll329NZjDg" /></form>
-<div id="exportExcelSelected-action-alert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exportExcelSelected-action-alert-title">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="exportExcelSelected-action-alert-title">Information</h4>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-</div>
-<div class="modal-body">
-<div class="additional-text" id="exportExcelSelected-info"></div>
-</div>
-<div class="modal-footer">
-<span class="btn btn-primary float-right" data-dismiss="modal">Ok</span>
-</div>
-</div>
-</div>
-<div class="btn btn-default" id="exportExcelSelected" style="display:none"></div><script type="cdc95ed82d453b61da671cf8-text/javascript">$(document).ready(function () {$('#exportExcelSelected').attr("data-toggle", "modal").attr("data-target", "#exportExcelSelected-action-alert")});</script></div>
-</div>
-<div class="main-footer">
-<div class="container-fluid">
-<div class="col-md-12">
-<div class="row">
-<div class="col-md-4 col-xs-12 text-md-left text-center">
-Powered by <a href="https://www.nopcommerce.com/?utm_source=demo-admin-panel&amp;utm_medium=footer&amp;utm_campaign=admin-panel" target="_blank">nopCommerce</a>
-</div>
-<div class="col-md-4 col-xs-12 text-center">
-Tuesday, January 2, 2024 9:01 AM
-</div>
-<div class="col-md-4 col-xs-12 text-md-right text-center">
-<b>nopCommerce version 4.60.0</b>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<a id="backTop" class="btn btn-back-top bg-teal"></a>
-<script type="cdc95ed82d453b61da671cf8-text/javascript" src="~/js/qlvfucyxvmxlswx0bx1vxg.scripts.js?v=M1Ov74NfRaEDWnAXADkDp5tuu80"></script><script type="cdc95ed82d453b61da671cf8-text/javascript" src="~/lib/kendo/2020.1.406/js/messages/kendo.messages.en-US.min.js?v=KNwmFaETNYZCiBVx3NSwe1lYysw"></script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-    $(document).ready(function () {
-        $('#products-grid').DataTable({
+            <li class="nav-item">
+              <a class="nav-link" href="accounts.html">
+                <i class="far fa-user"></i> Accounts
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-cog"></i>
+                <span> Settings <i class="fas fa-angle-down"></i> </span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="#">Billing</a>
+                <a class="dropdown-item" href="#">Customize</a>
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link d-block" href="login.html">
+                Admin, <b>Logout</b>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container tm-mt-big tm-mb-big">
+      <div class="row">
+        <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+          <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <div class="row">
+              <div class="col-12">
+                <h2 class="tm-block-title d-inline-block">Add Product</h2>
+              </div>
+            </div>
+            <div class="row tm-edit-product-row">
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <form action="" class="tm-edit-product-form">
+                  <div class="form-group mb-3">
+                    <label
+                      for="name"
+                      >Product Name
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      class="form-control validate"
+                      required
+                    />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label
+                      for="description"
+                      >Description</label
+                    >
+                    <textarea
+                      class="form-control validate"
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label
+                      for="category"
+                      >Category</label
+                    >
+                    <select
+                      class="custom-select tm-select-accounts"
+                      id="category"
+                    >
+                      <option selected>Select category</option>
+                      <option value="1">New Arrival</option>
+                      <option value="2">Most Popular</option>
+                      <option value="3">Trending</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                      <div class="form-group mb-3 col-xs-12 col-sm-6">
+                          <label
+                            for="expire_date"
+                            >Expire Date
+                          </label>
+                          <input
+                            id="expire_date"
+                            name="expire_date"
+                            type="text"
+                            class="form-control validate"
+                            data-large-mode="true"
+                          />
+                        </div>
+                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                          <label
+                            for="stock"
+                            >Units In Stock
+                          </label>
+                          <input
+                            id="stock"
+                            name="stock"
+                            type="text"
+                            class="form-control validate"
+                            required
+                          />
+                        </div>
+                  </div>
+                  
+              
+              <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                <div class="tm-product-img-dummy mx-auto">
+                  <i
+                    class="fas fa-cloud-upload-alt tm-upload-icon"
+                    onclick="document.getElementById('fileInput').click();"
+                  ></i>
+                </div>
+                <div class="custom-file mt-3 mb-3">
+                  <input id="fileInput" type="file" style="display:none;" />
+                  <input
+                    type="button"
+                    class="btn btn-primary btn-block mx-auto"
+                    value="UPLOAD PRODUCT IMAGE"
+                    onclick="document.getElementById('fileInput').click();"
+                  />
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-block text-uppercase">Add Product Now</button>
+              </div>
+            </form>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="tm-footer row tm-mt-small">
+        <div class="col-12 font-weight-light">
+          <p class="text-center text-white mb-0 px-4 small">
+            Copyright &copy; <b>2018</b> All rights reserved. 
             
+            Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+        </p>
+        </div>
+    </footer> 
 
-
-
-
-    processing: true,
-    
-    serverSide: true,
-    
-    ajax:
-    {
-        url: "/Admin/Product/ProductList",
-        type: "POST",
-        dataType: "json",
-        dataSrc: "Data",
-        beforeSend: function() {
-
-            clearMasterCheckbox('#products-grid');
-                    },
-        data: function(data) {
-
-                            data.SearchProductName = $('#SearchProductName').val();
-                            
-                            data.SearchCategoryId = $('#SearchCategoryId').val();
-                            
-                        data.SearchIncludeSubCategories = $('#SearchIncludeSubCategories').is(':checked');
-                        
-                            data.SearchManufacturerId = $('#SearchManufacturerId').val();
-                            
-                            data.SearchStoreId = $('#SearchStoreId').val();
-                            
-                            data.SearchWarehouseId = $('#SearchWarehouseId').val();
-                            
-                            data.SearchVendorId = $('#SearchVendorId').val();
-                            
-                            data.SearchProductTypeId = $('#SearchProductTypeId').val();
-                            
-                            data.SearchPublishedId = $('#SearchPublishedId').val();
-                                        addAntiForgeryToken(data);
-            return data;
-        }
-    },
-    scrollX: true,
-info: true,
-paging: true,
-pagingType: 'simple_numbers',
-language: {
-    "emptyTable":     "No data available in table",
-    "info":           "_START_-_END_ of _TOTAL_ items",
-    "infoEmpty":      "No records",
-    "infoFiltered":   "(filtered from _MAX_ total entries)",
-    "thousands":      ",",
-    "lengthMenu":     "Show _MENU_ items",
-    "loadingRecords": "Loading...",
-    "processing":     "\u003Ci class=\u0027fas fa-refresh fa-spin\u0027\u003E\u003C/i\u003E",
-    "search":         "Search:",
-    "zeroRecords":    "No matching records found",
-    "paginate": {
-
-                "first":"<i class='k-icon k-i-seek-w'></i>",
-                "last":"<i class='k-icon k-i-seek-e'></i>",
-                "next":"<i class='k-icon k-i-arrow-e'></i>",
-                "previous":"<i class='k-icon k-i-arrow-w'></i>"
-                },
-    "aria": {
-        "sortAscending":  ": activate to sort column ascending",
-        "sortDescending": ": activate to sort column descending"
-    }
-},
-pageLength: 15,
-
-    lengthMenu: [7, 15, 20, 50, 100],
-    ordering: false,
-
-    buttons: [{
-        name: 'refresh',
-        text: '<i class="fas fa-sync-alt" style="padding-left: 5px"></i>',
-        action: function() {
-
-                updateTable('#products-grid', true);
-                        }
-    }],
-    dom: '\u003C\u0027row\u0027\u003C\u0027col-md-12\u0027t\u003E\u003E\u003C\u0027row margin-t-5\u0027\u003C\u0027col-lg-5 col-xs-12\u0027\u003C\u0027float-lg-left\u0027p\u003E\u003E\u003C\u0027col-lg-3 col-xs-12\u0027\u003C\u0027text-center\u0027l\u003E\u003E\u003C\u0027col-lg-3 col-xs-12\u0027\u003C\u0027float-lg-right text-center\u0027i\u003E\u003E\u003C\u0027col-lg-1 col-xs-12\u0027\u003C\u0027float-lg-right text-center data-tables-refresh\u0027B\u003E\u003E\u003E',
-columns: [    
-
-        {            
-
-                        title: '<input class="mastercheckbox" type="checkbox"/>',
-                                    width: '50',
-            visible: true,
-            searchable: false,
-
-                className: 'text-center',
-                
-                    render: function (data, type, row, meta) {
-                        return (data === true)
-                            ? '<input name="checkbox_products" value="' + row.Id + '" type="checkbox" class="checkboxGroups" checked="checked" />'
-                            : '<input name="checkbox_products" value="' + row.Id + '" type="checkbox" class="checkboxGroups" />';
-                    },
-                                data: 'Id'            
-        }
-,        
-        {            
-
-                title: 'Picture',
-                            width: '100',
-            visible: true,
-            searchable: false,
-
-                    render: function (data, type, row, meta) {
-
-                            return '<img src="' + data + '"  />';
-                                                },
-                                data: 'PictureThumbnailUrl'            
-        }
-,        
-        {            
-
-                title: 'Product name',
-                            width: '',
-            visible: true,
-            searchable: false,
-
-                render: function (data, type, row, meta) {
-                    return escapeHtml(data);
-                },
-                            data: 'Name'            
-        }
-,        
-        {            
-
-                title: 'SKU',
-                            width: '100',
-            visible: true,
-            searchable: false,
-
-                render: function (data, type, row, meta) {
-                    return escapeHtml(data);
-                },
-                            data: 'Sku'            
-        }
-,        
-        {            
-
-                title: 'Price',
-                            width: '',
-            visible: true,
-            searchable: false,
-
-                    render: function (data, type, row, meta) {
-                        return renderColumnPrice(data, type, row, meta);
-                    },
-                                data: 'Price'            
-        }
-,        
-        {            
-
-                title: 'Stock quantity',
-                            width: '',
-            visible: true,
-            searchable: false,
-
-                render: function (data, type, row, meta) {
-                    return escapeHtml(data);
-                },
-                            data: 'StockQuantityStr'            
-        }
-,        
-        {            
-
-                title: 'Published',
-                            width: '80',
-            visible: true,
-            searchable: false,
-
-                className: 'text-center',
-                
-                    render: function (data, type, row) {
-                        return data
-                            ? '<i class="fas fa-check true-icon" nop-value="true"></i>'
-                            : '<i class="fas fa-times false-icon" nop-value="false"></i>';
-                    },
-                                data: 'Published'            
-        }
-,        
-        {            
-
-                title: 'Edit',
-                            width: '80',
-            visible: true,
-            searchable: false,
-
-                className: 'button-column',
-                
-                    render: function (data, type, row, meta) {
-                        return '<a class="btn btn-default" href="Edit/' + data + '"><i class="fas fa-pencil-alt"></i>Edit</a>';
-                    },
-                                data: 'Id'            
-        }
-        ]           
-        });
-
-
-            $('#search-products').click(function() {
-                $('#products-grid').DataTable().ajax.reload();
-                $('#products-grid .checkboxGroups').prop('checked', false).change();
-                selectedIds = [];
-                return false;
-            });
-            
-            $('.mastercheckbox', $('#products-grid').parents('.dataTables_scroll').first()).first().click(function () {
-                $('#products-grid .checkboxGroups').prop('checked', $(this).is(':checked')).change();
-            });
-
-            $('#products-grid').on('change', 'input[type=checkbox][class!=mastercheckbox][class=checkboxGroups]', function (e) {
-                var $check = $(this);
-                var checked = jQuery.inArray($check.val(), selectedIds);
-                if ($check.is(':checked') == true) {
-                    if (checked == -1) {
-                        selectedIds.push($check.val());
-                    }
-                } else if (checked > -1) {
-                    selectedIds = $.grep(selectedIds, function (item, index) {
-                        return item != $check.val();
-                    });
-                }
-                updateMasterCheckbox($('#products-grid').parents('.dataTables_scroll').first());
-            });
-                    $('#products-grid').DataTable().columns.adjust();
-
-    });
-</script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-                            function renderColumnPrice(data, type, row, meta) {
-                                return (row.ProductTypeId != 10 ) ? data : null;
-                            }
-
-                            $(document).ready(function () {
-                                $('#delete-selected-action-confirmation-submit-button').bind('click', function () {
-                                    var postData = {
-                                        selectedIds: selectedIds
-                                    };
-                                    addAntiForgeryToken(postData);
-                                    $.ajax({
-                                        cache: false,
-                                        type: "POST",
-                                        url: "/Admin/Product/DeleteSelected",
-                                        data: postData,
-                                        error: function (jqXHR, textStatus, errorThrown) {
-                                            showAlert('deleteSelectedFailed', errorThrown);
-                                        },
-                                        complete: function (jqXHR, textStatus) {
-                                            if (jqXHR.status === 204)
-                                            {
-                                                showAlert('nothingSelectedAlert', 'Please select at least one record.');
-                                                return;
-                                            }
-                                            updateTable('#products-grid');
-                                        }
-                                    });
-                                    $('#delete-selected-action-confirmation').modal('toggle');
-                                    return false;
-                                });
-                            });
-
-                              </script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-        $(document).ready(function () {
-            $("#GoDirectlyToSku").keydown(function (event) {
-                if (event.keyCode === 13) {
-                    $("#go-to-product-by-sku").click();
-                    return false;
-                }
-            });
-        });
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="~/jquery-ui-datepicker/jquery-ui.min.js"></script>
+    <!-- https://jqueryui.com/download/ -->
+    <script src="~/js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+    <script>
+      $(function() {
+        $("#expire_date").datepicker();
+      });
     </script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-    $(document).ready(function () {
-        var displayModal = false;
-        if (displayModal) {
-            $('#license-window').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-
-            $('#license-window').on('shown.bs.modal', function (event) {
-                var modalCloseEl = $(this).find('button.close');
-                var closeTextEl = $('span', modalCloseEl);
-
-                var startFrom = 5;
-                closeTextEl.text(startFrom);
-
-                const timer = setInterval(function() {
-                    if (startFrom-- > 0)
-                        closeTextEl.text(startFrom);
-                }, 1000);
-
-                setTimeout(function() {
-                    closeTextEl.html('&times;');
-                    modalCloseEl.on('click', function() {
-                        $('#license-window').modal('hide')
-                    });
-                    clearInterval(timer);
-                }, startFrom*1000);
-            });
-        }
-    });
-</script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-    $(document).ready(function () {
-        $('#exportxml-selected').click(function (e) {
-            e.preventDefault();
-            var ids = selectedIds.join(",");
-            if (!ids) {
-                $('#exportXmlSelected-info').text("No products selected");
-                $("#exportXmlSelected").click();
-            }
-            else {
-                $('#export-xml-selected-form #selectedIds').val(ids);
-                $('#export-xml-selected-form').submit();
-                updateTable('#products-grid');
-            }
-            return false;
-        });
-    });
-</script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-        $(document).ready(function () {
-            $('#exportexcel-selected').click(function (e) {
-                e.preventDefault();
-                var ids = selectedIds.join(",");
-                if (!ids) {
-                    $('#exportExcelSelected-info').text("No products selected");
-                    $("#exportExcelSelected").click();
-                }
-                else {
-                    $('#export-excel-selected-form #selectedIds').val(ids);
-                    $('#export-excel-selected-form').submit();
-                    updateTable('#products-grid');
-                }
-                return false;
-            });
-        });
-    </script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-        var rootAppPath = '/';
-        var culture = "en";
-
-        //load cldr for current culture
-        $.when(
-            $.get({ url: rootAppPath + "lib_npm/cldr-data/supplemental/likelySubtags.json", dataType: "json"}),
-            $.get({ url: rootAppPath + "lib_npm/cldr-data/main/" + culture + "/numbers.json", dataType: "json"}),
-            $.get({ url: rootAppPath + "lib_npm/cldr-data/main/" + culture + "/currencies.json", dataType: "json"}),
-            $.get({ url: rootAppPath + "lib_npm/cldr-data/supplemental/numberingSystems.json", dataType: "json"}),
-            $.get({ url: rootAppPath + "lib_npm/cldr-data/main/" + culture + "/ca-gregorian.json", dataType: "json"}),
-            $.get({ url: rootAppPath + "lib_npm/cldr-data/main/" + culture + "/timeZoneNames.json", dataType: "json"}),
-            $.get({ url: rootAppPath + "lib_npm/cldr-data/supplemental/timeData.json", dataType: "json"}),
-            $.get({ url: rootAppPath + "lib_npm/cldr-data/supplemental/weekData.json", dataType: "json"}),
-        ).then(function () {
-            // Normalize $.get results, we only need the JSON, not the request statuses.
-            return [].slice.apply(arguments, [0]).map(function (result) {
-                return result[0];
-            });
-        }).then(Globalize.load).then(function () {
-            Globalize.locale(culture);
-        });
-</script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-        kendo.culture("en-US");
-</script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-                            $(document).ready(function () {
-                                Admin.Search.init();
-                            });
-                        </script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-        var AdminLTEOptions = {
-            boxWidgetOptions: {
-                boxWidgetIcons: {
-                    collapse: 'fa-minus',
-                    open: 'fa-plus'
-                }
-            }
-        };
-    </script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">
-        $(document).ready(function () {
-            //enable "back top" arrow
-            $('#backTop').backTop();
-
-            //enable tooltips
-            $('[data-toggle="tooltip"]').tooltip({ placement: 'bottom' });
-        });
-    </script>
-<script src="~/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="cdc95ed82d453b61da671cf8-|49" defer></script></body>
-<link rel="stylesheet" href="~/etrade/assets/css/vendor/font-awesome.css">
-<link rel="stylesheet" type="text/css" href="~/css/kizeeqtjklmc0tehdlg-zq.styles.css" />
-<link rel="stylesheet" href="~/etrade/assets/css/vendor/flaticon/flaticon.css" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
-<link rel="stylesheet" type="text/css" href="/css/0cjwy8p51txrakxd3fxobw.styles.css?v=h6PtLMdNCwrcJEWOKh4DTdHI9zI" />
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=gncz0DjbsJ56eCJ1bjF0ODRIbNnNW799xHHHPDRSuWSQMfMymy4tOgJ4i1kcVj6bLu9_mwXZQ2T5eZxvKuqoC-NAalfUSdUh2CkDDkvkW-w" charset="UTF-8"></script><script type="cdc95ed82d453b61da671cf8-text/javascript" src="~/lib_npm/jquery/jquery.min.js?v=LO1ZLwpRUE4YpyjPJfd6yZIfA9I"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2NJTDMQ3JH" type="cdc95ed82d453b61da671cf8-text/javascript"></script>
-<script type="cdc95ed82d453b61da671cf8-text/javascript">        
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-2NJTDMQ3JH');
-    
-</script>       
+  </body>
+</html>
