@@ -12,21 +12,25 @@
     <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="Views\assets\**" />
     <Compile Remove="Views\Catelogy\**" />
+    <Compile Remove="Views\myAccount\**" />
     <Compile Remove="Views\Order\**" />
     <Content Remove="Areas\Admin\Data\**" />
     <Content Remove="Areas\Admin\Models\**" />
     <Content Remove="Views\assets\**" />
     <Content Remove="Views\Catelogy\**" />
+    <Content Remove="Views\myAccount\**" />
     <Content Remove="Views\Order\**" />
     <EmbeddedResource Remove="Areas\Admin\Data\**" />
     <EmbeddedResource Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="Views\assets\**" />
     <EmbeddedResource Remove="Views\Catelogy\**" />
+    <EmbeddedResource Remove="Views\myAccount\**" />
     <EmbeddedResource Remove="Views\Order\**" />
     <None Remove="Areas\Admin\Data\**" />
     <None Remove="Areas\Admin\Models\**" />
     <None Remove="Views\assets\**" />
     <None Remove="Views\Catelogy\**" />
+    <None Remove="Views\myAccount\**" />
     <None Remove="Views\Order\**" />
   </ItemGroup>
 
@@ -45,7 +49,6 @@
 
   <ItemGroup>
     <Folder Include="Pic\" />
-    <Folder Include="Views\myAccount\" />
     <Folder Include="wwwroot\eTrade\assets\images\product\product-thumb\" />
   </ItemGroup>
 
