@@ -8,12 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="Views\assets\**" />
     <Compile Remove="Views\Catelogy\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\**" />
     <Content Remove="Views\assets\**" />
     <Content Remove="Views\Catelogy\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="Views\assets\**" />
     <EmbeddedResource Remove="Views\Catelogy\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\**" />
     <None Remove="Views\assets\**" />
     <None Remove="Views\Catelogy\**" />
   </ItemGroup>
@@ -32,8 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Pic\" />
     <Folder Include="Views\myAccount\" />
     <Folder Include="Views\Order\" />
