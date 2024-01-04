@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using MimeKit.Text;
 using MimeKit;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace DegitalDelight.Services
 {
@@ -49,6 +50,31 @@ namespace DegitalDelight.Services
         public void RemindOrder(string userName)
         {
             _emailService.SendMail("sorunaito@gmail.com", "Bạn còn món hàng trong giỏ", "Bấm đặt hàng ngay");
+        }
+
+        public async Task<List<CartItem>> GetCartItems(string userId)
+        {
+            var cartItems = await _context.CartItems
+                .Where(ci => ci.User.Id == userId)
+                .Include(ci => ci.Product)
+                .ToListAsync();
+
+            return cartItems;
+        }
+        public async Task<bool> RemoveItemFromCart(int productId, string userId)
+        {
+            var cartItem = await _context.CartItems
+                .Where(ci => ci.Product.Id == productId && ci.User.Id == userId)
+                .FirstOrDefaultAsync();
+
+            if (cartItem != null)
+            {
+                _context.CartItems.Remove(cartItem);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
     }
 }

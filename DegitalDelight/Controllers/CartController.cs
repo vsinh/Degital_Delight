@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using MimeKit.Text;
 using MimeKit;
 using DegitalDelight.Services.Interfaces;
+using System.Security.Claims;
 
 namespace DegitalDelight.Controllers
 {
@@ -35,6 +36,38 @@ namespace DegitalDelight.Controllers
             {
                 return NotFound();
             }
+        }       
+        [HttpGet]
+        public async Task<IActionResult> ViewCart()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId != null)
+            {
+                var cartItems = await _cartService.GetCartItems(userId);
+                return View(cartItems);
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
         }
+        [HttpPost]
+        public async Task<IActionResult> RemoveItemFromCart(int productId)
+        {   
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId != null)
+            {
+                var result = await _cartService.RemoveItemFromCart(productId, userId);
+
+                if (result)
+                {
+                    return Ok();
+                }
+            }
+            return NotFound();
+        }
+
     }
 }
