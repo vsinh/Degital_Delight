@@ -38,13 +38,13 @@ namespace DegitalDelight.Services
             }
             return false;
         }
-        public async Task<List<Favorite>?> GetFavoriteProducts()
+        public async Task<List<Favorite>> GetFavoriteProducts()
         {
             var currentUser = await _userService.GetCurrentUser();
             if (currentUser != null)
             {
-                var favoriteProducts = await _context.Favorites
-                    .Where(f => f.User.Id == currentUser.Id)
+                var favoriteProducts = await _context.Favorites.Include(x => x.UserId)
+                    .Where(f => f.UserId == currentUser.Id)
                     .Include(f => f.Product)
                     .ToListAsync();
 
@@ -58,7 +58,7 @@ namespace DegitalDelight.Services
             var currentUser = await _userService.GetCurrentUser();
 
             var favoriteItem = await _context.Favorites
-                .Where(f => f.ProductId == productId && f.User.Id == currentUser.Id)
+                .Where(f => f.ProductId == productId && f.UserId == currentUser.Id)
                 .FirstOrDefaultAsync();
 
             if (favoriteItem != null)
