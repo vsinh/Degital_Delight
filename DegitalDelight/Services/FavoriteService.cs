@@ -53,5 +53,23 @@ namespace DegitalDelight.Services
 
             return null;
         }
+        public async Task<bool> RemoveItemFromFavorite(int productId)
+        {
+            var currentUser = await _userService.GetCurrentUser();
+
+            var favoriteItem = await _context.Favorites
+                .Where(f => f.ProductId == productId && f.User.Id == currentUser.Id)
+                .FirstOrDefaultAsync();
+
+            if (favoriteItem != null)
+            {
+                _context.Favorites.Remove(favoriteItem);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

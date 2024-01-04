@@ -6,5 +6,7 @@ namespace DegitalDelight.Services.Interfaces
     {
         Task<bool> AddItemToCart(int productId);
         void RemindOrder(string userName);
+        Task<List<CartItem>> GetCartItems(string userId);
+        Task<bool> RemoveItemFromCart(int productId, string userId);
     }
 }

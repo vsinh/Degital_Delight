@@ -6,5 +6,6 @@ namespace DegitalDelight.Services.Interfaces
     {
         Task<bool> AddItemToFavorite(int productId);
         Task<List<Favorite>> GetFavoriteProducts();
+        Task<bool> RemoveItemFromFavorite(int productId);
     }
 }

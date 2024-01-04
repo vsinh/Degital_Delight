@@ -31,5 +31,18 @@ namespace DegitalDelight.Controllers
                     return NotFound();
                 }
             }
-        } 
+        [HttpPost]
+        public async Task<IActionResult> RemoveItemFromFavorite(int productId)
+        {
+            var result = await _favoriteService.RemoveItemFromFavorite(productId);
+
+            if (result)
+            {
+                return Ok();
+            }
+
+            return NotFound();
+        }
+
+    } 
     }
