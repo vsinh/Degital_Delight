@@ -8,7 +8,8 @@
         public string? Picture { get; set; }
         public string? Description { get; set; }
         public bool IsDeleted { get; set; } = false;
-        public ProductType? ProductType { get; set; }
+        public int Stock { get; set; } = 0;
+		public ProductType? ProductType { get; set; }
         public Warranty? Warranty { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
