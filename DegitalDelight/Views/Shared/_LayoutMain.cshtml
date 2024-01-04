@@ -53,8 +53,8 @@
                                 }
                                 else
                                 {
-                                    <li><a asp-area="Identity" asp-page="/Account/Register">Join Us</a></li>
-                                    <li><a asp-area="Identity" asp-page="/Account/Login">Sign In</a></li>
+                                    <li><a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a></li>
+                                    <li><a asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a></li>
                                 }
                             </ul>
                         </div>
@@ -95,12 +95,9 @@
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#">Phụ kiện</a>
+                                    <a href="#">Danh mục</a>
                                     <ul class="axil-submenu">
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="my-account.html">Account</a></li>
+                                        <li><a asp-action="Wishlist" asp-controller="Wishlist">Wishlist</a></li>
                                     </ul>
                                 </li>
                                 <li><a asp-action="About">About</a></li>
@@ -116,12 +113,12 @@
                                 </a>
                             </li>
                             <li class="wishlist">
-                                <a href="wishlist.html">
+                                <a asp-action="Wishlist" asp-controller="Wishlist">
                                     <i class="flaticon-heart"></i>
                                 </a>
                             </li>
                             <li class="shopping-cart">
-                                <a href="#" class="cart-dropdown-btn">
+                                <a asp-action="Cart" asp-controller="Cart" class="cart-dropdown-btn">
                                     <span class="cart-count">3</span>
                                     <i class="flaticon-shopping-cart"></i>
                                 </a>
