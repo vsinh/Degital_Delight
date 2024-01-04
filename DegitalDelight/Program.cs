@@ -49,6 +49,7 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IProduct, ProductService>();
+builder.Services.AddScoped<ISupply, SupplyService>();
 
 var app = builder.Build();
 
