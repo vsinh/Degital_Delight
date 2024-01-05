@@ -28,7 +28,7 @@
 								<th scope="col">&nbsp;</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="comment_table">
 							@foreach (var comment in Model)
 							{
 								<tr>
@@ -42,7 +42,6 @@
 									</td>
 								</tr>
 							}
-
 						</tbody>
 					</table>
 				</div>
@@ -60,59 +59,38 @@
 	</div>
 </footer>
 <script type="text/javascript">
-    function LoadComment(input) {
-        let count = 0;
-        var comments = [];
-		console.log(input);
-        $.ajax({
-            type: "GET",
-            url: "/Admin/Comment/Search",
-            dataType: "json",
-            async: true,
-            data: { input: input },
-            success: function (data) {
-				console.log(data);
-            },
-            failure: function (err) {
-            }
-        })
-        var dtb = document.getElementById('display_comment').DataTable({
-            "destroy": true,
-            "order": [[1, 'asc']],
-            "bLengthChange": false,
-            "bInfo": false,
-            "searching": false,
-            "paging": false,
-            "data": comments,
-            "columnDefs": [
-                { className: "first_row_center", "targets": [0] },
-                { className: "cursor_pointer", "targets": '_all' },
-            ],
-        });
-
-        // dtb.on('order.dt search.dt', function () {
-        //     let i = 1;
-
-        //     dtb.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
-        //         this.data(i++);
-        //     });
-        // }).draw();
-
-        // dtb.on('click', 'tr', function (e) {
-        //     $('#userIdText').val(dtb.row(this).data()[1]);
-        //     LoadClassmate("Model.Id", dtb.row(this).data()[1]);
-        // });
-
-        // if (finduser.length == 1) {
-        //     localStorage.setItem('UserFound', finduser[0][1])
-        // }
-        // else {
-        //     localStorage.setItem('UserFound', 'NotFound');
-        // }
-    }
+	function LoadComment(input) {
+		var cmttable = document.getElementById("comment_table");
+		cmttable.innerHTML = ``;
+		$.ajax({
+			type: "GET",
+			url: "/Admin/Comment/Search",
+			dataType: "json",
+			async: true,
+			data: { input: input },
+			success: function (data) {
+				$.each(data, function (key, value) {
+					cmttable.innerHTML = cmttable.innerHTML + `
+						<tr>
+							<td class="tm-product-name">${value.user.userName}</td>
+							<td><a href="~/Product/${value.product.id}" style="color: khaki">${value.product.name}</a></td>
+							<td>${value.content}</td>
+							<td>
+									<a href="Delete/${value.id}" class="tm-product-delete-link">
+									<i class="far fa-trash-alt tm-product-delete-icon"></i>
+								</a>
+							</td>
+						</tr>
+					`
+				})
+			},
+			failure: function (err) {
+			}
+		})
+	}
 
 	function Search() {
 		var input = document.getElementById("search_input").value;
-        LoadComment(input);
-    };
+		LoadComment(input);
+	};
 </script>

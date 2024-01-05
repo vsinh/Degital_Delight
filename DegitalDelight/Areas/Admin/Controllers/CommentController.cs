@@ -28,5 +28,9 @@ namespace DegitalDelight.Areas.Admin.Controllers
             var comments = await _commentService.SearchComments(input);
             return Json(comments);
         }
-    }
+		public async Task<IActionResult> Delete()
+		{
+			return RedirectToAction("Index");
+		}
+	}
 }

@@ -34,9 +34,11 @@ namespace DegitalDelight.Areas.Admin.Services
 
 		public async Task<List<Comment>> SearchComments(string input)
 		{
+			if (string.IsNullOrEmpty(input))
+				return await _context.Comments.Include(x => x.User).Include(x => x.Product).ToListAsync();
 			var comments = await _context.Comments.Include(x => x.User).Include(x => x.Product).Where(x =>
-				x.User.UserName == null ? (x.User.UserName).Contains(input) : true
-				|| x.Product.Name == null ? (x.Product.Name).Contains(input) : true
+				(x.User.UserName).Contains(input)
+				|| (x.Product.Name).Contains(input)
 				|| (x.Content).Contains(input)
 			).ToListAsync();
 			return comments;
