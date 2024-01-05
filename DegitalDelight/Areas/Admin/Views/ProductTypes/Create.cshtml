@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "../Shared/_LayoutAdmin.cshtml";
+}
+<div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+            <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="tm-block-title d-inline-block">Add Product</h2>
+                    </div>
+                </div>
+                <div>
+                    <form asp-action="Create" asp-controller="ProductTypes" method="post" class="tm-edit-product-form">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+
+                            <div class="form-group mb-3">
+                                <label for="name">
+                                    Product Type Name
+                                </label>
+                                <input id="name"
+                                       name="name"
+                                       type="text"
+                                       class="form-control validate"
+                                       required />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="description">Description</label>
+                                <textarea class="form-control validate"
+                                          rows="3"
+                                          required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block text-uppercase">Add Product Type Now</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="tm-footer row tm-mt-small">
+    <div class="col-12 font-weight-light">
+        <p class="text-center text-white mb-0 px-4 small">
+            Copyright &copy; <b>2018</b> All rights reserved.
+
+            Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+        </p>
+    </div>
+</footer>
+<script>
+    var inputCounter = 1;
+
+    function addInputFields() {
+
+        var newRow = document.getElementById('atfield');
+        var oldhtml = newRow.innerHTML;
+        newRow.className = 'row tm-edit-product-row align-items-center';
+        var currentCounter = inputCounter++;
+
+        newRow.innerHTML = oldhtml + `
+                <div class="row tm-edit-product-row align-items-center">
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <div class="form-group mb-3">
+                                <label for="name${currentCounter}">Property Name</label>
+                                <input id="propertyname${currentCounter}" name="name${currentCounter}" type="text" class="form-control validate" required />
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <div class="form-group mb-3">
+                                <label for="value${currentCounter}">Product Value</label>
+                                <input id="valuename${currentCounter}" name="value${currentCounter}" type="text" class="form-control validate" required />
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 col-md-2">
+                            <button type="button" class="btn btn-sm btn-danger btn-block mt-md-1 mt-1" onclick="removeInputFields(this)">X</button>
+                        </div>
+                                 </div>
+                    `;
+    }
+    function removeInputFields(button) {
+        var row = button.parentElement.parentElement;
+        row.parentNode.removeChild(row);
+    }
+</script>

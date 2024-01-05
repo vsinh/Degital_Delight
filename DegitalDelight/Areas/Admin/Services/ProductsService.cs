@@ -13,9 +13,23 @@ namespace DegitalDelight.Areas.Admin.Services
 		{
 			_context = context;
 		}
-		public async Task CreateProduct(Product product)
+		public async Task CreateProduct(ProductDTO product, List<ProductDetail> productDetails)
 		{
-			await _context.Products.AddAsync(product);
+			Product newproduct = new Product();
+			newproduct.Name = product.Name;
+			newproduct.ProductType = _context.ProductTypes.FirstOrDefault(x => x.Id==product.ProductTypeId);
+			newproduct.Description = product.Description;
+			newproduct.Price = product.Price;
+			newproduct.Picture = product.Picture;
+			newproduct.Brand = product.Brand;
+			await _context.Products.AddAsync(newproduct);
+			await _context.SaveChangesAsync();
+			foreach (var item in productDetails)
+			{
+				item.ProductId = newproduct.Id;
+				await _context.ProductDetails.AddAsync(item);
+			}
+			await _context.SaveChangesAsync();
 		}
 
 		public async Task DeleteProduct(int id)
@@ -28,16 +42,26 @@ namespace DegitalDelight.Areas.Admin.Services
 			}
 		}
 
-		public async Task EditProduct(ProductDTO product)
+		public async Task EditProduct(ProductDTO product, List<ProductDetail> productDetails)
 		{
-			var oldSupply = await _context.Products.FirstOrDefaultAsync(x => x.Id == product.Id);
-			if (oldSupply != null)
+			var oldProduct = await _context.Products.Include(x => x.ProductDetails).Where(x => !x.IsDeleted).FirstOrDefaultAsync(x => x.Id == product.Id);
+			if (oldProduct != null)
 			{
-				oldSupply.Name = product.Name;
-				oldSupply.Description = product.Description;
-				oldSupply.ProductType = _context.ProductTypes.FirstOrDefault(x => x.Id == product.ProductTypeId);
-				oldSupply.Price = product.Price;
-				oldSupply.Picture = product.Picture;
+				oldProduct.Name = product.Name;
+				oldProduct.Description = product.Description;
+				oldProduct.ProductType = _context.ProductTypes.FirstOrDefault(x => x.Id == product.ProductTypeId);
+				oldProduct.Price = product.Price;
+				oldProduct.Picture = product.Picture;
+
+				foreach (var item in oldProduct.ProductDetails)
+				{
+					_context.ProductDetails.Remove(item);
+				}
+				foreach (var item in productDetails)
+				{
+					item.ProductId = oldProduct.Id;
+					_context.ProductDetails.Add(item);
+				}
 				await _context.SaveChangesAsync();
 
 			}
@@ -45,12 +69,15 @@ namespace DegitalDelight.Areas.Admin.Services
 
 		public async Task<List<Product>> GetAllProducts()
 		{
-			return await _context.Products.Include(x => x.ProductType).ToListAsync();
+			return await _context.Products.Include(x => x.ProductType).Where(x => !x.IsDeleted).ToListAsync();
 		}
-
-		public async Task<Product> GetProducts(int id)
+        public async Task<List<ProductType>> GetAllProductTypes()
+        {
+            return await _context.ProductTypes.ToListAsync();
+        }
+        public async Task<Product> GetProducts(int id)
 		{
-			return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+			return await _context.Products.Include(x => x.ProductType).Include(x => x.ProductDetails).Where(x => !x.IsDeleted).FirstOrDefaultAsync(x => x.Id == id);
 		}
 
 		public async Task<List<Product>> SearchProducts(string input)
@@ -58,9 +85,9 @@ namespace DegitalDelight.Areas.Admin.Services
 			if (string.IsNullOrEmpty(input))
 				return await _context.Products.Include(x => x.ProductType).ToListAsync();
 			var productList = await _context.Products.Include(x => x.ProductType).Where(x =>
-			x.Name.Contains(input)
+			(x.Name.Contains(input)
 			|| x.ProductType.Name.Contains(input)
-			|| x.Brand.Contains(input)
+			|| x.Brand.Contains(input)) && !x.IsDeleted
 			).ToListAsync();
 			return productList;
 		}

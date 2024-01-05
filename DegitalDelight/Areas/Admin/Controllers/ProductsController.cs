@@ -10,6 +10,7 @@ using DegitalDelight.Models;
 using DegitalDelight.Areas.Admin.Services.Interfaces;
 using DegitalDelight.Models.DTO;
 using DegitalDelight.Areas.Admin.Services;
+using System.Collections;
 
 namespace DegitalDelight.Areas.Admin.Controllers
 {
@@ -28,6 +29,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
         // GET: Admin/Products
         public async Task<IActionResult> Index()
         {
+            TempData["ProductTypes"] = await _productService.GetAllProductTypes();
             return View(await _productService.GetAllProducts());
         }
 
@@ -38,26 +40,16 @@ namespace DegitalDelight.Areas.Admin.Controllers
 			return Json(products);
 		}
 
-		// GET: Admin/Products/Details/5
-		public async Task<IActionResult> Details(int id)
+		[HttpGet]
+		public async Task<IActionResult> Delete(int id)
+		{
+            await _productService.DeleteProduct(id);
+            return RedirectToAction("Index");
+		}
+		// GET: Admin/Products/Create
+		public async Task<IActionResult> Create()
         {
-            if (_context.Products == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _productService.GetProducts(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        // GET: Admin/Products/Create
-        public IActionResult Create()
-        {
+            ViewData["ProductTypes"] = new SelectList(await _productService.GetAllProductTypes(), "Id", "Name");
             return View();
         }
 
@@ -66,12 +58,31 @@ namespace DegitalDelight.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Price,Picture,Description,Stock")] Product product, IFormCollection _aa)
+        public async Task<IActionResult> Create([Bind("Name,Price,ProductTypeId,Description,Brand")] ProductDTO product, IFormCollection form)
         {
             if (ModelState.IsValid)
             {
-                await _productService.CreateProduct(product);
-                return RedirectToAction("Index");
+                List<String> namevalue = new List<String>();
+                foreach (var item in form.Keys)
+                {
+                    if (item.Contains('-'))
+                    {
+                        var nameid = item.Split('-')[1];
+                        var value = form[item];
+                        namevalue.Add(value);
+                    }
+                }
+				List<ProductDetail> productDetails = new List<ProductDetail>();
+
+				for (int i = 0; i < namevalue.Count; i+=2)
+                {
+                    var productDetail = new ProductDetail();
+                    productDetail.Property = namevalue[i];
+                    productDetail.Value = namevalue[i+1];
+                    productDetails.Add(productDetail);
+                }
+				await _productService.CreateProduct(product, productDetails);
+				return RedirectToAction("Index");
             }
             return View(product);
         }
@@ -85,11 +96,24 @@ namespace DegitalDelight.Areas.Admin.Controllers
             }
 
             var product = await _productService.GetProducts(id);
-            if (product == null)
+			if (product == null)
             {
                 return NotFound();
             }
-            return View(product);
+			ProductDTO productDTO = new ProductDTO();
+			productDTO.Id = id;
+			productDTO.Name = product.Name;
+			productDTO.ProductTypeId = product.ProductType.Id;
+			productDTO.Description = product.Description;
+			productDTO.Price = product.Price;
+			productDTO.Picture = product.Picture;
+			productDTO.Brand = product.Brand;
+			foreach (var item in product.ProductDetails)
+			{
+				productDTO.ProductDetails.Add(item);
+			}
+			ViewData["ProductTypes"] = new SelectList(await _productService.GetAllProductTypes(), "Id", "Name", product.ProductType.Id);
+            return View(productDTO);
         }
 
         // POST: Admin/Products/Edit/5
@@ -97,33 +121,33 @@ namespace DegitalDelight.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Picture,Description")] ProductDTO product)
+        public async Task<IActionResult> Edit([Bind("Id,Name,Price,ProductTypeId,Description,Brand")] ProductDTO product, IFormCollection form)
         {
-            if (id != product.Id)
-            {
-                return NotFound();
-            }
+			if (ModelState.IsValid)
+			{
+				List<String> namevalue = new List<String>();
+				foreach (var item in form.Keys)
+				{
+					if (item.Contains('-'))
+					{
+						var nameid = item.Split('-')[1];
+						var value = form[item];
+						namevalue.Add(value);
+					}
+				}
+				List<ProductDetail> productDetails = new List<ProductDetail>();
 
-            if (ModelState.IsValid)
-            {
-
-                await _productService.EditProduct(product);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(product);
-        }
-
-        // POST: Admin/Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
-        {
-            if (_context.Products == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Products'  is null.");
-            }
-            await _productService.DeleteProduct(id);
-            return RedirectToAction(nameof(Index));
-        }
+				for (int i = 0; i < namevalue.Count; i += 2)
+				{
+					var productDetail = new ProductDetail();
+					productDetail.Property = namevalue[i];
+					productDetail.Value = namevalue[i + 1];
+					productDetails.Add(productDetail);
+				}
+				await _productService.EditProduct(product, productDetails);
+				return RedirectToAction("Index");
+			}
+			return View(product);
+		}
     }
 }

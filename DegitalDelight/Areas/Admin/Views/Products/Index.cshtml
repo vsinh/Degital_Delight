@@ -33,14 +33,14 @@
 						<tbody id="product_table">
 							@foreach(var product in Model)
 							{
-								<tr>
+								<tr onclick="EditProduct(@product.Id)">
 									<td class="tm-product-name">@product.Name</td>
 									<td>@product.ProductType.Name</td>
 									<td>@product.Brand</td>
 									<td>@product.Price</td>
 									<td>@product.Stock</td>
 									<td>
-										<a href="#" class="tm-product-delete-link">
+										<a asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" class="tm-product-delete-link">
 											<i class="far fa-trash-alt tm-product-delete-icon"></i>
 										</a>
 									</td>
@@ -63,101 +63,26 @@
 				<div class="tm-product-table-container">
 					<table class="table tm-table-small tm-product-table">
 						<tbody>
-							<tr>
-								<td class="tm-product-name">Product Category 1</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tm-product-name">Product Category 2</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tm-product-name">Product Category 3</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tm-product-name">Product Category 4</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tm-product-name">Product Category 5</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tm-product-name">Product Category 6</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tm-product-name">Product Category 7</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tm-product-name">Product Category 8</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tm-product-name">Product Category 9</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tm-product-name">Product Category 10</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="tm-product-name">Product Category 11</td>
-								<td class="text-center">
-									<a href="#" class="tm-product-delete-link">
-										<i class="far fa-trash-alt tm-product-delete-icon"></i>
-									</a>
-								</td>
-							</tr>
+							@foreach(var productType in TempData["ProductTypes"] as List<ProductType>)
+							{
+								<tr>
+									<td class="tm-product-name">@productType.Name</td>
+									<td class="text-center">
+										<a href="#" class="tm-product-delete-link">
+											<i class="far fa-trash-alt tm-product-delete-icon"></i>
+										</a>
+									</td>
+								</tr>
+							}
+
+							
 						</tbody>
 					</table>
 				</div>
 				<!-- table container -->
-				<button class="btn btn-primary btn-block text-uppercase mb-3">
+				<a asp-action="Create" asp-controller="ProductTypes" class="btn btn-primary btn-block text-uppercase mb-3">
 					Add new category
-				</button>
+				</a>
 			</div>
 		</div>
 	</div>
@@ -208,4 +133,7 @@
 		var input = document.getElementById("search_input").value;
 		LoadProduct(input);
 	};
+	function EditProduct(ProductId) {
+		window.location = "Edit/" + ProductId;
+	}
 </script>

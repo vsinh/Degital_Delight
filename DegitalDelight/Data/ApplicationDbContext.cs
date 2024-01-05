@@ -24,5 +24,6 @@ namespace DegitalDelight.Data
         public virtual DbSet<User> Users {  get; set; }
         public virtual DbSet<Warranty> Warrantys { get; set; }
         public virtual DbSet<Favorite> Favorites { get; set; }
-    }
+		public virtual DbSet<ProductDetail> ProductDetails { get; set; }
+	}
 }

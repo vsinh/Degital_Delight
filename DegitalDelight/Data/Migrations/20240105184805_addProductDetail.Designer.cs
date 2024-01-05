@@ -4,6 +4,7 @@ using DegitalDelight.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DegitalDelight.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240105184805_addProductDetail")]
+    partial class addProductDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +51,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Comment", b =>
@@ -91,7 +94,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Discount", b =>
@@ -127,7 +130,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Discounts", (string)null);
+                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Favorite", b =>
@@ -151,7 +154,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Favorites", (string)null);
+                    b.ToTable("Favorites");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Order", b =>
@@ -183,7 +186,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order", (string)null);
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.OrderItem", b =>
@@ -223,7 +226,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Product", b =>
@@ -267,7 +270,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("WarrantyId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.ProductDetail", b =>
@@ -291,7 +294,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductDetails", (string)null);
+                    b.ToTable("ProductDetails");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.ProductType", b =>
@@ -313,7 +316,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductTypes", (string)null);
+                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Report", b =>
@@ -341,7 +344,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Reports", (string)null);
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.ReportDetail", b =>
@@ -365,7 +368,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("ProductTypeId");
 
-                    b.ToTable("ReportDetail", (string)null);
+                    b.ToTable("ReportDetail");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.ReportInventory", b =>
@@ -395,7 +398,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ReportInventory", (string)null);
+                    b.ToTable("ReportInventory");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Supply", b =>
@@ -425,7 +428,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Supplies", (string)null);
+                    b.ToTable("Supplies");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Warranty", b =>
@@ -447,7 +450,7 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Warrantys", (string)null);
+                    b.ToTable("Warrantys");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
