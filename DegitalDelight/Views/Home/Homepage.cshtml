@@ -4,46 +4,6 @@
     ViewData["Title"] = "Home Page";
     Layout = "../Shared/_LayoutMain.cshtml";
 }
-@* 
-<a asp-area="Admin" asp-controller="Products" asp-action="Index">
-    Admin/Products/Index
-</a>
-
-<a asp-area="Admin" asp-controller="Products" asp-action="Create">
-    Admin/Products/Create
-</a>
-
-<a asp-area="Admin" asp-controller="Products" asp-action="Index">
-    Admin/Products/Index
-</a>
-
-<a asp-area="Admin" asp-controller="Dashboard" asp-action="Dashboard">
-    M vo Dashboard
-</a>
-
-<a asp-area="Admin" asp-controller="Admin" asp-action="Admin">
-    M vo Admin
-</a>
-
-<a asp-controller="Product" asp-action="Product">
-    M se vo Product page
-</a>
-
-<a asp-action="About">
-    M se vo About page
-</a>
-
-<a asp-action="myAccount">
-    M se vo My account page
-</a>
-
-<a asp-action="Order">
-    M se vo Order page
-</a>
-
-<a asp-action="Search">
-    M se vo Search page
-</a> *@
 
 <main class="main-wrapper">
     <div class="axil-main-slider-area main-slider-style-1">
@@ -57,7 +17,7 @@
                                 <h1 class="title">Roco Wireless Headphone</h1>
                                 <div class="slide-action">
                                     <div class="shop-btn">
-                                        <a href="shop.html" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Mua ngay</a>
+                                        <a asp-controller="Shop" asp-action="Shop" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Mua ngay</a>
                                     </div>
                                     <div class="item-rating">
                                         <div class="thumb">
@@ -88,7 +48,7 @@
                                 <h1 class="title">Smart Digital Watch</h1>
                                 <div class="slide-action">
                                     <div class="shop-btn">
-                                        <a href="shop.html" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Mua ngay</a>
+                                        <a asp-controller="Shop" asp-action="Shop" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Mua ngay</a>
                                     </div>
                                     <div class="item-rating">
                                         <div class="thumb">
@@ -119,7 +79,7 @@
                                 <h1 class="title">Roco Wireless Headphone</h1>
                                 <div class="slide-action">
                                     <div class="shop-btn">
-                                        <a href="shop.html" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Mua ngay</a>
+                                        <a asp-controller="Shop" asp-action="Shop" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Mua ngay</a>
                                     </div>
                                     <div class="item-rating">
                                         <div class="thumb">
@@ -150,7 +110,7 @@
                                 <h1 class="title">Smart Digital Watch</h1>
                                 <div class="slide-action">
                                     <div class="shop-btn">
-                                        <a href="shop.html" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Mua ngay</a>
+                                        <a  asp-controller="Shop" asp-action="Shop" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Mua ngay</a>
                                     </div>
                                     <div class="item-rating">
                                         <div class="thumb">
@@ -1735,7 +1695,7 @@
                     <h3 class="title">Best Sales Offer<br> Grab Yours</h3>
                 </div>
                 <div class="poster-countdown countdown"></div>
-                <a href="shop.html" class="axil-btn btn-bg-primary">Mua ngay <i class="fal fa-long-arrow-right"></i></a>
+                <a asp-controller="Shop" asp-action="Shop" class="axil-btn btn-bg-primary">Mua ngay <i class="fal fa-long-arrow-right"></i></a>
             </div>
         </div>
     </div>

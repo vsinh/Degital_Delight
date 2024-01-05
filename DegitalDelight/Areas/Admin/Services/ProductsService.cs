@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DegitalDelight.Areas.Admin.Services
 {
-	public class ProductService : IProduct
+	public class ProductsService : IProduct
 	{
 		private readonly ApplicationDbContext _context;
-		public ProductService(ApplicationDbContext context)
+		public ProductsService(ApplicationDbContext context)
 		{
 			_context = context;
 		}

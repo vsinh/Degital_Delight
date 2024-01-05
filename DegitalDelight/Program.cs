@@ -1,4 +1,4 @@
-    using DegitalDelight.Data;
+using DegitalDelight.Data;
 using DegitalDelight.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -49,7 +49,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddScoped<IProduct, ProductService>();
+builder.Services.AddScoped<IProduct, ProductsService>();
 builder.Services.AddScoped<ISupply, SupplyService>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 builder.Services.AddScoped<IComment, CommentService>();
@@ -59,6 +59,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 	options.JsonSerializerOptions.WriteIndented = true;
 });
+builder.Services.AddScoped<IProductService, ProductService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
