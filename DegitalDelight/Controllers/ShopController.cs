@@ -10,9 +10,9 @@ namespace DegitalDelight.Controllers
         {
             _productService = productService;
         }
-        public IActionResult Shop()
+        public async Task<IActionResult> Shop()
         {
-            TempData["ProductTypes"] = _productService.GetProductTypes();
+            ViewData["ProductTypes"] = await _productService.GetProductTypes();
             return View();
         }
     }
