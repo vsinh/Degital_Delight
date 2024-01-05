@@ -30,12 +30,6 @@ namespace DegitalDelight.Areas.Identity.Pages.Account.Manage
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public string Username { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
 
@@ -45,6 +39,7 @@ namespace DegitalDelight.Areas.Identity.Pages.Account.Manage
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -59,17 +54,33 @@ namespace DegitalDelight.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Password")]
+            public string Password { get; set; }
+
+            [Display(Name = "New Password")]
+            public string NewPassword { get; set; }
+
+            [Display(Name = "Confirm Password")]
+            public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Username")]
+            public string Username { get; set; }
+
+
         }
+        public int CreatedYear { get; set; }
 
         private async Task LoadAsync(User user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            Username = userName;
+            CreatedYear = user.CreatedDate.Value.Year;
 
             Input = new InputModel
             {
+                Username = userName,
                 PhoneNumber = phoneNumber
             };
         }
@@ -107,9 +118,38 @@ namespace DegitalDelight.Areas.Identity.Pages.Account.Manage
                 if (!setPhoneResult.Succeeded)
                 {
                     StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
+                    return Page();
                 }
             }
+
+            if (!string.IsNullOrEmpty(Input.NewPassword) && !string.IsNullOrEmpty(Input.ConfirmPassword))
+            {
+                if (Input.NewPassword != Input.ConfirmPassword)
+                {
+                    StatusMessage = "New password and confirm password must be the same.";
+                    return Page();
+                }
+                if (Input.NewPassword.Length <= 3)
+                {
+                    StatusMessage = "New password must longer than 3 characters.";
+                    return Page();
+                }
+                else
+                {
+                    var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.Password, Input.NewPassword);
+                    if (!changePasswordResult.Succeeded)
+                    {
+
+                        StatusMessage = "Mật khẩu cũ không chính xác.";
+                        return Page();
+                    }
+                }
+            }
+            else
+            {
+                return Page();
+            }
+
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

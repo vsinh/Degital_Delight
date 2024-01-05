@@ -4,6 +4,7 @@ using DegitalDelight.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DegitalDelight.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240104154030_AddFavoriteTable")]
+    partial class AddFavoriteTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,9 +253,6 @@ namespace DegitalDelight.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("ProductTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.Property<int?>("WarrantyId")
@@ -637,14 +637,8 @@ namespace DegitalDelight.Data.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("User");
                 });

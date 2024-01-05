@@ -49,7 +49,8 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IProduct, ProductService>();
-
+builder.Services.AddScoped<ISupply, SupplyService>();
+builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

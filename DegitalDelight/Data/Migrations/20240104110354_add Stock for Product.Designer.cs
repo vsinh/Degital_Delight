@@ -4,6 +4,7 @@ using DegitalDelight.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DegitalDelight.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240104110354_add Stock for Product")]
+    partial class addStockforProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,30 +131,6 @@ namespace DegitalDelight.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Discounts");
-                });
-
-            modelBuilder.Entity("DegitalDelight.Models.Favorite", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Favorites");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Order", b =>
@@ -637,14 +616,8 @@ namespace DegitalDelight.Data.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("User");
                 });
@@ -692,21 +665,6 @@ namespace DegitalDelight.Data.Migrations
                         .HasForeignKey("ProductId");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("DegitalDelight.Models.Favorite", b =>
-                {
-                    b.HasOne("DegitalDelight.Models.Product", null)
-                        .WithMany("Favorites")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DegitalDelight.Models.User", null)
-                        .WithMany("Favorites")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Order", b =>
@@ -851,8 +809,6 @@ namespace DegitalDelight.Data.Migrations
 
                     b.Navigation("Discounts");
 
-                    b.Navigation("Favorites");
-
                     b.Navigation("OrderItems");
 
                     b.Navigation("ReportInventories");
@@ -872,8 +828,6 @@ namespace DegitalDelight.Data.Migrations
                     b.Navigation("CartItems");
 
                     b.Navigation("Comments");
-
-                    b.Navigation("Favorites");
 
                     b.Navigation("Orders");
                 });
