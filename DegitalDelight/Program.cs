@@ -10,6 +10,7 @@ using DegitalDelight.Areas.Admin.Services.Interfaces;
 using DegitalDelight.Areas.Admin.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +52,13 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IProduct, ProductsService>();
 builder.Services.AddScoped<ISupply, SupplyService>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+builder.Services.AddScoped<IComment, CommentService>();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+	options.JsonSerializerOptions.WriteIndented = true;
+});
 builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
