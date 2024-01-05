@@ -46,59 +46,40 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mx-auto h-100">
 					<li class="nav-item">
-						<a class="nav-link" asp-action="Admin" asp-controller="Admin">
+						<a class="nav-link" id="Dashboard" asp-action="Dashboard" asp-controller="Dashboard">
 							<i class="fas fa-tachometer-alt"></i> Dashboard
 							<span class="sr-only">(current)</span>
 						</a>
 					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle"
-						   href="#"
-						   id="navbarDropdown"
-						   role="button"
-						   data-toggle="dropdown"
-						   aria-haspopup="true"
-						   aria-expanded="false">
-							<i class="far fa-file-alt"></i>
-							<span> Reports <i class="fas fa-angle-down"></i> </span>
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">Daily Report</a>
-							<a class="dropdown-item" href="#">Weekly Report</a>
-							<a class="dropdown-item" href="#">Yearly Report</a>
-						</div>
-					</li>
 					<li class="nav-item">
-						<a class="nav-link" asp-action="Index" asp-controller="Products">
+						<a class="nav-link" id="Product" asp-action="Index" asp-controller="Products">
 							<i class="fas fa-shopping-cart"></i> Products
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" asp-action="Index" asp-controller="Comment">
+						<a class="nav-link" id="Supply" asp-action="Index" asp-controller="Products">
+							<i class="fas fa-shopping-cart"></i> Supply
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="Comment" asp-action="Index" asp-controller="Comment">
 							<i class="far fa-comment"></i> Comments
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="accounts.html">
+						<a class="nav-link" id="Admin" asp-action="Admin" asp-controller="Admin">
 							<i class="far fa-user"></i> Accounts
 						</a>
 					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle"
-						   href="#"
-						   id="navbarDropdown"
-						   role="button"
-						   data-toggle="dropdown"
-						   aria-haspopup="true"
-						   aria-expanded="false">
-							<i class="fas fa-cog"></i>
-							<span> Settings <i class="fas fa-angle-down"></i> </span>
+					<li class="nav-item">
+						<a class="nav-link" id="Discount" asp-action="Discount" asp-controller="Discount">
+							<i class="far fa-user"></i> Discounts
 						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">Profile</a>
-							<a class="dropdown-item" href="#">Billing</a>
-							<a class="dropdown-item" href="#">Customize</a>
-						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="Warranty" asp-action="Warranty" asp-controller="Warranty">
+							<i class="far fa-user"></i> Warranties
+						</a>
 					</li>
 				</ul>
 				<ul class="navbar-nav">
@@ -116,6 +97,18 @@
 	<!-- https://jquery.com/download/ -->
 	<script src="~/js/bootstrap.min.js"></script>
 	<!-- https://getbootstrap.com/ -->
+	<script src="~/js/tooplate-scripts.js"></script>
+	@RenderSectionAsync("Scripts", required: false)
+	<script>
+		var navClass = document.getElementsByClassName("nav-link");
+		var path = window.location.href;
+
+		for (i = 0; i < navClass.length; i++) {
+			if (path.includes(navClass[i].href)) {
+				navClass[i].classList.add("active");
+			}
+		}
+	</script>
 </body>
 </html>
 
