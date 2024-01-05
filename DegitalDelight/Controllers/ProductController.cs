@@ -7,27 +7,44 @@ namespace DegitalDelight.Controllers
 {
     public class ProductController : Controller
     {
-        public IActionResult Product(int productId)
-        {
-            var product = GetProductById(productId);
+        private readonly IProductService _productService;
 
-            // Pass the product details to the CartView
+        public ProductController(IProductService productService)
+        {
+            _productService = productService;
+        }
+        public IActionResult Product()
+        {
+            return View();
+        }
+        public async Task<IActionResult> Product(int productId)
+        {
+            var product = await _productService.GetProductById(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
             return View(product);
         }
 
-
-        private Product GetProductById(int productId)
+        public async Task<IActionResult> Products()
         {
-            // Replace this with your actual logic to fetch product details from the database or any other source
-            // For demonstration purposes, a sample Product class is assumed here
-            return new Product
-            {
-                Id = productId,
-                Name = "Laptop thông minh",
-                Price = 100,
-                Description = "Laptop thông minh.",
-                Picture = "https://topthuthuat.com/wp/wp-content/uploads/2020/05/ban-phim-laptop-bi-loi.jpg"
-            };
+            var products = await _productService.GetProducts();
+            return View(products);
+        }
+
+        public async Task<IActionResult> ProductsByCategory(int categoryId)
+        {
+            var products = await _productService.GetProductsByCategory(categoryId);
+            return View(products);
+        }
+
+        public async Task<IActionResult> ProductTypes()
+        {
+            var productTypes = await _productService.GetProductTypes();
+            return View(productTypes);
         }
     }
 }
