@@ -1,0 +1,36 @@
+﻿using DegitalDelight.Data;
+using DegitalDelight.Models;
+using DegitalDelight.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
+namespace DegitalDelight.Services
+{
+    public class ProductService : IProductService
+    {
+        private readonly ApplicationDbContext _context;
+        public ProductService(ApplicationDbContext applicationDbContext)
+        {
+            _context = applicationDbContext;
+        }
+        public async Task<Product> GetProductById(int productId)
+        {
+            return await _context.Products.FindAsync(productId);
+
+        }
+
+        public async Task<List<Product>> GetProducts()
+        {
+            return await _context.Products.ToListAsync();
+        }
+
+        public Task<List<Product>> GetProductsByCategory(int categoryId)
+        {
+            return _context.Products.Include(x => x.ProductType).Where(x => x.ProductType.Id == categoryId).ToListAsync();
+        }
+
+        public async Task<List<ProductType>> GetProductTypes()
+        {
+            return await _context.ProductTypes.ToListAsync();
+        }
+    }
+}
