@@ -9,6 +9,7 @@ using DegitalDelight.Data;
 using DegitalDelight.Models;
 using DegitalDelight.Areas.Admin.Services.Interfaces;
 using DegitalDelight.Models.DTO;
+using DegitalDelight.Areas.Admin.Services;
 
 namespace DegitalDelight.Areas.Admin.Controllers
 {
@@ -30,8 +31,15 @@ namespace DegitalDelight.Areas.Admin.Controllers
             return View(await _productService.GetAllProducts());
         }
 
-        // GET: Admin/Products/Details/5
-        public async Task<IActionResult> Details(int id)
+		[HttpGet]
+		public async Task<IActionResult> Search(string input)
+		{
+			var products = await _productService.SearchProducts(input);
+			return Json(products);
+		}
+
+		// GET: Admin/Products/Details/5
+		public async Task<IActionResult> Details(int id)
         {
             if (_context.Products == null)
             {

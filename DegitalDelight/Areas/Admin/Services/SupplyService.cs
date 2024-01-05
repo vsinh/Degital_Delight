@@ -59,9 +59,11 @@ namespace DegitalDelight.Areas.Admin.Services
 
 		public async Task<List<Supply>> SearchSupplies(string input)
 		{
+			if (string.IsNullOrEmpty(input))
+				return await _context.Supplies.Include(x => x.Product).ToListAsync();
 			var supplies = await _context.Supplies.Include(x => x.Product).Where(x =>
 				(x.Id.ToString()).Contains(input)
-				|| x.Product.Name == null ? (x.Product.Name).Contains(input) : true
+				|| (x.Product.Name).Contains(input)
 				|| (x.Product.Id.ToString()).Contains(input)
 			).ToListAsync();
 			return supplies;

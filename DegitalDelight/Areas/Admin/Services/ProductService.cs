@@ -55,10 +55,12 @@ namespace DegitalDelight.Areas.Admin.Services
 
 		public async Task<List<Product>> SearchProducts(string input)
 		{
-			int productTypeId = -1;
+			if (string.IsNullOrEmpty(input))
+				return await _context.Products.Include(x => x.ProductType).ToListAsync();
 			var productList = await _context.Products.Include(x => x.ProductType).Where(x =>
 			x.Name.Contains(input)
-			|| int.TryParse(input, out productTypeId) ? x.ProductType.Id == productTypeId : true
+			|| x.ProductType.Name.Contains(input)
+			|| x.Brand.Contains(input)
 			).ToListAsync();
 			return productList;
 		}

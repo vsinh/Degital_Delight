@@ -4,6 +4,18 @@
 @model IEnumerable<DegitalDelight.Models.Product>
 <div class="container mt-5">
 	<div class="row tm-content-row">
+		<div class="col-12 tm-block-col">
+			<div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+				<h2 class="tm-block-title">Search</h2>
+				<div style="display: inline-flex; width: 100%">
+					<input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white" placeholder="Search" class="placeholder-white" onkeyup="Search()">
+					<i class="fa fa-search" style="float: right; font-size: 50px; color: white; padding-left: 10px"></i>
+					</input>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row tm-content-row">
 		<div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
 			<div class="tm-bg-primary-dark tm-block tm-block-products">
 				<div class="tm-product-table-container">
@@ -18,7 +30,7 @@
 								<th scope="col">&nbsp;</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="product_table">
 							@foreach(var product in Model)
 							{
 								<tr>
@@ -159,3 +171,41 @@
 		</p>
 	</div>
 </footer>
+<script type="text/javascript">
+	function LoadProduct(input) {
+		var producttable = document.getElementById("product_table");
+		producttable.innerHTML = ``;
+		$.ajax({
+			type: "GET",
+			url: "/Admin/Products/Search",
+			dataType: "json",
+			async: true,
+			data: { input: input },
+			success: function (data) {
+				$.each(data, function (key, value) {
+					producttable.innerHTML = producttable.innerHTML + `
+						<tr>
+							<td class="tm-product-name">${value.name}</td>
+							<td>${value.productType.name}</td>
+							<td>${value.brand}</td>
+							<td>${value.price}</td>
+							<td>${value.stock}</td>
+							<td>
+								<a href="#" class="tm-product-delete-link">
+									<i class="far fa-trash-alt tm-product-delete-icon"></i>
+								</a>
+							</td>
+						</tr>
+					`
+				})
+			},
+			failure: function (err) {
+			}
+		})
+	}
+
+	function Search() {
+		var input = document.getElementById("search_input").value;
+		LoadProduct(input);
+	};
+</script>
