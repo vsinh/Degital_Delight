@@ -707,3 +707,6 @@ input[type="checkbox"]:focus {
     max-height: 350px;
   }
 }
+placeholder-white::placeholder {
+    color: #fff;
+}
