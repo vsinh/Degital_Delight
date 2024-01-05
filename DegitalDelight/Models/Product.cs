@@ -9,6 +9,7 @@
         public string? Description { get; set; }
         public bool IsDeleted { get; set; } = false;
         public int Stock { get; set; } = 0;
+        public string? Brand { get; set; }
 		public ProductType? ProductType { get; set; }
         public Warranty? Warranty { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
@@ -18,5 +19,6 @@
         public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
         public virtual ICollection<ReportInventory> ReportInventories { get; set; } = new List<ReportInventory>();
         public virtual ICollection<Supply> Supplies { get; } = new List<Supply>();
-    }
+		public virtual ICollection<ProductDetail> ProductDetails { get; } = new List<ProductDetail>();
+	}
 }
