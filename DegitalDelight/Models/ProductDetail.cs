@@ -1,4 +1,7 @@
-﻿namespace DegitalDelight.Models
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
+namespace DegitalDelight.Models
 {
 	public class ProductDetail
 	{

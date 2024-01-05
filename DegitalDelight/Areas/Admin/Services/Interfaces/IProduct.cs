@@ -8,8 +8,9 @@ namespace DegitalDelight.Areas.Admin.Services.Interfaces
         Task<List<Product>> GetAllProducts();
         Task<Product> GetProducts(int id);
         Task<List<Product>> SearchProducts(string input);
-        Task CreateProduct(Product product);
-        Task EditProduct(ProductDTO product);
+        Task CreateProduct(ProductDTO product, List<ProductDetail> productDetails);
+        Task EditProduct(ProductDTO product, List<ProductDetail> productDetails);
         Task DeleteProduct(int id);
+        Task<List<ProductType>> GetAllProductTypes();
     }
 }
