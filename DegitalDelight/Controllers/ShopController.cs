@@ -13,7 +13,7 @@ namespace DegitalDelight.Controllers
         public async Task<IActionResult> Shop()
         {
             ViewData["ProductTypes"] = await _productService.GetProductTypes();
-            return View();
+            return View(await _productService.GetProducts());
         }
     }
 }

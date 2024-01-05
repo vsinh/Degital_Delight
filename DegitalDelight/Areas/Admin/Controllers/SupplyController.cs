@@ -2,12 +2,14 @@
 using DegitalDelight.Areas.Admin.Services.Interfaces;
 using DegitalDelight.Data;
 using DegitalDelight.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DegitalDelight.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize(Roles = "Administrator")]
 	public class SupplyController : Controller
 	{
 		private readonly ApplicationDbContext _context;

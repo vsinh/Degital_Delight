@@ -84,9 +84,9 @@
 				</ul>
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link d-block" href="login.html">
-							Admin, <b>Logout</b>
-						</a>
+						<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Homepage", "Home", new { area = "" })">
+							<a onclick="Logout()">Admin, <b>Logout</b></a>
+						</form>
 					</li>
 				</ul>
 			</div>
@@ -108,6 +108,9 @@
 				navClass[i].classList.add("active");
 			}
 		}
+		function Logout() {
+            document.getElementById("logoutForm").submit();
+        }
 	</script>
 </body>
 </html>

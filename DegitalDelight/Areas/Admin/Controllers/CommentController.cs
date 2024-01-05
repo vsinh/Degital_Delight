@@ -3,10 +3,12 @@ using DegitalDelight.Areas.Admin.Services;
 using DegitalDelight.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DegitalDelight.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize(Roles = "Administrator")]
 	public class CommentController : Controller
 	{
 		private readonly ApplicationDbContext _context;

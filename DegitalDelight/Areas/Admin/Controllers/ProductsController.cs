@@ -11,11 +11,13 @@ using DegitalDelight.Areas.Admin.Services.Interfaces;
 using DegitalDelight.Models.DTO;
 using DegitalDelight.Areas.Admin.Services;
 using System.Collections;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DegitalDelight.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ProductsController : Controller
+	[Authorize(Roles = "Administrator")]
+	public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IProduct _productService;

@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="~/etrade/assets/css/style.min.css">
 
 </head>
-
+<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Homepage", "Home", new { area = "" })"></form>
 <body class="sticky-header newsletter-popup-modal">
 
     <!--[if lte IE 9]>
@@ -48,7 +48,11 @@
                                 @if (SignInManager.IsSignedIn(User))
                                 {
                                     <li><a asp-area="Identity" asp-page="/Account/Manage/Index">@User.Identity?.Name</a></li>
-                                    <li><a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Đăng xuất</a></li>
+                                    <li>
+                                        <a href="#" onclick="Logout()">Đăng xuất
+                                        </a>
+                                    </li>
+                                    
 
                                 }
                                 else
@@ -97,7 +101,7 @@
                                 <li class="menu-item-has-children">
                                     <a href="#">Danh mục</a>
                                     <ul class="axil-submenu">
-                                        <li><a asp-action="Wishlist" asp-controller="Wishlist">Wishlist</a></li>
+                                        <li><a asp-action="Favorite" asp-controller="Favorite">Wishlist</a></li>
                                     </ul>
                                 </li>
                                 <li><a asp-action="About">About</a></li>
@@ -145,7 +149,7 @@
                                             </li>
                                         </ul>
                                         <div class="login-btn">
-                                            <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" class="axil-btn btn-bg-primary">Logout</a>
+                                            <a onclick="Logout()" class="axil-btn btn-bg-primary">Logout</a>
                                         </div>
                                     }
                                 </div>
@@ -677,7 +681,11 @@
 
     <!-- Main JS -->
     <script src="~/etrade/assets/js/main.js"></script>
-
+    <script>
+        function Logout() {
+            document.getElementById("logoutForm").submit();
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

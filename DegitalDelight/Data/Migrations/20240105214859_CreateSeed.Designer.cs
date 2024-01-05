@@ -4,6 +4,7 @@ using DegitalDelight.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DegitalDelight.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240105214859_CreateSeed")]
+    partial class CreateSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -581,6 +584,22 @@ namespace DegitalDelight.Data.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
 
                     b.UseTphMappingStrategy();
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9d6bd7fd-9d1e-415d-994c-fd1e7e0f32ee",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "ADMIN@ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFPnbC79Jf7pCf9PrZyN2ZtGDMSsGmUYAoqxCXdmJF2q2fWV0cV4/kSVHoqQLch9ww==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "36b0be93-f865-4e74-b50a-5a943443c4ec",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -689,23 +708,6 @@ namespace DegitalDelight.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("User");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "f516ca9a-5226-4a75-9d95-32cb5426ed73",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "ADMIN@ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEL2uUcMRoVTVAI0sXW0mRwAfb/v4ah3tF9yTm7tXIwLJZTkshvwSnZ+AtUS4EmyRQA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "d4855ec3-9990-4b5c-a5fd-b71b105486a2",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@admin",
-                            IsDeleted = false
-                        });
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.CartItem", b =>
