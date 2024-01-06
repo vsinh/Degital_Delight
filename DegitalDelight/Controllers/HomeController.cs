@@ -50,11 +50,6 @@ namespace DegitalDelight.Controllers
             return View();
         }
 
-        public IActionResult myAccount()
-        {
-            return View();
-        }
-
         public IActionResult Order()
         {
             return View();
@@ -69,6 +64,12 @@ namespace DegitalDelight.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Route("/NotFound")]
+        public IActionResult Page404()
+        {
+            return View();
         }
     }
 }

@@ -104,7 +104,7 @@
                                         <li><a asp-action="Favorite" asp-controller="Favorite">Wishlist</a></li>
                                     </ul>
                                 </li>
-                                <li><a asp-action="About">About</a></li>
+                                <li><a asp-controller="Home" asp-action="About">About</a></li>
                             </ul>
                         </nav>
                         <!-- End Mainmanu Nav -->
@@ -117,7 +117,7 @@
                                 </a>
                             </li>
                             <li class="wishlist">
-                                <a asp-action="Wishlist" asp-controller="Wishlist">
+                                <a asp-action="Favorite" asp-controller="Favorite">
                                     <i class="flaticon-heart"></i>
                                 </a>
                             </li>
@@ -256,11 +256,11 @@
                             <h5 class="widget-title">Tài khoản</h5>
                             <div class="inner">
                                 <ul>
-                                    <li><a href="my-account.html">My Account</a></li>
-                                    <li><a href="sign-up.html">Đăng nhập / Đăng kí</a></li>
-                                    <li><a href="cart.html">Giỏ hàng</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="shop.html">Cửa hàng</a></li>
+                                    <li><a asp-area="Identity" asp-page="/Account/Manage/Index">My Account</a></li>
+                                    <li><a asp-area="Identity" asp-page="/Account/Register">Đăng nhập / Đăng kí</a></li>
+                                    <li><a asp-controller="Cart" asp-action="Cart">Giỏ hàng</a></li>
+                                    <li><a asp-action="Favorite" asp-controller="Favorite">Wishlist</a></li>
+                                    <li><a asp-action="Shop" asp-controller="Shop">Cửa hàng</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -272,8 +272,8 @@
                             <h5 class="widget-title">Chính sách</h5>
                             <div class="inner">
                                 <ul>
-                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                    <li><a href="terms-of-service.html">Terms Of Use</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms Of Use</a></li>
                                     <li><a href="#">FAQ</a></li>
                                 </ul>
                             </div>
