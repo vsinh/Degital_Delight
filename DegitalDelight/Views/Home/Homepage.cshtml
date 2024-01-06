@@ -252,7 +252,7 @@
                 <div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb--30">
                     <div class="axil-product product-style-one">
                         <div class="thumbnail">
-                            <a href="single-product.html">
+                            <a asp-action="Product" asp-controller="Product" asp-route-id="@item.Id">
                                             <img data-sal="zoom-out" data-sal-delay="200" data-sal-duration="800" loading="lazy" class="main-img" style="width: 276px; height: 276px;"  src="@item.Picture" alt="Product Images">
                                 <img class="hover-img" src="@item.Picture" alt="Product Images">
                             </a>
