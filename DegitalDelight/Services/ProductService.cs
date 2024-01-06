@@ -2,7 +2,9 @@
 using DegitalDelight.Data;
 using DegitalDelight.Models;
 using DegitalDelight.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 
 namespace DegitalDelight.Services
 {
@@ -13,9 +15,11 @@ namespace DegitalDelight.Services
         {
             _context = applicationDbContext;
         }
+
+        [HttpGet("{productId}")]
         public async Task<Product> GetProductById(int productId)
         {
-            return await _context.Products.Where(x => x.Id == productId && !x.IsDeleted).FirstOrDefaultAsync();
+            return await _context.Products.Include(x => x.ProductDetails).Include(x => x.Comments).ThenInclude(x => x.User).Where(x => x.Id == productId && !x.IsDeleted).FirstOrDefaultAsync();
         }
 
         public Task<Product> GetProductById(List<int> productIds)

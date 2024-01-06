@@ -273,7 +273,7 @@
                         </div>
                         <div class="product-content">
                             <div class="inner">
-                                <h5 class="title"><a href="single-product.html">@item.Name</a></h5>
+                                <h5 class="title"><a asp-action="Product" asp-controller="Product" asp-route-id="@item.Id">@item.Name</a></h5>
                                 <div class="product-price-variant">
                                     <span class="price current-price">@item.Price</span>
                                     <span class="price old-price">@item.Price</span>
