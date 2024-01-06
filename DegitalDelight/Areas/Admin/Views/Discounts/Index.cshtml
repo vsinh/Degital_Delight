@@ -1,0 +1,134 @@
+﻿@{
+	Layout = "../Shared/_LayoutAdmin.cshtml";
+}
+@model IEnumerable<DegitalDelight.Models.Discount>
+<div class="container mt-5">
+	<div class="row tm-content-row">
+		<div class="col-12 tm-block-col align-items-center">
+			<div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+				<h2 class="tm-block-title">Search</h2>
+				<div style="display: inline-flex; width: 100%">
+					<input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white" placeholder="Search" class="placeholder-white" onkeyup="Search()">
+					<i class="fa fa-search" style="float: right; font-size: 50px; color: white; padding-left: 10px"></i>
+					</input>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row tm-content-row">
+		<div class="col-6">
+		</div>
+		<div class="col-6">
+			<a asp-action="CreateCode" asp-controller="Discounts"
+			   class="btn btn-primary btn-block text-uppercase mb-3">
+				Add new code discount
+			</a>
+		</div>
+		<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 tm-block-col">
+			<div class="tm-bg-primary-dark tm-block tm-block-products">
+				<h2 class="tm-block-title">Product Type Discount</h2>
+				<div class="tm-product-table-container">
+					<table id="table1" class="table table-hover tm-table-small tm-product-table">
+						<thead>
+							<tr>
+								<th scope="col">CODE</th>
+								<th scope="col">AMOUNT</th>
+								<th scope="col">QUANTITY</th>
+								<th scope="col">START DATE</th>
+								<th scope="col">END DATE</th>
+							</tr>
+						</thead>
+						<tbody id="product_table">
+							@foreach (var discount in Model)
+							{
+								<tr>
+									<td class="tm-product-name">@discount.Code</td>
+									<td>@discount.Amount</td>
+									<td>@discount.Quantity</td>
+									<td>@discount.StartDate</td>
+									<td>@discount.EndDate</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 tm-block-col">
+			<div class="tm-bg-primary-dark tm-block tm-block-products">
+				<h2 class="tm-block-title">Code Discount</h2>
+				<div class="tm-product-table-container">
+					<table id="table1" class="table table-hover tm-table-small tm-product-table">
+						<thead>
+							<tr>
+								<th scope="col">CODE</th>
+								<th scope="col">AMOUNT</th>
+								<th scope="col">QUANTITY</th>
+								<th scope="col">START DATE</th>
+								<th scope="col">END DATE</th>
+							</tr>
+						</thead>
+						<tbody id="product_table">
+							@foreach (var discount in Model)
+							{
+								<tr>
+									<td class="tm-product-name">@discount.Code</td>
+									<td>@discount.Amount</td>
+									<td>@discount.Quantity</td>
+									<td>@discount.StartDate</td>
+									<td>@discount.EndDate</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<footer class="tm-footer row tm-mt-small">
+	<div class="col-12 font-weight-light">
+		<p class="text-center text-white mb-0 px-4 small">
+			Copyright &copy; <b>2018</b> All rights reserved.
+
+			Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+		</p>
+	</div>
+</footer>
+<script type="text/javascript">
+	function LoadSupply(input) {
+		var producttable = document.getElementById("product_table");
+		producttable.innerHTML = ``;
+		$.ajax({
+			type: "GET",
+			url: "/Admin/Supply/Search",
+			dataType: "json",
+			async: true,
+			data: { input: input },
+			success: function (data) {
+				$.each(data, function (key, value) {
+					producttable.innerHTML = producttable.innerHTML + `
+								<tr>
+									<td class="tm-product-name">${value.product.name}</td>
+									<td>${value.amount}</td>
+									<td>${value.date}</td>
+									<td>${value.price}</td>
+								</tr>
+							`
+				})
+			},
+			failure: function (err) {
+			}
+		})
+	}
+
+	function Search() {
+		var input = document.getElementById("search_input").value;
+		LoadSupply(input);
+	};
+	function EditSupply(SupplyId) {
+		window.location = "Edit/" + SupplyId
+	}
+</script>

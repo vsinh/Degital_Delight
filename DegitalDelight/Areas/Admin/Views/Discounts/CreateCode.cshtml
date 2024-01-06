@@ -1,30 +1,28 @@
 ﻿@{
 	Layout = "../Shared/_LayoutAdmin.cshtml";
 }
-@model DegitalDelight.Models.DTO.SupplyDTO;
+@model Discount;
 <div class="container tm-mt-big tm-mb-big">
 	<div class="row">
 		<div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
 			<div class="tm-bg-primary-dark tm-block tm-block-h-auto">
 				<div class="row">
 					<div class="col-12">
-						<h2 class="tm-block-title d-inline-block">Add Supply</h2>
+						<h2 class="tm-block-title d-inline-block">Add Code Discount</h2>
 					</div>
 				</div>
 				<div>
-					<form asp-action="Create" asp-controller="Supply" method="post" class="tm-edit-product-form">
+					<form asp-action="CreateCode" asp-controller="Discounts" method="post" class="tm-edit-product-form">
 						<div class="col-xl-12 col-lg-12 col-md-12">
-							<input asp-for="ProductId" value="@ViewBag.Product.Id" hidden/>
+							<input asp-for="Type" value="code" hidden />
 							<div class="form-group mb-3">
 								<label for="name">
-									Product Name
+									Code
 								</label>
 								<input id="name"
 									   type="text"
 									   class="form-control validate"
-									   style="background-color: #54657d; opacity: 0.5"
-									   disabled
-									   value="@ViewBag.Product.Name"/>
+									   asp-for="Code" />
 							</div>
 							<div class="form-group mb-3">
 								<label for="name">
@@ -32,33 +30,41 @@
 								</label>
 								<input id="brand"
 									   type="text"
+									   asp-for="Amount"
 									   class="form-control validate"
-									   required 
-									   asp-for="Amount"/>
+									   required/>
 							</div>
 							<div class="form-group mb-3">
 								<label for="name">
-									Date
+									Start Date
 								</label>
-								<input id="date"
-									   type="text"
+								<input id="datePicker"
+									   type="date"
+									   asp-for="StartDate"
 									   class="form-control validate"
-									   style="background-color: #54657d; opacity: 0.5"
-									   value="@DateTime.Now"
-									   disabled/>
+									   />
 							</div>
 							<div class="form-group mb-3">
-								<label for="price">
-									Price
+								<label for="name">
+									End Date
 								</label>
-								<input id="price"
+								<input id="datePicker"
+									   type="date"
+									   asp-for="EndDate"
+									   class="form-control validate" />
+							</div>
+							<div class="form-group mb-3">
+								<label for="name">
+									Quantity
+								</label>
+								<input id="quantity"
 									   type="text"
+									   asp-for="Quantity"
 									   class="form-control validate"
-									   required
-									   asp-for="Price" />
+									   required/>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-primary btn-block text-uppercase">Add Supply Now</button>
+						<button type="submit" class="btn btn-primary btn-block text-uppercase">Add Code Discount Now</button>
 					</form>
 				</div>
 
