@@ -22,6 +22,7 @@ namespace DegitalDelight.Areas.Admin.Services
 			newproduct.Price = product.Price;
 			newproduct.Picture = product.Picture;
 			newproduct.Brand = product.Brand;
+			newproduct.CreatedDate = DateTime.Now;
 			await _context.Products.AddAsync(newproduct);
 			await _context.SaveChangesAsync();
 			foreach (var item in productDetails)
