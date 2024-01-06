@@ -2,9 +2,11 @@
 using DegitalDelight.Areas.Admin.Services.Interfaces;
 using DegitalDelight.Data;
 using DegitalDelight.Models;
+using DegitalDelight.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DegitalDelight.Areas.Admin.Controllers
 {
@@ -27,22 +29,29 @@ namespace DegitalDelight.Areas.Admin.Controllers
 		}
 
 		// GET: SupplyController/Create
-		public ActionResult Create()
+		public async Task<IActionResult> Create(int id)
 		{
+			ViewData["Product"] = await _supplyService.GetProductById(id);
 			return View();
 		}
 
-		// POST: SupplyController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Create([Bind("Id,Amount,Date,Price")] Supply supply)
+		public async Task<IActionResult> Create([Bind("Amount,Price,ProductId")] SupplyDTO supply, IFormCollection form)
 		{
 			if (ModelState.IsValid)
 			{
 				await _supplyService.CreateSupplies(supply);
-				return RedirectToAction("Supply");
+				return RedirectToAction("Index","Products");
 			}
 			return View(supply);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Search(string input)
+		{
+			var supplies = await _supplyService.SearchSupplies(input);
+			return Json(supplies);
 		}
 
 		// GET: SupplyController/Edit/5

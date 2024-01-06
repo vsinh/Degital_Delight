@@ -22,6 +22,7 @@ namespace DegitalDelight.Areas.Admin.Services
 			newproduct.Price = product.Price;
 			newproduct.Picture = product.Picture;
 			newproduct.Brand = product.Brand;
+			newproduct.CreatedDate = DateTime.Now;
 			await _context.Products.AddAsync(newproduct);
 			await _context.SaveChangesAsync();
 			foreach (var item in productDetails)
@@ -52,6 +53,7 @@ namespace DegitalDelight.Areas.Admin.Services
 				oldProduct.ProductType = _context.ProductTypes.FirstOrDefault(x => x.Id == product.ProductTypeId);
 				oldProduct.Price = product.Price;
 				oldProduct.Picture = product.Picture;
+				oldProduct.Brand = product.Brand;
 
 				foreach (var item in oldProduct.ProductDetails)
 				{

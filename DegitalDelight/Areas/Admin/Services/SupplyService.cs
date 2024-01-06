@@ -13,9 +13,17 @@ namespace DegitalDelight.Areas.Admin.Services
 		{
 			_context = context;
 		}
-		public async Task CreateSupplies(Supply supply)
+		public async Task CreateSupplies(SupplyDTO supply)
 		{
-			await _context.Supplies.AddAsync(supply);
+			Supply newsupply = new Supply();
+			newsupply.Price = supply.Price;
+			newsupply.Amount = supply.Amount;
+			newsupply.Product = _context.Products.Find(supply.ProductId);
+			newsupply.Date = DateTime.Now;
+			await _context.Supplies.AddAsync(newsupply);
+			await _context.SaveChangesAsync();
+			newsupply.Product.Stock += newsupply.Amount;
+			await _context.SaveChangesAsync();
 		}
 
 		public async Task DeleteSupply(int id)
@@ -49,7 +57,12 @@ namespace DegitalDelight.Areas.Admin.Services
 
 		public async Task<List<Supply>> GetAllSupplies()
 		{
-			return await _context.Supplies.ToListAsync();
+			return await _context.Supplies.Include(x => x.Product).Where(x => !x.IsDeleted).ToListAsync();
+		}
+
+		public async Task<Product> GetProductById(int id)
+		{
+			return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
 		}
 
 		public async Task<Supply> GetSupplies(int id)
@@ -60,11 +73,10 @@ namespace DegitalDelight.Areas.Admin.Services
 		public async Task<List<Supply>> SearchSupplies(string input)
 		{
 			if (string.IsNullOrEmpty(input))
-				return await _context.Supplies.Include(x => x.Product).ToListAsync();
+				return await _context.Supplies.Include(x => x.Product).Where(x => !x.IsDeleted).ToListAsync();
 			var supplies = await _context.Supplies.Include(x => x.Product).Where(x =>
-				(x.Id.ToString()).Contains(input)
-				|| (x.Product.Name).Contains(input)
-				|| (x.Product.Id.ToString()).Contains(input)
+				((x.Product.Name).Contains(input)
+				|| (x.Date.ToString()).Contains(input)) && (!x.IsDeleted)
 			).ToListAsync();
 			return supplies;
 		}

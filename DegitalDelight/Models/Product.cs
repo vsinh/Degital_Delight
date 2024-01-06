@@ -10,6 +10,7 @@
         public bool IsDeleted { get; set; } = false;
         public int Stock { get; set; } = 0;
         public string? Brand { get; set; }
+        public DateTime CreatedDate { get; set; }
 		public ProductType? ProductType { get; set; }
         public Warranty? Warranty { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();

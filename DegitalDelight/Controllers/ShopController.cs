@@ -10,10 +10,11 @@ namespace DegitalDelight.Controllers
         {
             _productService = productService;
         }
-        public async Task<IActionResult> Shop(int id = 1)
+        public async Task<IActionResult> Shop(int id = 1, int minPrice = 0, int maxPrice = int.MaxValue, string sort = "latest")
         {
             ViewData["ProductTypes"] = await _productService.GetProductTypes();
-            return View(await _productService.GetProducts());
+            ViewData["CurrentId"] = id;
+            return View(await _productService.GetProductList(id, minPrice,maxPrice, sort));
         }
     }
 }
