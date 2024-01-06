@@ -1,53 +1,93 @@
-﻿@model IEnumerable<DegitalDelight.Models.Supply>
-
-@{
-    ViewData["Title"] = "Supply";
+﻿@{
+	Layout = "../Shared/_LayoutAdmin.cshtml";
 }
+@model IEnumerable<DegitalDelight.Models.Supply>
+<div class="container mt-5">
+	<div class="row tm-content-row">
+		<div class="col-12 tm-block-col">
+			<div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+				<h2 class="tm-block-title">Search</h2>
+				<div style="display: inline-flex; width: 100%">
+					<input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white" placeholder="Search" class="placeholder-white" onkeyup="Search()">
+					<i class="fa fa-search" style="float: right; font-size: 50px; color: white; padding-left: 10px"></i>
+					</input>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row tm-content-row">
+		<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-block-col">
+			<div class="tm-bg-primary-dark tm-block tm-block-products">
+				<div class="tm-product-table-container">
+					<table id="table1" class="table table-hover tm-table-small tm-product-table">
+						<thead>
+							<tr>
+								<th scope="col">PRODUCT NAME</th>
+								<th scope="col">AMOUNT</th>
+								<th scope="col">DATE</th>
+								<th scope="col">PRICE (VND)</th>
+							</tr>
+						</thead>
+						<tbody id="product_table">
+							@foreach (var supply in Model)
+							{
+								<tr>
+									<td class="tm-product-name">@supply.Product.Name</td>
+									<td>@supply.Amount</td>
+									<td>@supply.Date</td>
+									<td>@supply.Price</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+				<a asp-action="Index" asp-controller="Products"
+				   class="btn btn-primary btn-block text-uppercase mb-3">Add new supply</a>
+			</div>
+		</div>
+	</div>
+</div>
+<footer class="tm-footer row tm-mt-small">
+	<div class="col-12 font-weight-light">
+		<p class="text-center text-white mb-0 px-4 small">
+			Copyright &copy; <b>2018</b> All rights reserved.
 
-<h1>Supply</h1>
+			Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+		</p>
+	</div>
+</footer>
+<script type="text/javascript">
+	function LoadSupply(input) {
+		var producttable = document.getElementById("product_table");
+		producttable.innerHTML = ``;
+		$.ajax({
+			type: "GET",
+			url: "/Admin/Supply/Search",
+			dataType: "json",
+			async: true,
+			data: { input: input },
+			success: function (data) {
+				$.each(data, function (key, value) {
+					producttable.innerHTML = producttable.innerHTML + `
+							<tr>
+								<td class="tm-product-name">${value.product.name}</td>
+								<td>${value.amount}</td>
+								<td>${value.date}</td>
+								<td>${value.price}</td>
+							</tr>
+						`
+				})
+			},
+			failure: function (err) {
+			}
+		})
+	}
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+	function Search() {
+		var input = document.getElementById("search_input").value;
+		LoadSupply(input);
+	};
+	function EditSupply(SupplyId) {
+		window.location = "Edit/" + SupplyId
+	}
+</script>

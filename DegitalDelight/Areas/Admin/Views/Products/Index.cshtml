@@ -18,6 +18,7 @@
 	<div class="row tm-content-row">
 		<div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
 			<div class="tm-bg-primary-dark tm-block tm-block-products">
+				<h2 class="tm-block-title">DANH SÁCH SẢN PHẨM</h2>
 				<div class="tm-product-table-container">
 					<table id="table1" class="table table-hover tm-table-small tm-product-table">
 						<thead>
@@ -27,6 +28,7 @@
 								<th scope="col">BRAND</th>
 								<th scope="col">PRICE (VND)</th>
 								<th scope="col">IN STOCK</th>
+								<th scope="col">&nbsp;</th>
 								<th scope="col">&nbsp;</th>
 							</tr>
 						</thead>
@@ -39,6 +41,11 @@
 									<td>@product.Brand</td>
 									<td>@product.Price</td>
 									<td>@product.Stock</td>
+									<td>
+										<a asp-controller="Supply" asp-action="Create" asp-route-id="@product.Id" class="tm-product-delete-link">
+											<i class="far fa-trash-alt tm-product-delete-icon"></i>
+										</a>
+									</td>
 									<td>
 										<a asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" class="tm-product-delete-link">
 											<i class="far fa-trash-alt tm-product-delete-icon"></i>
@@ -96,6 +103,10 @@
 		</p>
 	</div>
 </footer>
+<form asp-action="Delete" asp-controller="Products" method="get" id="formDelete">
+</form>
+<form asp-action="Create" asp-controller="Supply" method="get" id="formCreateSupply">
+</form>
 <script type="text/javascript">
 	function LoadProduct(input) {
 		var producttable = document.getElementById("product_table");
@@ -109,14 +120,19 @@
 			success: function (data) {
 				$.each(data, function (key, value) {
 					producttable.innerHTML = producttable.innerHTML + `
-						<tr>
+						<tr onclick="EditProduct(${value.id})">
 							<td class="tm-product-name">${value.name}</td>
 							<td>${value.productType.name}</td>
 							<td>${value.brand}</td>
 							<td>${value.price}</td>
 							<td>${value.stock}</td>
 							<td>
-								<a href="#" class="tm-product-delete-link">
+								<a onclick="CreateSupply(${value.id})" class="tm-product-delete-link">
+									<i class="far fa-trash-alt tm-product-delete-icon"></i>
+								</a>
+							</td>
+							<td>
+								<a onclick="DeleteProduct(${value.id})" class="tm-product-delete-link">
 									<i class="far fa-trash-alt tm-product-delete-icon"></i>
 								</a>
 							</td>
@@ -135,5 +151,18 @@
 	};
 	function EditProduct(ProductId) {
 		window.location = "Edit/" + ProductId;
+	}
+	function DeleteProduct(ProductId)
+	{
+		var newhref = $("#formDelete").attr('href') + '/' + ProductId;
+		$("#formDelete").attr("href", newhref);
+		var form = document.getElementById("formDelete");
+		form.submit();
+	}
+	function CreateSupply(ProductId) {
+		var newhref = $("#formCreateSupply").attr('href') + '/' + ProductId;
+		$("#formCreateSupply").attr("href", newhref);
+		var form = document.getElementById("formCreateSupply");
+		form.submit();
 	}
 </script>

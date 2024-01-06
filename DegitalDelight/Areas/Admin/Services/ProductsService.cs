@@ -52,6 +52,7 @@ namespace DegitalDelight.Areas.Admin.Services
 				oldProduct.ProductType = _context.ProductTypes.FirstOrDefault(x => x.Id == product.ProductTypeId);
 				oldProduct.Price = product.Price;
 				oldProduct.Picture = product.Picture;
+				oldProduct.Brand = product.Brand;
 
 				foreach (var item in oldProduct.ProductDetails)
 				{
