@@ -73,7 +73,7 @@ namespace DegitalDelight.Areas.Admin.Services
 		}
         public async Task<List<ProductType>> GetAllProductTypes()
         {
-            return await _context.ProductTypes.ToListAsync();
+            return await _context.ProductTypes.Where(x => !x.IsDeleted).ToListAsync();
         }
         public async Task<Product> GetProducts(int id)
 		{
@@ -83,7 +83,7 @@ namespace DegitalDelight.Areas.Admin.Services
 		public async Task<List<Product>> SearchProducts(string input)
 		{
 			if (string.IsNullOrEmpty(input))
-				return await _context.Products.Include(x => x.ProductType).ToListAsync();
+				return await _context.Products.Include(x => x.ProductType).Where(x => !x.IsDeleted).ToListAsync();
 			var productList = await _context.Products.Include(x => x.ProductType).Where(x =>
 			(x.Name.Contains(input)
 			|| x.ProductType.Name.Contains(input)
@@ -91,5 +91,14 @@ namespace DegitalDelight.Areas.Admin.Services
 			).ToListAsync();
 			return productList;
 		}
-	}
+        public async Task DeleteProductType(int id)
+        {
+            var productType = await _context.ProductTypes.FirstOrDefaultAsync(x => x.Id == id);
+            if (productType != null)
+            {
+                productType.IsDeleted = true;
+                await _context.SaveChangesAsync();
+            }
+        }
+    }
 }

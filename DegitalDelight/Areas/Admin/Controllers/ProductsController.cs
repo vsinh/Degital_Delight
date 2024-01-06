@@ -48,12 +48,53 @@ namespace DegitalDelight.Areas.Admin.Controllers
             await _productService.DeleteProduct(id);
             return RedirectToAction("Index");
 		}
-		// GET: Admin/Products/Create
-		public async Task<IActionResult> Create()
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteProductType(int id)
+        {
+            await _productService.DeleteProductType(id);
+            return RedirectToAction("Index");
+        }
+
+        // GET: Admin/Products/Create
+        public async Task<IActionResult> Create()
         {
             ViewData["ProductTypes"] = new SelectList(await _productService.GetAllProductTypes(), "Id", "Name");
             return View();
         }
+		public async Task<IActionResult> CreateProductType()
+		{
+            return View();
+		}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateProductType([Bind("Name,Description")] ProductType productType)
+        {
+            if (ModelState.IsValid)
+            {
+                await _context.AddAsync(productType);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Products");
+            }
+            return View(productType);
+        }
+
+        // GET: Admin/ProductTypes/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null || _context.ProductTypes == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var productType = await _context.ProductTypes.FindAsync(id);
+        //    if (productType == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(productType);
+        //}
 
         // POST: Admin/Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
