@@ -18,41 +18,37 @@
                         <div class="shop-submenu">
                             <ul>
                                 @{
-                                    int i = 0;
                                     foreach (var item in ViewBag.ProductTypes as List<ProductType>)
                                     {
-                                        if (i ==0)
+                                        if (ViewBag.CurrentId == item.Id)
                                         {
                                             <li class="current-cat"><a href="#">@item.Name</a></li>
-                                            i++;
                                         }
                                         else
                                         {
-                                            <li><a href="#">@item.Name</a></li>
+                                            <li><a asp-action="Shop" asp-route-id="@item.Id">@item.Name</a></li>
                                         }
                                     }
                                 }
                             </ul>
                         </div>
-                    </div>@* 
-                    *@
-                    <div class="toggle-list product-price-range active">
-                        <h6 class="title">PRICE</h6>
-                        <div class="shop-submenu">
-                            <ul>
-                                <li class="chosen"><a href="#">0</a></li>
-                                <li><a href="#">100000000</a></li>
-                            </ul>
-                            <form action="#" class="mt--25">
+                    </div>
+                    <form asp-action="Shop" class="mt--25">
+                        <div class="toggle-list product-price-range active">
+                            <h6 class="title">PRICE</h6>
+                            <div class="shop-submenu">
                                 <div id="slider-range"></div>
                                 <div class="flex-center mt--20">
                                     <span class="input-range">Price: </span>
-                                    <input type="text" id="amount" class="amount-range" readonly>
+                                    <input type="text" id="amount" name="amount" class="amount-range" readonly>
+                                    <input id="minPrice" name="minPrice" hidden/>
+                                    <input id="maxPrice" name="maxPrice" hidden/>
+                                    <input id="id" name="id" hidden/>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
-                    <button class="axil-btn btn-bg-primary">All Reset</button>
+                        <button type="submit" class="axil-btn btn-bg-primary">Search</button>
+                    </form>
                 </div>
                 <!-- End .axil-shop-sidebar -->
             </div>
@@ -79,8 +75,8 @@
                 </div>
                 <!-- End .row -->
                 <div class="row row--15">
-                @foreach (var item in Model)
-                {
+                    @foreach (var item in Model)
+                    {
                         <div class="col-xl-4 col-sm-6">
                             <div class="axil-product product-style-one mb--30">
                                 <div class="thumbnail">
@@ -139,3 +135,23 @@
     <!-- End .container -->
 </div>
 <!-- End Axil Newsletter Area  -->
+@section Scripts {
+    <script defer>
+        $('#slider-range').slider({
+            range: true,
+            min: 0,
+            max: 100000000, // 50 million VND
+            values: [0, 40000000], // Initial range from 0 to 40 million VND
+            slide: function (event, ui) {
+                $('#amount').val(
+                    ui.values[0].toLocaleString() + ' ₫  -  ' + ui.values[1].toLocaleString() + '  ₫'
+                );
+            }
+        });
+
+        $('#amount').val(
+            $('#slider-range').slider('values', 0).toLocaleString() +
+            ' ₫  - ' + $('#slider-range').slider('values', 1).toLocaleString() + '  ₫'
+        );
+    </script>
+}

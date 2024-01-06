@@ -15,7 +15,7 @@ namespace DegitalDelight.Services
         }
         public async Task<Product> GetProductById(int productId)
         {
-            return await _context.Products.FindAsync(productId);
+            return await _context.Products.Where(x => x.Id == productId && !x.IsDeleted).FirstOrDefaultAsync();
         }
 
         public Task<Product> GetProductById(List<int> productIds)
@@ -25,7 +25,17 @@ namespace DegitalDelight.Services
 
         public async Task<List<Product>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Where(x => !x.IsDeleted).ToListAsync();
+        }
+        public async Task<List<Product>> GetProductList(int productTypeId, int maxPrice, int minPrice, string sort)
+        {
+            return await _context.Products.Include(x => x.ProductType)
+                .Where(x => 
+                x.ProductType.Id == productTypeId
+                && x.Price >= minPrice 
+                && x.Price <= maxPrice 
+                && !x.IsDeleted
+            ).ToListAsync();
         }
 
         public Task<List<Product>> GetProductsByCategory(int categoryId)

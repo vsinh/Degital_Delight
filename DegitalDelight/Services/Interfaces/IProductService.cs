@@ -10,5 +10,6 @@ namespace DegitalDelight.Services.Interfaces
         Task<List<Product>> GetProducts();
         Task<List<Product>> GetProductsByCategory(int categoryId);
         Task<List<ProductType>> GetProductTypes();
+        Task<List<Product>> GetProductList(int productTypeId, int maxPrice, int minPrice, string sort);
     }
 }

@@ -13,13 +13,9 @@ namespace DegitalDelight.Controllers
         {
             _productService = productService;
         }
-        public IActionResult Product()
+        public async Task<IActionResult> Product(int id)
         {
-            return View();
-        }
-        public async Task<IActionResult> Product(int productId)
-        {
-            var product = await _productService.GetProductById(productId);
+            var product = await _productService.GetProductById(id);
 
             if (product == null)
             {
