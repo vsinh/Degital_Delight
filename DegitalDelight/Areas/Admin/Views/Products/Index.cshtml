@@ -68,7 +68,7 @@
 								<tr>
 									<td class="tm-product-name">@productType.Name</td>
 									<td class="text-center">
-										<a href="#" class="tm-product-delete-link">
+										<a asp-action="DeleteProductType" asp-controller="Products" asp-route-id="@productType.Id" class="tm-product-delete-link">
 											<i class="far fa-trash-alt tm-product-delete-icon"></i>
 										</a>
 									</td>
@@ -80,7 +80,7 @@
 					</table>
 				</div>
 				<!-- table container -->
-				<a asp-action="Create" asp-controller="ProductTypes" class="btn btn-primary btn-block text-uppercase mb-3">
+				<a asp-action="CreateProductType" asp-controller="Products" class="btn btn-primary btn-block text-uppercase mb-3">
 					Add new category
 				</a>
 			</div>

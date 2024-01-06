@@ -12,5 +12,6 @@ namespace DegitalDelight.Areas.Admin.Services.Interfaces
         Task EditProduct(ProductDTO product, List<ProductDetail> productDetails);
         Task DeleteProduct(int id);
         Task<List<ProductType>> GetAllProductTypes();
+        Task DeleteProductType(int id);
     }
 }
