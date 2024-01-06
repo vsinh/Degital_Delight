@@ -1,4 +1,5 @@
-﻿using DegitalDelight.Data;
+﻿using DegitalDelight.Areas.Admin.Services.Interfaces;
+using DegitalDelight.Data;
 using DegitalDelight.Models;
 using DegitalDelight.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,11 @@ namespace DegitalDelight.Services
         public async Task<Product> GetProductById(int productId)
         {
             return await _context.Products.FindAsync(productId);
+        }
 
+        public Task<Product> GetProductById(List<int> productIds)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<List<Product>> GetProducts()
