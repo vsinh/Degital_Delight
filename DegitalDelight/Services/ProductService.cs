@@ -25,7 +25,7 @@ namespace DegitalDelight.Services
 
         public async Task<List<Product>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Where(x => !x.IsDeleted).ToListAsync();
         }
 
         public Task<List<Product>> GetProductsByCategory(int categoryId)
