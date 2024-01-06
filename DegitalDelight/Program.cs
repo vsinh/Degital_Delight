@@ -11,6 +11,7 @@ using DegitalDelight.Areas.Admin.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +63,11 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 builder.Services.AddScoped<IProductService, ProductService>();
 
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(typeof(RedirectToDefaultActionFilter));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -75,6 +81,15 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.StatusCode == 404)
+    {
+        context.Request.Path = "/NotFound";
+        await next();
+    }
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -94,6 +109,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Homepage}/{id?}");
 
 app.MapRazorPages();
+
 
 
 RecurringJob.AddOrUpdate<DiscountService>("SundayDiscount", x => x.SundayDiscount(), "0 0 * * 0");
