@@ -12,8 +12,16 @@ namespace DegitalDelight.Areas.Admin.Services
 		{
 			_context = context;
 		}
-		public async Task CreateDisount(Discount discount)
+		public async Task CreateDiscount(Discount discount)
 		{
+			await _context.AddAsync(discount);
+			await _context.SaveChangesAsync();
+		}
+
+		public async Task CreateProductDiscount(Discount discount)
+		{
+			Product product = _context.Products.FirstOrDefault(x => x.Id == discount.Product.Id);
+			discount.Product = product;
 			await _context.AddAsync(discount);
 			await _context.SaveChangesAsync();
 		}
@@ -23,24 +31,65 @@ namespace DegitalDelight.Areas.Admin.Services
 			throw new NotImplementedException();
 		}
 
-		public Task EditDiscount(Discount supply)
-		{
-			throw new NotImplementedException();
-		}
-
 		public async Task<List<Discount>> GetAllDiscounts()
 		{
 			return await _context.Discounts.Include(x => x.Product).Where(x => !x.IsDeleted).ToListAsync();
 		}
 
-		public Task<Discount> GetDiscountById(int id)
+		public async Task<Discount> GetDiscountById(int id)
 		{
-			throw new NotImplementedException();
+			return await _context.Discounts.Include(x => x.Product).Where(x => !x.IsDeleted).FirstOrDefaultAsync(x => x.Id == id);
 		}
 
-		public Task<List<Discount>> SearchDiscounts(string input)
+		public async Task<List<Discount>> SearchProductDiscounts(string input)
 		{
-			throw new NotImplementedException();
+			if (string.IsNullOrEmpty(input))
+				return await _context.Discounts.Where(x => !x.IsDeleted && x.Type == "Product").Include(x => x.Product).ToListAsync();
+			var discountList = await _context.Discounts.Include(x => x.Product).Where(x =>
+			(x.Product.Name.Contains(input)
+			|| x.StartDate.ToString().Contains(input)
+			|| x.EndDate.ToString().Contains(input)) && !x.IsDeleted && x.Type == "Product"
+			).ToListAsync();
+			return discountList;
+		}
+		public async Task<List<Discount>> SearchCodeDiscounts(string input)
+		{
+			if (string.IsNullOrEmpty(input))
+				return await _context.Discounts.Where(x => !x.IsDeleted && x.Type == "code").ToListAsync();
+			var discountList = await _context.Discounts.Where(x =>
+			(x.Code.Contains(input)
+			|| x.StartDate.ToString().Contains(input)
+			|| x.EndDate.ToString().Contains(input)) && !x.IsDeleted && x.Type == "code"
+			).ToListAsync();
+			return discountList;
+		}
+		public async Task EditDiscount(Discount discount)
+		{
+			_context.Update(discount);
+			await _context.SaveChangesAsync();
+		}
+
+		public async Task<List<Discount>> GetAllDiscountExceptThis(Discount discount)
+		{
+			return await _context.Discounts.Where(x => !x.Equals(discount)).ToListAsync();
+		}
+
+		public async Task<bool> CheckExistCode(Discount discount)
+		{
+			var discounts = await GetAllDiscountExceptThis(discount);
+			foreach (var item in discounts)
+			{
+				if (discount.Code == item.Code)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		public async Task DeleteDiscount(Discount discount)
+		{
+			discount.IsDeleted = true;
+			await _context.SaveChangesAsync();
 		}
 	}
 }

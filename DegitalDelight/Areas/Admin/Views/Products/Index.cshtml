@@ -8,7 +8,7 @@
 			<div class="tm-bg-primary-dark tm-block tm-block-h-auto">
 				<h2 class="tm-block-title">Search</h2>
 				<div style="display: inline-flex; width: 100%">
-					<input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white" placeholder="Search" class="placeholder-white" onkeyup="Search()">
+					<input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white">
 					<i class="fa fa-search" style="float: right; font-size: 50px; color: white; padding-left: 10px"></i>
 					</input>
 				</div>
@@ -29,7 +29,7 @@
 								<th scope="col">PRICE (VND)</th>
 								<th scope="col">IN STOCK</th>
 								<th scope="col">ADD SUPPLY</th>
-								<th scope="col">DELETE</th>
+								<th scope="col">ADD DISCOUNT</th>
 							</tr>
 						</thead>
 						<tbody id="product_table">
@@ -47,8 +47,8 @@
 										</a>
 									</td>
 									<td>
-										<a asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" class="tm-product-delete-link">
-											<i class="far fa-trash-alt tm-product-delete-icon"></i>
+										<a asp-controller="Discounts" asp-action="CreateProductDiscount" asp-route-id="@product.Id" class="tm-product-delete-link">
+											<i class="fa fa-plus tm-product-delete-icon"></i>
 										</a>
 									</td>
 								</tr>
@@ -103,7 +103,7 @@
 		</p>
 	</div>
 </footer>
-<form asp-action="Delete" asp-controller="Products" method="get" id="formDelete">
+<form asp-action="CreateProductDiscount" asp-controller="Discounts" method="get" id="formCreateDiscount">
 </form>
 <form asp-action="Create" asp-controller="Supply" method="get" id="formCreateSupply">
 </form>
@@ -128,12 +128,12 @@
 							<td>${value.stock}</td>
 							<td>
 								<a onclick="CreateSupply(${value.id})" class="tm-product-delete-link">
-									<i class="far fa-trash-alt tm-product-delete-icon"></i>
+									<i class="fa fa-plus tm-product-delete-icon"></i>
 								</a>
 							</td>
 							<td>
-								<a onclick="DeleteProduct(${value.id})" class="tm-product-delete-link">
-									<i class="far fa-trash-alt tm-product-delete-icon"></i>
+								<a onclick="CreateDiscount(${value.id})" class="tm-product-delete-link">
+									<i class="fa fa-plus tm-product-delete-icon"></i>
 								</a>
 							</td>
 						</tr>
@@ -145,18 +145,20 @@
 		})
 	}
 
-	function Search() {
-		var input = document.getElementById("search_input").value;
-		LoadProduct(input);
-	};
+	var input = document.getElementById("search_input");
+	input.addEventListener("keydown", function (e) {
+		if (e.keyCode === 13) {
+			e.preventDefault();
+			LoadProduct(input.value);
+		}
+	});
 	function EditProduct(ProductId) {
 		window.location = "Edit/" + ProductId;
 	}
-	function DeleteProduct(ProductId)
-	{
-		var newhref = $("#formDelete").attr('href') + '/' + ProductId;
-		$("#formDelete").attr("href", newhref);
-		var form = document.getElementById("formDelete");
+	function CreateDiscount(ProductId) {
+		var newhref = $("#formCreateDiscount").attr('href') + '/' + ProductId;
+		$("#formCreateDiscount").attr("href", newhref);
+		var form = document.getElementById("formCreateDiscount");
 		form.submit();
 	}
 	function CreateSupply(ProductId) {

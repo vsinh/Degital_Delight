@@ -71,7 +71,7 @@ namespace DegitalDelight.Areas.Admin.Services
 
 		public async Task<List<Product>> GetAllProducts()
 		{
-			return await _context.Products.Include(x => x.ProductType).Where(x => !x.IsDeleted).ToListAsync();
+			return await _context.Products.Include(x => x.ProductType).Where(x => !x.IsDeleted && !x.ProductType.IsDeleted).ToListAsync();
 		}
         public async Task<List<ProductType>> GetAllProductTypes()
         {

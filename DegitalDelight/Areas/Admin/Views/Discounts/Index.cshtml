@@ -8,7 +8,7 @@
 			<div class="tm-bg-primary-dark tm-block tm-block-h-auto">
 				<h2 class="tm-block-title">Search</h2>
 				<div style="display: inline-flex; width: 100%">
-					<input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white" placeholder="Search" class="placeholder-white" onkeyup="Search()">
+					<input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white">
 					<i class="fa fa-search" style="float: right; font-size: 50px; color: white; padding-left: 10px"></i>
 					</input>
 				</div>
@@ -19,35 +19,38 @@
 		<div class="col-6">
 		</div>
 		<div class="col-6">
-			<a asp-action="CreateCode" asp-controller="Discounts"
+			<a asp-action="CreateCodeDiscount" asp-controller="Discounts"
 			   class="btn btn-primary btn-block text-uppercase mb-3">
 				Add new code discount
 			</a>
 		</div>
 		<div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 tm-block-col">
 			<div class="tm-bg-primary-dark tm-block tm-block-products">
-				<h2 class="tm-block-title">Product Type Discount</h2>
+				<h2 class="tm-block-title">Product Discount</h2>
 				<div class="tm-product-table-container">
 					<table id="table1" class="table table-hover tm-table-small tm-product-table">
 						<thead>
 							<tr>
-								<th scope="col">CODE</th>
+								<th scope="col">PRODUCT NAME</th>
 								<th scope="col">AMOUNT</th>
 								<th scope="col">QUANTITY</th>
 								<th scope="col">START DATE</th>
 								<th scope="col">END DATE</th>
 							</tr>
 						</thead>
-						<tbody id="product_table">
+						<tbody id="producttype_table">
 							@foreach (var discount in Model)
 							{
-								<tr>
-									<td class="tm-product-name">@discount.Code</td>
-									<td>@discount.Amount</td>
-									<td>@discount.Quantity</td>
-									<td>@discount.StartDate</td>
-									<td>@discount.EndDate</td>
-								</tr>
+								if(discount.Type=="Product")
+								{
+									<tr onclick="EditProductDiscount(@discount.Id)">
+										<td class="tm-product-name">@discount.Product.Name</td>
+										<td>@discount.Amount</td>
+										<td>@discount.Quantity</td>
+										<td>@discount.StartDate</td>
+										<td>@discount.EndDate</td>
+									</tr>
+								}
 							}
 						</tbody>
 					</table>
@@ -69,16 +72,19 @@
 								<th scope="col">END DATE</th>
 							</tr>
 						</thead>
-						<tbody id="product_table">
+						<tbody id="code_table">
 							@foreach (var discount in Model)
 							{
-								<tr>
-									<td class="tm-product-name">@discount.Code</td>
-									<td>@discount.Amount</td>
-									<td>@discount.Quantity</td>
-									<td>@discount.StartDate</td>
-									<td>@discount.EndDate</td>
-								</tr>
+								if (discount.Type == "code")
+								{
+									<tr onclick="EditCodeDiscount(@discount.Id)">
+										<td class="tm-product-name">@discount.Code</td>
+										<td>@discount.Amount</td>
+										<td>@discount.Quantity</td>
+										<td>@discount.StartDate</td>
+										<td>@discount.EndDate</td>
+									</tr>
+								}
 							}
 						</tbody>
 					</table>
@@ -98,25 +104,53 @@
 	</div>
 </footer>
 <script type="text/javascript">
-	function LoadSupply(input) {
-		var producttable = document.getElementById("product_table");
-		producttable.innerHTML = ``;
+	function LoadDiscount(input) {
+		//Load Product Type Discount
+		var producttypetable = document.getElementById("producttype_table");
+		producttypetable.innerHTML = ``;
 		$.ajax({
 			type: "GET",
-			url: "/Admin/Supply/Search",
+			url: "/Admin/Discounts/SearchProductType",
 			dataType: "json",
 			async: true,
 			data: { input: input },
 			success: function (data) {
 				$.each(data, function (key, value) {
-					producttable.innerHTML = producttable.innerHTML + `
-								<tr>
-									<td class="tm-product-name">${value.product.name}</td>
-									<td>${value.amount}</td>
-									<td>${value.date}</td>
-									<td>${value.price}</td>
-								</tr>
-							`
+					producttypetable.innerHTML = producttypetable.innerHTML + `
+						<tr onclick="EditDiscount(${value.id})">
+							<td class="tm-product-name">${value.product.name}</td>
+							<td>${value.amount}</td>
+							<td>${value.quantity}</td>
+							<td>${value.startDate}</td>
+							<td>${value.endDate}</td>
+						</tr>
+					`
+				})
+			},
+			failure: function (err) {
+			}
+		})
+
+		//Load Code Discount
+		var codetable = document.getElementById("code_table");
+		codetable.innerHTML = ``;
+		$.ajax({
+			type: "GET",
+			url: "/Admin/Discounts/SearchCode",
+			dataType: "json",
+			async: true,
+			data: { input: input },
+			success: function (data) {
+				$.each(data, function (key, value) {
+					codetable.innerHTML = codetable.innerHTML + `
+							<tr onclick="EditProduct(${value.id})">
+								<td class="tm-product-name">${value.code}</td>
+								<td>${value.amount}</td>
+								<td>${value.quantity}</td>
+								<td>${value.startDate}</td>
+								<td>${value.endDate}</td>
+							</tr>
+					`
 				})
 			},
 			failure: function (err) {
@@ -124,11 +158,17 @@
 		})
 	}
 
-	function Search() {
-		var input = document.getElementById("search_input").value;
-		LoadSupply(input);
-	};
-	function EditSupply(SupplyId) {
-		window.location = "Edit/" + SupplyId
+	var input = document.getElementById("search_input");
+	input.addEventListener("keydown", function (e) {
+		if (e.keyCode === 13) {
+			e.preventDefault();
+			LoadDiscount(input.value);
+		}
+	});
+	function EditCodeDiscount(DiscountId) {
+		window.location = "EditCodeDiscount/" + DiscountId
+	}
+	function EditProductDiscount(DiscountId) {
+		window.location = "EditProductDiscount/" + DiscountId
 	}
 </script>
