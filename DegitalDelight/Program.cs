@@ -46,15 +46,17 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.TryAddScoped<UserManager<User>>();
 
 //Cac service
+builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 builder.Services.AddTransient<IDiscountService, DiscountService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddTransient<IUserService, UserService>();
+
 builder.Services.AddScoped<IProduct, ProductsService>();
 builder.Services.AddScoped<ISupply, SupplyService>();
-builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 builder.Services.AddScoped<IComment, CommentService>();
+builder.Services.AddScoped<IDiscount, DiscountsService>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

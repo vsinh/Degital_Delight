@@ -28,8 +28,8 @@
 								<th scope="col">BRAND</th>
 								<th scope="col">PRICE (VND)</th>
 								<th scope="col">IN STOCK</th>
-								<th scope="col">&nbsp;</th>
-								<th scope="col">&nbsp;</th>
+								<th scope="col">ADD SUPPLY</th>
+								<th scope="col">DELETE</th>
 							</tr>
 						</thead>
 						<tbody id="product_table">
@@ -43,7 +43,7 @@
 									<td>@product.Stock</td>
 									<td>
 										<a asp-controller="Supply" asp-action="Create" asp-route-id="@product.Id" class="tm-product-delete-link">
-											<i class="far fa-trash-alt tm-product-delete-icon"></i>
+											<i class="fa fa-plus tm-product-delete-icon"></i>
 										</a>
 									</td>
 									<td>

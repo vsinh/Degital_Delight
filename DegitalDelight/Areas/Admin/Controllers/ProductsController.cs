@@ -173,7 +173,6 @@ namespace DegitalDelight.Areas.Admin.Controllers
 				{
 					if (item.Contains('-'))
 					{
-						var nameid = item.Split('-')[1];
 						var value = form[item];
 						namevalue.Add(value);
 					}
