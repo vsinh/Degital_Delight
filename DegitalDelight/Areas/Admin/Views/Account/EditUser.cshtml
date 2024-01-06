@@ -1,0 +1,131 @@
+﻿@using Microsoft.AspNetCore.Identity
+@{
+    Layout = "../Shared/_LayoutAdmin.cshtml";
+    ViewBag.img = Url.Content("~/img/user");
+}
+@inject SignInManager<User> SignInManager
+@model User
+<div class="" id="home">
+    <form asp-controller="Account" asp-action="EditUser" enctype="multipart/form-data" class="container mt-5">
+        <div class="row tm-content-row">
+            <div class="col-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                    <h2 class="tm-block-title">User Type</h2>
+                    <p class="text-white">Accounts</p>
+                    @if (ViewBag.SameUser)
+                    {
+                        <select name="role" class="custom-select" asp-items="@ViewBag.SelectType" disabled>
+                        </select>
+                    }
+                    else
+                    {
+                        <select name="role" class="custom-select" asp-items="@ViewBag.SelectType">
+                        </select>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="row tm-content-row">
+            <div class="tm-block-col tm-col-avatar">
+                <div class="tm-bg-primary-dark tm-block tm-block-avatar">
+                    <h2 class="tm-block-title">Change Avatar</h2>
+                    <div class="tm-avatar-container">
+                        <img src="@ViewBag.img/@Model.ImagePath"
+                             alt="Avatar"
+                             class="tm-avatar img-fluid mb-4" />
+                        <a href="#" class="tm-avatar-delete-link">
+                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                        </a>
+                    </div>
+                    <button id="img_button" onclick="InputImage()" class="btn btn-primary btn-block text-uppercase">
+                        Upload New Photo
+                    </button>
+                    <input id="img" name="img" type="file" accept="img" hidden />
+                </div>
+            </div>
+            <div class="tm-block-col tm-col-account-settings">
+                <div class="tm-bg-primary-dark tm-block tm-block-settings">
+                    <h2 class="tm-block-title">Account Settings</h2>
+                    <div class="tm-signup-form row">
+                        <input asp-for="Id" value="@Model.Id" hidden />
+                        <div class="form-group col-lg-6">
+                            <label for="name">Account Name</label>
+                            <input id="UserName"
+                                   name="UserName"
+                                   asp-for="UserName"
+                                   type="text"
+                                   class="form-control validate" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="Email">Account Email</label>
+                            <input id="Email"
+                                   name="Email"
+                                   type="Email"
+                                   asp-for="Email"
+                                   class="form-control validate" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="PhoneNumber">Phone</label>
+                            <input id="PhoneNumber"
+                                   name="PhoneNumber"
+                                   asp-for="PhoneNumber"
+                                   type="tel"
+                                   class="form-control validate" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="tm-hide-sm">&nbsp;</label>
+                            @if (ViewBag.SameUser)
+                            {
+                                <button type="button" class="btn btn-danger btn-block text-uppercase" disabled>
+                                    Lock This Account
+                                </button>
+
+                            }
+                            else
+                            {
+                                if (Model.IsDeleted)
+                                {
+                                    <button type="button" onclick="RevertState('@Model.Id')" class="btn btn-success btn-block text-uppercase">
+                                        Unlock This Account
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" onclick="RevertState('@Model.Id')" class="btn btn-danger btn-block text-uppercase">
+                                        Lock This Account
+                                    </button>
+                                }
+                            }
+                        </div>
+                        <div class="col-12">
+                            <button type="submit"
+                                    class="btn btn-primary btn-block text-uppercase">
+                                Save Change
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <footer class="tm-footer row tm-mt-small">
+        <div class="col-12 font-weight-light">
+            <p class="text-center text-white mb-0 px-4 small">
+                Copyright &copy; <b>2018</b> All rights reserved.
+
+                Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+            </p>
+        </div>
+    </footer>
+</div>
+<script>
+    function InputImage() {
+        document.getElementById('img').click();
+    };
+
+    function RevertState(id) {
+        window.location.href = "/Admin/Account/RevertState/" + id;
+    }
+    localStorage.setItem(imgPath, "~/img/user");
+</script>

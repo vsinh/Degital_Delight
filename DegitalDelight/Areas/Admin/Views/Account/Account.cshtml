@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "../Shared/_LayoutAdmin.cshtml";
+}
+@model IEnumerable<User>
+<div class="" id="home">
+    <div class="container mt-5">
+        <div class="row tm-content-row">
+            <div class="col-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                    <h2 class="tm-block-title">Search</h2>
+                    <div style="display: inline-flex; width: 100%">
+                        <input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white">
+                        <i class="fa fa-search" style="float: right; font-size: 50px; color: white; padding-left: 10px"></i>
+                        </input>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="row tm-content-row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-products">
+                    <h2 class="tm-block-title">DANH SÁCH TÀI KHOẢN</h2>
+                    <div class="tm-product-table-container">
+                        <table id="table1" class="table table-hover tm-table-small tm-product-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ACCOUNT NAME</th>
+                                    <th scope="col">EMAIL</th>
+                                    <th scope="col">PHONE NUMBER</th>
+                                    <th scope="col">LOCKED</th>
+                                </tr>
+                            </thead>
+                            <tbody id="product_table">
+                                @foreach (var user in Model)
+                                {
+                                    <tr onclick="EditAccount('@user.Id')">
+                                        <td class="tm-product-name">@user.UserName</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.PhoneNumber</td>
+                                        <td>
+                                            @if (user.IsDeleted)
+                                            {
+                                                <p class="text-danger">Đã bị khóa</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-success">Còn hoạt động</p>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function EditAccount(id) {
+            window.location = "/Admin/Account/EditUser/" + id;
+        }
+    </script>

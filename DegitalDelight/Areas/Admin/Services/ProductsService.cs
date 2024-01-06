@@ -71,7 +71,7 @@ namespace DegitalDelight.Areas.Admin.Services
 
 		public async Task<List<Product>> GetAllProducts()
 		{
-			return await _context.Products.Include(x => x.ProductType).Where(x => !x.IsDeleted).ToListAsync();
+			return await _context.Products.Include(x => x.ProductType).Where(x => !x.IsDeleted && !x.ProductType.IsDeleted).ToListAsync();
 		}
         public async Task<List<ProductType>> GetAllProductTypes()
         {
@@ -79,17 +79,18 @@ namespace DegitalDelight.Areas.Admin.Services
         }
         public async Task<Product> GetProducts(int id)
 		{
-			return await _context.Products.Include(x => x.ProductType).Include(x => x.ProductDetails).Where(x => !x.IsDeleted).FirstOrDefaultAsync(x => x.Id == id);
+			return await _context.Products.Include(x => x.ProductType).Include(x => x.ProductDetails).Where(x => !x.IsDeleted && !x.ProductType.IsDeleted).FirstOrDefaultAsync(x => x.Id == id);
 		}
 
 		public async Task<List<Product>> SearchProducts(string input)
 		{
 			if (string.IsNullOrEmpty(input))
-				return await _context.Products.Include(x => x.ProductType).Where(x => !x.IsDeleted).ToListAsync();
+				return await _context.Products.Include(x => x.ProductType).Where(x => !x.IsDeleted && !x.ProductType.IsDeleted).ToListAsync();
 			var productList = await _context.Products.Include(x => x.ProductType).Where(x =>
 			(x.Name.Contains(input)
 			|| x.ProductType.Name.Contains(input)
-			|| x.Brand.Contains(input)) && !x.IsDeleted
+			|| x.Brand.Contains(input)
+			) && !x.IsDeleted && !x.ProductType.IsDeleted
 			).ToListAsync();
 			return productList;
 		}

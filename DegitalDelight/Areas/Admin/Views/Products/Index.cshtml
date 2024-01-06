@@ -1,168 +1,172 @@
 ﻿@{
-	Layout = "../Shared/_LayoutAdmin.cshtml";
+    Layout = "../Shared/_LayoutAdmin.cshtml";
 }
 @model IEnumerable<DegitalDelight.Models.Product>
 <div class="container mt-5">
-	<div class="row tm-content-row">
-		<div class="col-12 tm-block-col">
-			<div class="tm-bg-primary-dark tm-block tm-block-h-auto">
-				<h2 class="tm-block-title">Search</h2>
-				<div style="display: inline-flex; width: 100%">
-					<input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white" placeholder="Search" class="placeholder-white" onkeyup="Search()">
-					<i class="fa fa-search" style="float: right; font-size: 50px; color: white; padding-left: 10px"></i>
-					</input>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row tm-content-row">
-		<div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
-			<div class="tm-bg-primary-dark tm-block tm-block-products">
-				<h2 class="tm-block-title">DANH SÁCH SẢN PHẨM</h2>
-				<div class="tm-product-table-container">
-					<table id="table1" class="table table-hover tm-table-small tm-product-table">
-						<thead>
-							<tr>
-								<th scope="col">PRODUCT NAME</th>
-								<th scope="col">PRODUCT TYPE</th>
-								<th scope="col">BRAND</th>
-								<th scope="col">PRICE (VND)</th>
-								<th scope="col">IN STOCK</th>
-								<th scope="col">ADD SUPPLY</th>
-								<th scope="col">DELETE</th>
-							</tr>
-						</thead>
-						<tbody id="product_table">
-							@foreach(var product in Model)
-							{
-								<tr onclick="EditProduct(@product.Id)">
-									<td class="tm-product-name">@product.Name</td>
-									<td>@product.ProductType.Name</td>
-									<td>@product.Brand</td>
-									<td>@product.Price</td>
-									<td>@product.Stock</td>
-									<td>
-										<a asp-controller="Supply" asp-action="Create" asp-route-id="@product.Id" class="tm-product-delete-link">
-											<i class="fa fa-plus tm-product-delete-icon"></i>
-										</a>
-									</td>
-									<td>
-										<a asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" class="tm-product-delete-link">
-											<i class="far fa-trash-alt tm-product-delete-icon"></i>
-										</a>
-									</td>
-								</tr>
-							}
-						</tbody>
-					</table>
-				</div>
-				<!-- table container -->
-				<a asp-action="Create" asp-controller="Products"
-				   class="btn btn-primary btn-block text-uppercase mb-3">Add new product</a>
-				<button class="btn btn-primary btn-block text-uppercase">
-					Delete selected products
-				</button>
-			</div>
-		</div>
-		<div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
-			<div class="tm-bg-primary-dark tm-block tm-block-product-categories">
-				<h2 class="tm-block-title">Product Categories</h2>
-				<div class="tm-product-table-container">
-					<table class="table tm-table-small tm-product-table">
-						<tbody>
-							@foreach(var productType in TempData["ProductTypes"] as List<ProductType>)
-							{
-								<tr>
-									<td class="tm-product-name">@productType.Name</td>
-									<td class="text-center">
-										<a asp-action="DeleteProductType" asp-controller="Products" asp-route-id="@productType.Id" class="tm-product-delete-link">
-											<i class="far fa-trash-alt tm-product-delete-icon"></i>
-										</a>
-									</td>
-								</tr>
-							}
+    <div class="row tm-content-row">
+        <div class="col-12 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                <h2 class="tm-block-title">Search</h2>
+                <div style="display: inline-flex; width: 100%">
+                    <input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white">
+                    <i class="fa fa-search" style="float: right; font-size: 50px; color: white; padding-left: 10px"></i>
+                    </input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row tm-content-row">
+        <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block tm-block-products">
+                <h2 class="tm-block-title">DANH SÁCH SẢN PHẨM</h2>
+                <div class="tm-product-table-container">
+                    <table id="table1" class="table table-hover tm-table-small tm-product-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">PRODUCT NAME</th>
+                                <th scope="col">PRODUCT TYPE</th>
+                                <th scope="col">BRAND</th>
+                                <th scope="col">PRICE (VND)</th>
+                                <th scope="col">IN STOCK</th>
+                                <th scope="col">ADD SUPPLY</th>
+                                <th scope="col">DELETE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product_table">
+                            @foreach (var product in Model)
+                            {
+                                <tr onclick="EditProduct(@product.Id)">
+                                    <td class="tm-product-name">@product.Name</td>
+                                    <td>@product.ProductType.Name</td>
+                                    <td>@product.Brand</td>
+                                    <td>@product.Price</td>
+                                    <td>@product.Stock</td>
+                                    <td>
+                                        <a asp-controller="Supply" asp-action="Create" asp-route-id="@product.Id" class="tm-product-delete-link">
+                                            <i class="fa fa-plus tm-product-delete-icon"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" class="tm-product-delete-link">
+                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- table container -->
+                <a asp-action="Create" asp-controller="Products"
+                   class="btn btn-primary btn-block text-uppercase mb-3">Add new product</a>
+                <button class="btn btn-primary btn-block text-uppercase">
+                    Delete selected products
+                </button>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+                <h2 class="tm-block-title">Product Categories</h2>
+                <div class="tm-product-table-container">
+                    <table class="table tm-table-small tm-product-table">
+                        <tbody>
+                            @foreach (var productType in TempData["ProductTypes"] as List<ProductType>)
+                            {
+                                <tr>
+                                    <td class="tm-product-name">@productType.Name</td>
+                                    <td class="text-center">
+                                        <a asp-action="DeleteProductType" asp-controller="Products" asp-route-id="@productType.Id" class="tm-product-delete-link">
+                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
 
-							
-						</tbody>
-					</table>
-				</div>
-				<!-- table container -->
-				<a asp-action="CreateProductType" asp-controller="Products" class="btn btn-primary btn-block text-uppercase mb-3">
-					Add new category
-				</a>
-			</div>
-		</div>
-	</div>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- table container -->
+                <a asp-action="CreateProductType" asp-controller="Products" class="btn btn-primary btn-block text-uppercase mb-3">
+                    Add new category
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 <footer class="tm-footer row tm-mt-small">
-	<div class="col-12 font-weight-light">
-		<p class="text-center text-white mb-0 px-4 small">
-			Copyright &copy; <b>2018</b> All rights reserved.
+    <div class="col-12 font-weight-light">
+        <p class="text-center text-white mb-0 px-4 small">
+            Copyright &copy; <b>2018</b> All rights reserved.
 
-			Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
-		</p>
-	</div>
+            Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+        </p>
+    </div>
 </footer>
 <form asp-action="Delete" asp-controller="Products" method="get" id="formDelete">
 </form>
 <form asp-action="Create" asp-controller="Supply" method="get" id="formCreateSupply">
 </form>
 <script type="text/javascript">
-	function LoadProduct(input) {
-		var producttable = document.getElementById("product_table");
-		producttable.innerHTML = ``;
-		$.ajax({
-			type: "GET",
-			url: "/Admin/Products/Search",
-			dataType: "json",
-			async: true,
-			data: { input: input },
-			success: function (data) {
-				$.each(data, function (key, value) {
-					producttable.innerHTML = producttable.innerHTML + `
-						<tr onclick="EditProduct(${value.id})">
-							<td class="tm-product-name">${value.name}</td>
-							<td>${value.productType.name}</td>
-							<td>${value.brand}</td>
-							<td>${value.price}</td>
-							<td>${value.stock}</td>
-							<td>
-								<a onclick="CreateSupply(${value.id})" class="tm-product-delete-link">
-									<i class="far fa-trash-alt tm-product-delete-icon"></i>
-								</a>
-							</td>
-							<td>
-								<a onclick="DeleteProduct(${value.id})" class="tm-product-delete-link">
-									<i class="far fa-trash-alt tm-product-delete-icon"></i>
-								</a>
-							</td>
-						</tr>
-					`
-				})
-			},
-			failure: function (err) {
-			}
-		})
-	}
+    function LoadProduct(input) {
+        var producttable = document.getElementById("product_table");
+        producttable.innerHTML = ``;
+        $.ajax({
+            type: "GET",
+            url: "/Admin/Products/Search",
+            dataType: "json",
+            async: true,
+            data: { input: input },
+            success: function (data) {
+                $.each(data, function (key, value) {
+                    producttable.innerHTML = producttable.innerHTML + `
+                                <tr onclick="EditProduct(${value.id})">
+                                    <td class="tm-product-name">${value.name}</td>
+                                    <td>${value.productType.name}</td>
+                                    <td>${value.brand}</td>
+                                    <td>${value.price}</td>
+                                    <td>${value.stock}</td>
+                                    <td>
+                                        <a onclick="CreateSupply(${value.id})" class="tm-product-delete-link">
+                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a onclick="DeleteProduct(${value.id})" class="tm-product-delete-link">
+                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            `
+                })
+            },
+            failure: function (err) {
+            }
+        })
+    }
 
-	function Search() {
-		var input = document.getElementById("search_input").value;
-		LoadProduct(input);
-	};
-	function EditProduct(ProductId) {
-		window.location = "Edit/" + ProductId;
-	}
-	function DeleteProduct(ProductId)
-	{
-		var newhref = $("#formDelete").attr('href') + '/' + ProductId;
-		$("#formDelete").attr("href", newhref);
-		var form = document.getElementById("formDelete");
-		form.submit();
-	}
-	function CreateSupply(ProductId) {
-		var newhref = $("#formCreateSupply").attr('href') + '/' + ProductId;
-		$("#formCreateSupply").attr("href", newhref);
-		var form = document.getElementById("formCreateSupply");
-		form.submit();
-	}
+    var input = document.getElementById("search_input");
+    input.addEventListener("keydown", function (e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            LoadProduct(input.value);
+        }
+    });
+
+    function EditProduct(ProductId) {
+        window.location = "Edit/" + ProductId;
+    }
+    function DeleteProduct(ProductId) {
+        var newhref = $("#formDelete").attr('href') + '/' + ProductId;
+        $("#formDelete").attr("href", newhref);
+        var form = document.getElementById("formDelete");
+        form.submit();
+    }
+    function CreateSupply(ProductId) {
+        var newhref = $("#formCreateSupply").attr('href') + '/' + ProductId;
+        $("#formCreateSupply").attr("href", newhref);
+        var form = document.getElementById("formCreateSupply");
+        form.submit();
+    }
+
 </script>

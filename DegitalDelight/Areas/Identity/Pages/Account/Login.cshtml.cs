@@ -119,6 +119,14 @@ namespace DegitalDelight.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
                     var user = await _userManager.FindByEmailAsync(Input.Email);
+
+                    if (user.IsDeleted)
+                    {
+                        ModelState.AddModelError(string.Empty, "Tài khoản của bạn đã bị khóa.");
+                        await _signInManager.SignOutAsync();
+                        return Page();
+                    }   
+
                     var roles = await _userManager.GetRolesAsync(user);
                     if( roles.Contains("Administrator"))
                     {
