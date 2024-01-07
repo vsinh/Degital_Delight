@@ -136,7 +136,18 @@
                             </li>
                             <li class="shopping-cart">
                                 <a asp-action="Cart" asp-controller="Cart" class="cart-dropdown-btn">
-                                   
+                                  
+                                  
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        int i=0;
+                                        foreach (var item in await userService.GetCartItems())
+                                        {
+                                            i += item.Amount;
+                                        }
+                                          <span class="cart-count">@i</span>
+                                    }
+                                    
                                     <i class="flaticon-shopping-cart"></i>
                                 </a>
                             </li>
@@ -591,7 +602,7 @@
                                         </form>
                                 </div>
                                 <div class="item-content">
-                                    <h3 class="item-title"><a href="single-product-3.html">@item.Product.Name</a></h3>
+                                        <h3 class="item-title"><a asp-action="Product" asp-controller="Product" asp-route-id="@item.Product.Id">@item.Product.Name</a></h3>
                                     <div class="item-price"><span class="currency-symbol">$</span>@item.Product.Price</div>
                                     <div class="pro-qty item-quantity">
                                         <input type="number" class="quantity-input" value="@item.Amount">
@@ -616,6 +627,7 @@
                 </div>
             </div>
             }
+            
         </div>
     </div>
 
