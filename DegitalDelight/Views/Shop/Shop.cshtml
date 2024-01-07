@@ -1,7 +1,9 @@
 ﻿@{
     ViewData["Title"] = "SHOPWITHSLIDEBAR";
     Layout = "../Shared/_LayoutMain.cshtml";
+    ViewData["ProductImageUrl"] = "/img/product";
 }
+@inject DegitalDelight.Services.Interfaces.IProductService productService
 @model IEnumerable<Product>
 
 <!-- Start Shop Area  -->
@@ -57,8 +59,6 @@
                     <div class="col-lg-12">
                         <div class="axil-shop-top mb--40">
                             <div class="category-select align-items-center justify-content-lg-end justify-content-between">
-                                <!-- Start Single Select  -->
-                                <span class="filter-results">Showing 1-12 of @Model.Count()</span>
                                 <select class="single-select">
                                     <option>Short by Latest</option>
                                     <option>Short by Oldest</option>
@@ -81,7 +81,7 @@
                             <div class="axil-product product-style-one mb--30">
                                 <div class="thumbnail">
                                     <a asp-action="Product" asp-controller="Product" asp-route-id="@item.Id">
-                                        <img src="@item.Picture" alt="Product Images">
+                                        <img src='@ViewData["ProductImageUrl"]/@item.Picture' alt="Product Images">
                                     </a>
                                     <div class="label-block label-right">
                                         <div class="product-badget">10% OFF</div>

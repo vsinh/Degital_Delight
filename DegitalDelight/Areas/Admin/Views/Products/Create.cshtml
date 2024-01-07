@@ -1,5 +1,6 @@
 ﻿@{
-	Layout = "../Shared/_LayoutAdmin.cshtml";
+	Layout = "../Shared/_LayoutAdmin.cshtml"; 
+	ViewData["ProductImageUrl"] = Url.Content("~/img/product");
 }
 @model DegitalDelight.Models.DTO.ProductDTO;
 <div class="container tm-mt-big tm-mb-big">
@@ -59,13 +60,20 @@
 									   required
 									   asp-for="Price" />
 							</div>
+							<div class="form-group mb-3">
+								<label for="Warranty">Warranty</label>
+								<select class="custom-select tm-select-accounts"
+										id="Warranty" asp-items="ViewBag.Warranties"
+										asp-for="WarrantyId">
+								</select>
+							</div>
 						</div>
 						<div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
 							<div class="tm-product-img-dummy mx-auto" id="imageContainer" style="background-size: cover; background-position: center; height: 200px; overflow: hidden">
 								<i class="fas fa-cloud-upload-alt tm-upload-icon" onclick="document.getElementById('fileInput').click();"></i>
 								<!-- Add an empty image tag to dynamically load the uploaded image -->
 								<div style="max-width: 200px; max-height: 200px; background-position: center center; background-repeat: no-repeat">
-									<img id="uploadedImage" src="#" alt="Uploaded Image"
+									<img id="uploadedImage" src="@ViewData["ProductImageUrl"]/@Model.Picture" alt="Uploaded Image"
 										 style="display: none;max-width: 100%; max-height: 100%; background-position: center center; background-repeat: no-repeat">
 								</div>
 							</div>
@@ -136,7 +144,7 @@
 				const reader = new FileReader();
 
 				reader.onload = function (e) {
-					imageContainer.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="img-fluid" style="max-height: 100%"; width: 340px; object-fit: cover>`;
+					imageContainer.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="img-fluid" style="max-height: 100%"; min-width: 340px; object-fit: cover>`;
 				};
 
 				reader.readAsDataURL(fileInput.files[0]);

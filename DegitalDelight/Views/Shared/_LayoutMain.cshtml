@@ -2,12 +2,13 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @inject DegitalDelight.Services.Interfaces.IUserService userService
+@inject DegitalDelight.Services.Interfaces.IProductService productService
 @{
     ViewData["ProductImageUrl"] = "/img/product";
 }
+
 <!doctype html>
 <html class="no-js" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -53,14 +54,13 @@
                                     {
                                         <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Dashboard">Admin Page</a></li>
                                     }
-                                    
+
                                     <li><a asp-area="Identity" asp-page="/Account/Manage/Index">@User.Identity?.Name</a></li>
                                     <li>
-                                        <a href="#" onclick="Logout()">Đăng xuất
+                                        <a href="#" onclick="Logout()">
+                                            Đăng xuất
                                         </a>
                                     </li>
-                                    
-
                                 }
                                 else
                                 {
@@ -102,13 +102,19 @@
                                 <li class="menu-item-has-children">
                                     <a href="#">Laptop</a>
                                     <ul class="axil-submenu">
-                                        <li><a asp-action="Shop" asp-controller="Shop">Shop</a></li>
+                                        @foreach (var item in await productService.GetProductTypes())
+                                        {
+                                            <li><a asp-action="Shop" asp-controller="Shop" asp-route-id="@item.Id">@item.Name</a></li>
+                                        }
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
                                     <a href="#">Danh mục</a>
                                     <ul class="axil-submenu">
-                                        <li><a asp-action="Favorite" asp-controller="Favorite">Wishlist</a></li>
+                                        @foreach (var item in await productService.GetProductTypes())
+                                        {
+                                            <li><a asp-action="Shop" asp-controller="Shop" asp-route-id="@item.Id">@item.Name</a></li>
+                                        }
                                     </ul>
                                 </li>
                                 <li><a asp-controller="Home" asp-action="About">About</a></li>

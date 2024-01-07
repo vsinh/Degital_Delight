@@ -12,6 +12,8 @@ using DegitalDelight.Models.DTO;
 using DegitalDelight.Areas.Admin.Services;
 using System.Collections;
 using Microsoft.AspNetCore.Authorization;
+using DegitalDelight.Data.Migrations;
+using DegitalDelight.Services.Interfaces;
 
 namespace DegitalDelight.Areas.Admin.Controllers
 {
@@ -21,11 +23,15 @@ namespace DegitalDelight.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IProduct _productService;
+        private readonly IWarranty _warrantyService;
+        private readonly IPictureService _pictureService;
 
-        public ProductsController(ApplicationDbContext context, IProduct productService)
+        public ProductsController(ApplicationDbContext context, IProduct productService, IWarranty warrantyService, IPictureService pictureService)
         {
             _context = context;
             _productService = productService;
+            _pictureService = pictureService;
+            _warrantyService = warrantyService;
         }
 
         // GET: Admin/Products
@@ -60,7 +66,8 @@ namespace DegitalDelight.Areas.Admin.Controllers
         public async Task<IActionResult> Create()
         {
             ViewData["ProductTypes"] = new SelectList(await _productService.GetAllProductTypes(), "Id", "Name");
-            return View();
+			ViewData["Warranties"] = new SelectList(await _warrantyService.GetAllWarranties(), "Id", "Name");
+			return View();
         }
 		public async Task<IActionResult> CreateProductType()
 		{
@@ -79,29 +86,10 @@ namespace DegitalDelight.Areas.Admin.Controllers
             }
             return View(productType);
         }
-
-        // GET: Admin/ProductTypes/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.ProductTypes == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var productType = await _context.ProductTypes.FindAsync(id);
-        //    if (productType == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(productType);
-        //}
-
-        // POST: Admin/Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Price,ProductTypeId,Description,Brand")] ProductDTO product, IFormCollection form, IFormFile fileInput)
+        public async Task<IActionResult> Create([Bind("Name,Price,ProductTypeId,Description,Brand,WarrantyId")] ProductDTO product, IFormCollection form, IFormFile fileInput)
         {
             if (ModelState.IsValid)
             {
@@ -116,9 +104,16 @@ namespace DegitalDelight.Areas.Admin.Controllers
                     }
                 }
 
+                if (fileInput != null)
+                {
+                    product.Picture = _pictureService.CreateProductPicture(fileInput);
+                }
+                else
+                {
+                    product.Picture = "product-placeholder.png";
+                }
 
-
-				List<ProductDetail> productDetails = new List<ProductDetail>();
+                List<ProductDetail> productDetails = new List<ProductDetail>();
 
 				for (int i = 0; i < namevalue.Count; i+=2)
                 {
@@ -130,7 +125,9 @@ namespace DegitalDelight.Areas.Admin.Controllers
 				await _productService.CreateProduct(product, productDetails);
 				return RedirectToAction("Index");
             }
-            return View(product);
+			ViewData["Warranties"] = new SelectList(await _warrantyService.GetAllWarranties(), "Id", "Name", product.WarrantyId);
+			ViewData["ProductTypes"] = new SelectList(await _productService.GetAllProductTypes(), "Id", "Name", product.ProductTypeId);
+			return View(product);
         }
 
         // GET: Admin/Products/Edit/5
@@ -150,6 +147,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
 			productDTO.Id = id;
 			productDTO.Name = product.Name;
 			productDTO.ProductTypeId = product.ProductType.Id;
+			productDTO.WarrantyId = product.Warranty.Id;
 			productDTO.Description = product.Description;
 			productDTO.Price = product.Price;
 			productDTO.Picture = product.Picture;
@@ -158,6 +156,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
 			{
 				productDTO.ProductDetails.Add(item);
 			}
+			ViewData["Warranties"] = new SelectList(await _warrantyService.GetAllWarranties(), "Id", "Name", product.Warranty.Id);
 			ViewData["ProductTypes"] = new SelectList(await _productService.GetAllProductTypes(), "Id", "Name", product.ProductType.Id);
             return View(productDTO);
         }
@@ -167,7 +166,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("Id,Name,Price,ProductTypeId,Description,Brand")] ProductDTO product, IFormCollection form)
+        public async Task<IActionResult> Edit([Bind("Id,Name,Price,ProductTypeId,Description,Brand,WarrantyId")] ProductDTO product, IFormCollection form, IFormFile fileInput)
         {
 			if (ModelState.IsValid)
 			{
@@ -180,6 +179,16 @@ namespace DegitalDelight.Areas.Admin.Controllers
 						namevalue.Add(value);
 					}
 				}
+
+				if (fileInput != null)
+				{
+					product.Picture = _pictureService.CreateProductPicture(fileInput);
+				}
+				else
+				{
+					product.Picture = "product-placeholder.png";
+				}
+
 				List<ProductDetail> productDetails = new List<ProductDetail>();
 
 				for (int i = 0; i < namevalue.Count; i += 2)
@@ -192,6 +201,8 @@ namespace DegitalDelight.Areas.Admin.Controllers
 				await _productService.EditProduct(product, productDetails);
 				return RedirectToAction("Index");
 			}
+			ViewData["Warranties"] = new SelectList(await _warrantyService.GetAllWarranties(), "Id", "Name", product.WarrantyId);
+			ViewData["ProductTypes"] = new SelectList(await _productService.GetAllProductTypes(), "Id", "Name", product.ProductTypeId);
 			return View(product);
 		}
     }

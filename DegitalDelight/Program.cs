@@ -52,10 +52,12 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddScoped<IPictureService, PictureService>();
 
 builder.Services.AddScoped<IProduct, ProductsService>();
 builder.Services.AddScoped<ISupply, SupplyService>();
 builder.Services.AddScoped<IComment, CommentService>();
+builder.Services.AddScoped<IWarranty, WarrantyService>();
 builder.Services.AddTransient<IDiscount, DiscountsService>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>

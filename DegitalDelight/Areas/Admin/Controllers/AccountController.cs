@@ -11,9 +11,11 @@ namespace DegitalDelight.Areas.Admin.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
-        public AccountController(IUserService userService)
+        private readonly IPictureService _pictureService;
+        public AccountController(IUserService userService, IPictureService pictureService)
         {
             _userService = userService;
+            _pictureService = pictureService;
         }
         public async Task<IActionResult> Account()
         {
@@ -48,7 +50,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUser([Bind("Id,UserName,PhoneNumber,Email")] User user, int role, IFormFileCollection formFile)
+        public async Task<IActionResult> EditUser([Bind("Id,UserName,PhoneNumber,Email")] User user, int role, IFormFile fileInput)
         {
             
             var currentRole = await _userService.IsAdmin(user.Id) ? 0 : 1;
@@ -58,6 +60,10 @@ namespace DegitalDelight.Areas.Admin.Controllers
             ViewBag.SameUser = currentUser.Id == user.Id;
             if (ModelState.IsValid)
             {
+                if (fileInput != null)
+                {
+                    user.ImagePath = _pictureService.CreateAccountPicture(fileInput);
+                }
                 if (role != currentRole)
                 {
                     await _userService.EditUserRole(user, role);

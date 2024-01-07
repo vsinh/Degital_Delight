@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using DegitalDelight.Models;
+using DegitalDelight.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,13 +18,16 @@ namespace DegitalDelight.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IPictureService _pictureService;
 
         public IndexModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            IPictureService pictureService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _pictureService = pictureService;
         }
 
         /// <summary>
@@ -70,6 +74,7 @@ namespace DegitalDelight.Areas.Identity.Pages.Account.Manage
 
         }
         public int CreatedYear { get; set; }
+        public string ImagePath { get; set; }
 
         private async Task LoadAsync(User user)
         {
@@ -77,6 +82,7 @@ namespace DegitalDelight.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             CreatedYear = user.CreatedDate.Value.Year;
+            ImagePath = user.ImagePath;
 
             Input = new InputModel
             {
@@ -97,7 +103,7 @@ namespace DegitalDelight.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile inputFile)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -110,6 +116,14 @@ namespace DegitalDelight.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
+
+            if (inputFile != null)
+            {
+                user.ImagePath = _pictureService.CreateAccountPicture(inputFile);
+            }
+
+            CreatedYear = user.CreatedDate.Value.Year;
+            ImagePath = user.ImagePath;
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)

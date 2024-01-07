@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Home Page";
     Layout = "../Shared/_LayoutMain.cshtml";
+    ViewData["ProductImageUrl"] = "/img/product";
 }
 
 <main class="main-wrapper">
@@ -56,7 +57,7 @@
                             @foreach (var item in Model.Take(4))
                             {
                                 <div class="single-slide slick-slide" data-sal="slide-up" data-sal-delay="600" data-sal-duration="1500">
-                                    <img src="@item.Picture" alt="Product">
+                                    <img src="@ViewData["ProductImageUrl"]/@item.Picture" alt="Product">
                                     <div class="product-price">
                                         <span class="text">From</span>
                                         <span class="price-amount">@item.Price VND</span>
@@ -157,7 +158,6 @@
                                 <span class="title-highlighter highlighter-secondary"> <i class="fal fa-headphones-alt"></i> Đừng bỏ lỡ!!</span>
                                 <h2 class="title">Tăng cường trải nghiệm nghe nhạc</h2>
                             </div>
-                            <div class="poster-countdown countdown mb--40"></div>
                             <a href="#" class="axil-btn btn-bg-primary">Xem thêm!</a>
                         </div>
                     </div>

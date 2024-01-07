@@ -88,6 +88,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
 				await _discountService.CreateProductDiscount(discount);
 				return RedirectToAction("Index", "Discounts");
 			}
+			ViewData["Product"] = await _productService.GetProducts(ProductId);
 			return View(discount);
 		}
 
