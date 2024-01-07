@@ -1,217 +1,146 @@
-﻿    @{
-        ViewData["Title"] = "CART";
-        ViewData["ProductImageUrl"] = "/img/product";
-        Layout = "../Shared/_LayoutMain.cshtml";
-    }   
+﻿@{
+    ViewData["Title"] = "CART";
+    ViewData["ProductImageUrl"] = "/img/product";
+    Layout = "../Shared/_LayoutMain.cshtml";
+}   
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+
+
 @inject DegitalDelight.Services.Interfaces.IUserService userService
 <main class="main-wrapper">
-
-    <!-- Start Cart Area  -->
-    <div class="axil-product-cart-area axil-section-gap">
-        <div class="container">
-            <div class="axil-product-cart-wrap">
-                <div class="product-table-heading">
-                    <h4 class="title">Your Cart</h4>
-                    <a href="#" class="cart-clear">Làm mới</a>
-                </div>
-                <div class="table-responsive">
-                    <table class="table axil-product-table axil-cart-table mb--40">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="product-remove"></th>
-                                <th scope="col" class="product-thumbnail">Product</th>
-                                <th scope="col" class="product-title"></th>
-                                <th scope="col" class="product-price">Price</th>
-                                <th scope="col" class="product-quantity">Quantity</th>
-                                <th scope="col" class="product-subtotal">Tổng cộng</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (SignInManager.IsSignedIn(User))
+    @{ int toltal = 0;
+        <!-- Start Cart Area  -->
+        <div class="axil-product-cart-area axil-section-gap">
+            <div class="container">
+                <div class="axil-product-cart-wrap">
+                    <div class="product-table-heading">
+                        <h4 class="title">Your Cart</h4>
+                        <a href="#" class="cart-clear">Làm mới</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table axil-product-table axil-cart-table mb--40">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="product-remove"></th>
+                                    <th scope="col" class="product-thumbnail">Sản phẩm</th>
+                                    <th scope="col" class="product-title"></th>
+                                    <th scope="col" class="product-price">Gía</th>
+                                    <th scope="col" class="product-quantity">Số lượng</th>
+                                    <th scope="col" class="product-subtotal">Tổng cộng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (SignInManager.IsSignedIn(User))
                             {
                                 foreach (var item in await userService.GetCartItems())
                                 {
-                                    <tr class="cart-item">
-                                        <td class="product-remove">
-                                            <a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a>
-                                        </td>
-                                        <td class="product-thumbnail">
-                                            <a href="single-product.html">
-                                                <img src="@ViewData["ProductImageUrl"]/@item.Product.Picture" alt="Digital Product">
-                                            </a>
-                                        </td>
-                                        <td class="product-title">
-                                            <a href="single-product-3.html">@item.Product.Name</a>
-                                        </td>
-                                        <td class="product-price" data-title="Price">
-                                            <span class="currency-symbol">@item.Product.Price</span> VNĐ
-                                        </td>
-                                        <td class="product-quantity" data-title="Qty">
-                                            <div class="pro-qty">
-                                                <input type="number" class="quantity-input" value="@item.Amount">
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal" data-title="Tổng cộng">
-                                            <span class="currency-symbol">@(item.Product.Price * item.Amount)</span>VNĐ
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="cart-update-btn-area">
-                    <div class="input-group product-cupon">
-                        <input placeholder="Enter coupon code" type="text">
-                        <div class="product-cupon-btn">
-                            <button type="submit" class="axil-btn btn-outline">Apply</button>
-                        </div>
-                    </div>
-                    <div class="update-btn">
-                        <a href="#" class="axil-btn btn-outline">Update Cart</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-5 col-lg-7 offset-xl-7 offset-lg-5">
-                        <div class="axil-order-summery mt--80">
-                            <h5 class="title mb--20">Order Summary</h5>
-                            <div class="summery-table-wrap">
-                                <table class="table summery-table mb--30">
-                                    <tbody>
-                                        <tr class="order-subtotal">
-                                            <td>Tổng cộng</td>
-                                            <td>$117.000</td>
-                                        </tr>
-                                        <tr class="order-shipping">
-                                            <td>Shipping</td>
-                                            <td>
-                                                <div class="input-group">
-                                                    <input type="radio" id="radio1" name="shipping" checked>
-                                                    <label for="radio1">Free Shippping</label>
-                                                </div>
-                                                <div class="input-group">
-                                                    <input type="radio" id="radio2" name="shipping">
-                                                    <label for="radio2">Local: $35.000</label>
-                                                </div>
-                                                <div class="input-group">
-                                                    <input type="radio" id="radio3" name="shipping">
-                                                    <label for="radio3">Flat rate: $12.000</label>
+                                        <tr class="cart-item">
+                                            <td class="product-remove">
+                                                <form method="post" asp-action="RemoveItemFromCart2" asp-controller="Cart">
+                                                    <input type="hidden" name="productId" value="@item.Product.Id" />
+                                                    <button type="submit" class="close-btn"><i class="fas fa-times"></i></button>
+                                                </form>
+                                            </td>
+                                            <td class="product-thumbnail">
+                                                <a asp-action="Product" asp-controller="Product" asp-route-id="@item.Product.Id">
+                                                    <img src="@ViewData["ProductImageUrl"]/@item.Product.Picture" alt="Digital Product">
+                                                </a>
+                                            </td>
+                                            <td class="product-title">
+                                                <a asp-action="Product" asp-controller="Product" asp-route-id="@item.Product.Id">@item.Product.Name</a>
+                                            </td>
+                                            <td class="product-price" data-title="Price">
+                                                <span class="currency-symbol">@item.Product.Price</span> VNĐ
+                                            </td>
+                                            <td class="product-quantity" data-title="Qty">
+                                                <div class="pro-qty">
+                                                    <input type="number" class="quantity-input" value="@item.Amount" id="quantity-@item.Product.Id" disabled>
                                                 </div>
                                             </td>
+                                            <td class="product-subtotal" data-title="Tổng cộng">
+                                                <span class="currency-symbol">@(item.Product.Price * item.Amount)</span>VNĐ
+                                                    @{
+                                                    toltal += item.Product.Price * item.Amount;
+                                                    }
+                                            </td>
                                         </tr>
-                                        <tr class="order-tax">
-                                            <td>State Tax</td>
-                                            <td>$8.000</td>
-                                        </tr>
-                                        <tr class="order-total">
-                                            <td>Total</td>
-                                            <td class="order-total-amount">$125.000</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                       
+                                }
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="cart-update-btn-area">
+                        <div class="input-group product-cupon">
+                            <input placeholder="Enter coupon code" type="text">
+                            <div class="product-cupon-btn">
+                                <button type="submit" class="axil-btn btn-outline">Apply</button>
                             </div>
-                            <a href="checkout.html" class="axil-btn btn-bg-primary checkout-btn">Process to Checkout</a>
+                        </div>
+                      
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-7 offset-xl-7 offset-lg-5">
+                            <div class="axil-order-summery mt--80">
+                                <h5 class="title mb--20">Order Summary</h5>
+                                <div class="summery-table-wrap">
+                                    <table class="table summery-table mb--30">
+                                        <tbody>
+                                            <tr class="order-subtotal">
+                                                <td>Tổng cộng</td>
+                                                    <td>@(toltal)  VNĐ</td>
+                                            </tr>
+                                            <tr class="order-shipping">
+                                                <td>Shipping</td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <input type="radio" id="radio1" name="shipping" checked>
+                                                        <label for="radio1">Free Shippping</label>
+                                                    </div>
+                                                                           
+                                                </td>
+                                            </tr>
+                                            <tr class="order-tax">
+                                                <td>State Tax</td>
+                                                    <td>@(toltal*0.1) VNĐ</td>
+                                            </tr>
+                                            <tr class="order-total">
+                                                <td>Total</td>
+                                                <td id="orderTotal" class="order-total-amount">$@(toltal + 25000 +toltal * 0.1) VNĐ</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <a asp-action="Order" asp-controller="Order" class="axil-btn btn-bg-primary checkout-btn">Thanh toán</a>
+                            </div>
                         </div>
                     </div>
+                      
                 </div>
             </div>
         </div>
-    </div>
-    <!-- End Cart Area  -->
-
+        <script>
+            function updateCartItemAmount(productId, newAmount) {
+                $.ajax({
+                    url: '@Url.Action("UpdateCartItemAmount", "Cart")',
+                    type: 'POST',
+                    data: {
+                        productId: productId,
+                        newAmount: newAmount
+                    },
+                    success: function (result) {
+                        location.reload(); 
+                    },
+                    error: function () {
+                        console.error('Error updating cart item amount.');
+                    }
+                });
+            }
+        </script>
+        <!-- End Cart Area  -->
+    }
 </main>
 
-<div class="cart-dropdown" id="cart-dropdown">
-    <div class="cart-content-wrap">
-        <div class="cart-header">
-            <h2 class="header-title">Giỏ hàng</h2>
-            <button class="cart-close sidebar-close"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="cart-body">
-            <ul class="cart-item-list">
-                <li class="cart-item">
-                    <div class="item-img">
-                        <a href="single-product.html"><img src="assets/images/product/electric/product-01.png" alt="Commodo Blown Lamp"></a>
-                        <button class="close-btn"><i class="fas fa-times"></i></button>
-                    </div>
-                    <div class="item-content">
-                        <div class="product-rating">
-                            <span class="icon">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </span>
-                            <span class="rating-number">(64)</span>
-                        </div>
-                        <h3 class="item-title"><a href="single-product-3.html">Wireless PS Handler</a></h3>
-                        <div class="item-price"><span class="currency-symbol">VND</span>155.000</div>
-                        <div class="pro-qty item-quantity">
-                            <input type="number" class="quantity-input" value="15">
-                        </div>
-                    </div>
-                </li>
-                <li class="cart-item">
-                    <div class="item-img">
-                        <a href="single-product-2.html"><img src="assets/images/product/electric/product-02.png" alt="Commodo Blown Lamp"></a>
-                        <button class="close-btn"><i class="fas fa-times"></i></button>
-                    </div>
-                    <div class="item-content">
-                        <div class="product-rating">
-                            <span class="icon">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </span>
-                            <span class="rating-number">(4)</span>
-                        </div>
-                        <h3 class="item-title"><a href="single-product-2.html">Gradient Light Keyboard</a></h3>
-                        <div class="item-price"><span class="currency-symbol">VND</span>255.000</div>
-                        <div class="pro-qty item-quantity">
-                            <input type="number" class="quantity-input" value="5">
-                        </div>
-                    </div>
-                </li>
-                <li class="cart-item">
-                    <div class="item-img">
-                        <a href="single-product-3.html"><img src="assets/images/product/electric/product-03.png" alt="Commodo Blown Lamp"></a>
-                        <button class="close-btn"><i class="fas fa-times"></i></button>
-                    </div>
-                    <div class="item-content">
-                        <div class="product-rating">
-                            <span class="icon">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </span>
-                            <span class="rating-number">(6)</span>
-                        </div>
-                        <h3 class="item-title"><a href="single-product.html">HD CC Camera</a></h3>
-                        <div class="item-price"><span class="currency-symbol">VND</span>200.000</div>
-                        <div class="pro-qty item-quantity">
-                            <input type="number" class="quantity-input" value="100">
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="cart-footer">
-            <h3 class="cart-subtotal">
-                <span class="subtotal-title">Tổng cộng:</span>
-                <span class="subtotal-amount">610.000 VND</span>
-            </h3>
-            <div class="group-btn">
-                <a href="cart.html" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
-                <a href="checkout.html" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
-            </div>
-        </div>
-    </div>
 </div>

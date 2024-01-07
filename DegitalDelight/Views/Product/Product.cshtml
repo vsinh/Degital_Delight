@@ -46,18 +46,6 @@
                             <div class="inner">
                                 <h2 class="product-title">@Model.Name</h2>
                                 <span class="price-amount">@Model.Price VND</span>
-                                <div class="product-rating">
-                                    <div class="star-rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                    <div class="review-link">
-                                        <a href="#">(<span>@Model.Comments.Count()</span> customer reviews)</a>
-                                    </div>
-                                </div>
                                 <ul class="product-meta">
                                     @if (Model.Stock == 0)
                                     {
@@ -119,6 +107,14 @@
                                         </p>
                                     </div>
                                 </div>
+                                <div class="col-lg-6 mb--30">
+                                    <div class="single-desc">
+                                        <h5 class="title">Warranty</h5>
+                                        <p>
+                                            @Model.Warranty.Description
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                             <!-- End .row -->
                         </div>
@@ -177,13 +173,6 @@
                                                                             <span data-text="@item.User.UserName">@item.User.UserName</span>
                                                                         </span>
                                                                     </a>
-                                                                    <span class="commenter-rating ratiing-four-star">
-                                                                        <a href="#"><i class="fas fa-star"></i></a>
-                                                                        <a href="#"><i class="fas fa-star"></i></a>
-                                                                        <a href="#"><i class="fas fa-star"></i></a>
-                                                                        <a href="#"><i class="fas fa-star"></i></a>
-                                                                        <a href="#"><i class="fas fa-star empty-rating"></i></a>
-                                                                    </span>
                                                                 </h6>
                                                                 <div class="comment-text">
                                                                     <p>@item.Content</p>
@@ -202,17 +191,6 @@
                                     <div class="comment-respond pro-des-commend-respond mt--0">
                                         <h5 class="title mb--30">Thêm đánh giá</h5>
                                         <p>Địa chỉ email của bạn sẽ không được công bố</p>
-                                        <div class="rating-wrapper d-flex-center mb--40">
-                                            Đánh giá của bạn<span class="require">*</span>
-                                            <div class="reating-inner ml--20">
-                                                <a href="#"><i class="fal fa-star"></i></a>
-                                                <a href="#"><i class="fal fa-star"></i></a>
-                                                <a href="#"><i class="fal fa-star"></i></a>
-                                                <a href="#"><i class="fal fa-star"></i></a>
-                                                <a href="#"><i class="fal fa-star"></i></a>
-                                            </div>
-                                        </div>
-
                                         <form action="#">
                                             <div class="row">
                                                 <div class="col-12">
