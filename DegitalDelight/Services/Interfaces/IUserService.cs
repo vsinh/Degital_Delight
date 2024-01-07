@@ -12,5 +12,6 @@ namespace DegitalDelight.Services.Interfaces
         Task<bool> EditUserRole(User user, int role);
         Task<bool> RevertState(string id);
         Task<List<CartItem>> GetCartItems();
+        Task<List<Favorite>> GetFavorites();
     }
 }

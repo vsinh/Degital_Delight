@@ -43,6 +43,10 @@ namespace DegitalDelight.Controllers
         {
             return View();
         }
+        public IActionResult Favorite()
+        {
+            return View();
+        }
         [HttpGet]
         public async Task<IActionResult> ViewCart()
         {
