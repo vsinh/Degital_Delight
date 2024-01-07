@@ -18,6 +18,7 @@ namespace DegitalDelight.Areas.Admin.Services
 			Product newproduct = new Product();
 			newproduct.Name = product.Name;
 			newproduct.ProductType = _context.ProductTypes.FirstOrDefault(x => x.Id==product.ProductTypeId);
+			newproduct.Warranty = _context.Warrantys.FirstOrDefault(x => x.Id == product.WarrantyId);
 			newproduct.Description = product.Description;
 			newproduct.Price = product.Price;
 			newproduct.Picture = product.Picture;
@@ -51,6 +52,7 @@ namespace DegitalDelight.Areas.Admin.Services
 				oldProduct.Name = product.Name;
 				oldProduct.Description = product.Description;
 				oldProduct.ProductType = _context.ProductTypes.FirstOrDefault(x => x.Id == product.ProductTypeId);
+				oldProduct.Warranty = _context.Warrantys.FirstOrDefault(x => x.Id == product.WarrantyId);
 				oldProduct.Price = product.Price;
 				oldProduct.Picture = product.Picture;
 				oldProduct.Brand = product.Brand;
@@ -79,7 +81,7 @@ namespace DegitalDelight.Areas.Admin.Services
         }
         public async Task<Product> GetProducts(int id)
 		{
-			return await _context.Products.Include(x => x.ProductType).Include(x => x.ProductDetails).Where(x => !x.IsDeleted && !x.ProductType.IsDeleted).FirstOrDefaultAsync(x => x.Id == id);
+			return await _context.Products.Include(x => x.ProductType).Include(x => x.Warranty).Include(x => x.ProductDetails).Where(x => !x.IsDeleted && !x.ProductType.IsDeleted).FirstOrDefaultAsync(x => x.Id == id);
 		}
 
 		public async Task<List<Product>> SearchProducts(string input)

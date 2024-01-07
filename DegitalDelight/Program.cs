@@ -56,6 +56,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IProduct, ProductsService>();
 builder.Services.AddScoped<ISupply, SupplyService>();
 builder.Services.AddScoped<IComment, CommentService>();
+builder.Services.AddScoped<IWarranty, WarrantyService>();
 builder.Services.AddTransient<IDiscount, DiscountsService>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
