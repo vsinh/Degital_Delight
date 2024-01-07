@@ -2,13 +2,13 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @inject DegitalDelight.Services.Interfaces.IUserService userService
+@inject DegitalDelight.Services.Interfaces.IProductService productService
 @{
     ViewData["ProductImageUrl"] = "/img/product";
 }
 
 <!doctype html>
 <html class="no-js" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -99,13 +99,19 @@
                                 <li class="menu-item-has-children">
                                     <a href="#">Laptop</a>
                                     <ul class="axil-submenu">
-                                        <li><a asp-action="Shop" asp-controller="Shop">Shop</a></li>
+                                        @foreach (var item in await productService.GetProductTypes())
+                                        {
+                                            <li><a asp-action="Shop" asp-controller="Shop" asp-route-id="@item.Id">@item.Name</a></li>
+                                        }
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
                                     <a href="#">Danh mục</a>
                                     <ul class="axil-submenu">
-                                        <li><a asp-action="Favorite" asp-controller="Favorite">Wishlist</a></li>
+                                        @foreach (var item in await productService.GetProductTypes())
+                                        {
+                                            <li><a asp-action="Shop" asp-controller="Shop" asp-route-id="@item.Id">@item.Name</a></li>
+                                        }
                                     </ul>
                                 </li>
                                 <li><a asp-controller="Home" asp-action="About">About</a></li>
@@ -614,8 +620,8 @@
                     <span class="subtotal-amount">$610.00</span>
                 </h3>
                 <div class="group-btn">
-                    <a href="cart.html" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
-                    <a href="checkout.html" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
+                    <a asp-controller="Cart" asp-action="Cart" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
+                    <a asp-controller="Cart" asp-action="Cart" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
                 </div>
             </div>
         </div>

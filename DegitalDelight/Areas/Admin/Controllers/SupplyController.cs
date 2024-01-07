@@ -44,6 +44,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
 				await _supplyService.CreateSupplies(supply);
 				return RedirectToAction("Index","Products");
 			}
+			ViewData["Product"] = await _supplyService.GetProductById(supply.ProductId);
 			return View(supply);
 		}
 

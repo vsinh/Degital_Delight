@@ -60,6 +60,13 @@
 									   required
 									   asp-for="Price" />
 							</div>
+							<div class="form-group mb-3">
+								<label for="Warranty">Warranty</label>
+								<select class="custom-select tm-select-accounts"
+										id="Warranty" asp-items="ViewBag.Warranties"
+										asp-for="WarrantyId">
+								</select>
+							</div>
 						</div>
 						<div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
 							<div class="tm-product-img-dummy mx-auto" id="imageContainer" style="background-size: cover; background-position: center; height: 200px; overflow: hidden">
