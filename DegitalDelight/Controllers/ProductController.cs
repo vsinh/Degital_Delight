@@ -16,7 +16,7 @@ namespace DegitalDelight.Controllers
         public async Task<IActionResult> Product(int id)
         {
             var product = await _productService.GetProductById(id);
-
+            ViewData["RelatedProducts"] = await _productService.GetRelatedProduct(product);
             if (product == null)
             {
                 return NotFound();

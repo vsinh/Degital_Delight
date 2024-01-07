@@ -12,6 +12,8 @@ using DegitalDelight.Models.DTO;
 using DegitalDelight.Areas.Admin.Services;
 using System.Collections;
 using Microsoft.AspNetCore.Authorization;
+using DegitalDelight.Data.Migrations;
+using DegitalDelight.Services.Interfaces;
 
 namespace DegitalDelight.Areas.Admin.Controllers
 {
@@ -21,11 +23,13 @@ namespace DegitalDelight.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IProduct _productService;
+        private readonly IPictureService _pictureService;
 
-        public ProductsController(ApplicationDbContext context, IProduct productService)
+        public ProductsController(ApplicationDbContext context, IProduct productService, IPictureService pictureService)
         {
             _context = context;
             _productService = productService;
+            _pictureService = pictureService;
         }
 
         // GET: Admin/Products
@@ -79,26 +83,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
             }
             return View(productType);
         }
-
-        // GET: Admin/ProductTypes/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.ProductTypes == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var productType = await _context.ProductTypes.FindAsync(id);
-        //    if (productType == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(productType);
-        //}
-
-        // POST: Admin/Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Price,ProductTypeId,Description,Brand")] ProductDTO product, IFormCollection form, IFormFile fileInput)
@@ -116,9 +101,16 @@ namespace DegitalDelight.Areas.Admin.Controllers
                     }
                 }
 
+                if (fileInput != null)
+                {
+                    product.Picture = _pictureService.CreateProductPicture(fileInput);
+                }
+                else
+                {
+                    product.Picture = "product-placeholder.png";
+                }
 
-
-				List<ProductDetail> productDetails = new List<ProductDetail>();
+                List<ProductDetail> productDetails = new List<ProductDetail>();
 
 				for (int i = 0; i < namevalue.Count; i+=2)
                 {
@@ -167,7 +159,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("Id,Name,Price,ProductTypeId,Description,Brand")] ProductDTO product, IFormCollection form)
+        public async Task<IActionResult> Edit([Bind("Id,Name,Price,ProductTypeId,Description,Brand")] ProductDTO product, IFormCollection form, IFormFile fileInput)
         {
 			if (ModelState.IsValid)
 			{
@@ -180,6 +172,16 @@ namespace DegitalDelight.Areas.Admin.Controllers
 						namevalue.Add(value);
 					}
 				}
+
+				if (fileInput != null)
+				{
+					product.Picture = _pictureService.CreateProductPicture(fileInput);
+				}
+				else
+				{
+					product.Picture = "product-placeholder.png";
+				}
+
 				List<ProductDetail> productDetails = new List<ProductDetail>();
 
 				for (int i = 0; i < namevalue.Count; i += 2)
