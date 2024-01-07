@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Plugins;
 using System.Collections.Generic;
 using System;
+using static Org.BouncyCastle.Asn1.Cmp.Challenge;
 
 namespace DegitalDelight.Services
 {
@@ -32,6 +33,25 @@ namespace DegitalDelight.Services
         public async Task<List<Product>> GetProducts()
         {
             return await _context.Products.Where(x => !x.IsDeleted).ToListAsync();
+        }
+        public async Task<List<Product>> GetSomeProducts()
+        {
+            var products = await _context.Products.Where(x => !x.IsDeleted).ToListAsync();
+            var random = new Random();
+            products = products.OrderBy(Id => random.NextDouble()).Take(8).ToList();
+            return products;
+        }
+        public async Task<List<Product>> GetNewProducts()
+        {
+            var products = await _context.Products.Where(x => !x.IsDeleted).ToListAsync();
+            products = products.OrderByDescending(x => x.CreatedDate).Take(4).ToList();
+            return products;
+        }
+        public async Task<List<Product>> GetHotProducts()
+        {
+            var products = await _context.Products.Where(x => !x.IsDeleted).ToListAsync();
+            products = products.OrderByDescending(x => x.Stock).Take(8).ToList();
+            return products;
         }
         public async Task<List<Product>> GetProductList(int productTypeId, int minPrice, int maxPrice, string sort)
         {
@@ -64,9 +84,9 @@ namespace DegitalDelight.Services
         public async Task<List<Product>> Search(string input)
         {
             var products = await _context.Products.Include(x => x.ProductType)
-                .Where(x => (x.Name.Contains(input) 
+                .Where(x => (x.Name.Contains(input)
                 || x.ProductType.Name.Contains(input)
-                || x.Brand.Contains(input)) 
+                || x.Brand.Contains(input))
                 && !x.IsDeleted
                 ).ToListAsync();
             return products;

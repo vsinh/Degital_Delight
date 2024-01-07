@@ -176,7 +176,7 @@
             <div class="explore-product-activation slick-layout-wrapper slick-layout-wrapper--15 axil-slick-arrow arrow-top-slide">
                 <div class="slick-single-layout">
                     <div class="row row--15">
-                        @foreach (var item in Model.Take(8))
+                        @foreach (var item in await productService.GetSomeProducts())
                         {
                             <div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb--30">
                                 <div class="axil-product product-style-one">
@@ -338,7 +338,7 @@
                     <h2 class="title">Hàng mới về</h2>
                 </div>
                 <div class="new-arrivals-product-activation slick-layout-wrapper--30 axil-slick-arrow arrow-top-slide">
-                    @foreach (var item in Model.Take(4))
+                    @foreach (var item in await productService.GetNewProducts())
                     {
                         <div class="slick-single-layout">
                             <div class="axil-product product-style-two">
@@ -405,7 +405,7 @@
                     <h2 class="title">Hàng bán chạy</h2>
                 </div>
                 <div class="row row-cols-xl-2 row-cols-1 row--15">
-                    @foreach (var item in Model.Take(8))
+                    @foreach (var item in await productService.GetHotProducts())
                     {
                         <div class="col">
                             <div class="axil-product-list">
