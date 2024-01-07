@@ -38,7 +38,10 @@
                                 {
                                         <tr class="cart-item">
                                             <td class="product-remove">
-                                                <a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a>
+                                                <form method="post" asp-action="RemoveItemFromCart2" asp-controller="Cart">
+                                                    <input type="hidden" name="productId" value="@item.Product.Id" />
+                                                    <button type="submit" class="close-btn"><i class="fas fa-times"></i></button>
+                                                </form>
                                             </td>
                                             <td class="product-thumbnail">
                                                 <a asp-action="Product" asp-controller="Product" asp-route-id="@item.Product.Id">
