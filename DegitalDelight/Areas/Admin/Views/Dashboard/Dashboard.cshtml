@@ -1,6 +1,8 @@
-﻿@{
+﻿@using DegitalDelight.Services.Interfaces
+@{
     Layout = "../Shared/_LayoutAdmin.cshtml";
 }
+@inject IReportService reportService
 
 <div class="container">
     <div class="row">
@@ -77,16 +79,19 @@
                 updateBarChart();
             });
 
-
-            // Cần load data thông tin sản phẩm hiện có trong cửa hàng ở sau đây cho Pie Chart
-            // Sample data for the pie chart
-            var sampleData = [
-                { label: 'Laptop', value: 30 },
-                { label: 'Điện thoại', value: 20 },
-                { label: 'Thiết bị mạng', value: 25 },
-                { label: 'Phụ kiện gaming', value: 15 },
-                { label: 'Phụ kiện', value: 10 }
-            ];
+            var sampleData = [];
+            $.ajax({
+                type: "GET",
+                url: "/Admin/Dashboard/GetInventoryReport",
+                dataType: "json",
+                async: true,
+                success: function (data) {
+                    sampleData = data;
+                    updatePieChart(sampleData);
+                },
+                failure: function (err) {
+                }
+            })
 
             // Function to update the pie chart with data
             function updatePieChart(data) {
@@ -97,9 +102,9 @@
                 pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
                     type: 'pie',
                     data: {
-                        labels: data.map(item => item.label),
+                        labels: data.map(item => item.item1),
                         datasets: [{
-                            data: data.map(item => item.value),
+                            data: data.map(item => item.item2),
                             backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8B4513', '#00FF7F'], // Add more colors as needed
                         }],
                     },
@@ -180,5 +185,6 @@
             updatePieChart(sampleData);
         });
     </script>
+
 }
 
