@@ -35,13 +35,30 @@ namespace DegitalDelight.Services
         }
         public async Task<List<Product>> GetProductList(int productTypeId, int minPrice, int maxPrice, string sort)
         {
-            return await _context.Products.Include(x => x.ProductType)
+            var products = await _context.Products.Include(x => x.ProductType)
                 .Where(x =>
                 x.ProductType.Id == productTypeId
                 && x.Price >= minPrice
                 && x.Price <= maxPrice
                 && !x.IsDeleted
-            ).ToListAsync();
+                ).ToListAsync();
+            if (sort == "Latest")
+            {
+                products = products.OrderBy(x => x.CreatedDate).ToList();
+            }
+            if (sort == "Oldest")
+            {
+                products = products.OrderByDescending(x => x.CreatedDate).ToList();
+            }
+            if (sort == "PriceAsc")
+            {
+                products = products.OrderBy(x => x.Price).ToList();
+            }
+            if (sort == "PriceDesc")
+            {
+                products = products.OrderByDescending(x => x.Price).ToList();
+            }
+            return products;
         }
 
         public Task<List<Product>> GetProductsByCategory(int categoryId)
@@ -59,6 +76,42 @@ namespace DegitalDelight.Services
             Random random = new Random();
             var listProduct = await _context.Products.Where(x => x.Id != product.Id && x.ProductType.Id == product.ProductType.Id).OrderBy(Id => random.NextDouble()).Take(8).ToListAsync();
             return listProduct;
+        }
+
+        public async Task<int> GetProductDiscount(int productId)
+        {
+            var product = await _context.Products.Include(x => x.Discounts).Where(x => x.Id == productId && !x.IsDeleted).FirstOrDefaultAsync();
+            int maxAmount = 0;
+            foreach (var discount in product.Discounts)
+            {
+                if (discount.Amount > maxAmount)
+                {
+                    if (discount.Amount > 100)
+                    {
+                        discount.Amount = discount.Amount / product.Price * 100;
+                    }
+                    maxAmount = discount.Amount;
+                }
+            }
+            return maxAmount;
+        }
+
+        public async Task<int> GetProductPriceAfterDiscount(int productId)
+        {
+            var product = await _context.Products.Include(x => x.Discounts).Where(x => x.Id == productId && !x.IsDeleted).FirstOrDefaultAsync();
+            int maxAmount = 0;
+            foreach (var discount in product.Discounts)
+            {
+                if (discount.Amount < 100)
+                {
+                    discount.Amount = product.Price * discount.Amount / 100;
+                    if (discount.Amount > maxAmount)
+                    {
+                        maxAmount = discount.Amount;
+                    }
+                }
+            }
+            return product.Price - maxAmount;
         }
     }
 }

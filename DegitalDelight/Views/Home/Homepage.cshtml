@@ -1,4 +1,5 @@
 ﻿<!-- Trong thư mục Views/Home -->
+@inject DegitalDelight.Services.Interfaces.IProductService productService
 @model IEnumerable<Product>
 @{
     ViewData["Title"] = "Home Page";
@@ -37,7 +38,6 @@
                                 <div class="single-slide slick-slide" data-sal="slide-up" data-sal-delay="600" data-sal-duration="1500">
                                     <img src="@ViewData["ProductImageUrl"]/@item.Picture" alt="Product">
                                     <div class="product-price">
-                                        <span class="text">From</span>
                                         <span class="price-amount">@item.Price VND</span>
                                     </div>
                                 </div>
@@ -172,17 +172,23 @@
                                 <div class="axil-product product-style-one">
                                     <div class="thumbnail">
                                         <a asp-action="Product" asp-controller="Product" asp-route-id="@item.Id">
-                                            <img data-sal="zoom-out" data-sal-delay="200" data-sal-duration="800" loading="lazy" class="main-img" style="width: 276px; height: 276px;" src="@item.Picture" alt="Product Images">
+                                            <img data-sal="zoom-out" data-sal-delay="200" data-sal-duration="800" loading="lazy" class="main-img" style="width: 276px; height: 276px;" src='@ViewData["ProductImageUrl"]/@item.Picture' alt="Product Images">
                                             <img class="hover-img" src="@ViewData["ProductImageUrl"]/@item.Picture" alt="Product Images">
                                         </a>
                                         <div class="label-block label-right">
-                                            @*      <div class="product-badget">@item.Discounts</div> *@
+                                            @{
+                                                var discount = await productService.GetProductDiscount(item.Id);
+                                                if (discount > 0)
+                                                {
+                                                    <div class="product-badget">@discount%</div>
+                                                }
+                                            }
                                         </div>
                                         <div class="product-hover-action">
                                             <ul class="cart-action">
                                                 <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
                                                 <li class="select-option">
-                                                    <a href="single-product.html">
+                                                    <a>
                                                         Thêm vào giỏ
                                                     </a>
                                                 </li>
@@ -194,8 +200,14 @@
                                         <div class="inner">
                                             <h5 class="title"><a asp-action="Product" asp-controller="Product" asp-route-id="@item.Id">@item.Name</a></h5>
                                             <div class="product-price-variant">
-                                                <span class="price current-price">@item.Price</span>
-                                                <span class="price old-price">@item.Price</span>
+                                                @{
+                                                    var afterDiscountPrice = await productService.GetProductPriceAfterDiscount(item.Id);
+                                                    if (afterDiscountPrice != item.Price)
+                                                    {
+                                                        <span class="price old-price">@item.Price VND</span>
+                                                    }
+                                                    <span class="price current-price">@afterDiscountPrice VND</span>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +220,7 @@
 
         </div>
     </div>
-    <!-- End Expolre Product Area  -->
+    <!-- End Explore Product Area  -->
     <!-- Start Testimonila Area  -->
     <div class="axil-testimoial-area axil-section-gap bg-vista-white">
         <div class="container">
@@ -320,17 +332,28 @@
                                     <a href="single-product.html">
                                         <img data-sal="zoom-out" data-sal-delay="100" data-sal-duration="500" style="width: 276px; height: 276px;" src="@ViewData["ProductImageUrl"]/@item.Picture" alt="Product Images">
                                     </a>
-
+                                    <div class="label-block label-right">
+                                        @{
+                                            var discount = await productService.GetProductDiscount(item.Id);
+                                            if (discount > 0)
+                                            {
+                                                <div class="product-badget">@discount%</div>
+                                            }
+                                        }
+                                    </div>
                                 </div>
                                 <div class="product-content">
                                     <div class="inner">
                                         <h5 class="title"><a href="single-product.html">@item.Name</a></h5>
                                         <div class="product-price-variant">
-                                            @*  @if (item.OldPrice.HasValue)
-                                        {
-                                        <span class="price old-price">@item.OldPrice VND</span>
-                                        } *@
-                                            <span class="price current-price">@item.Price VND</span>
+                                            @{
+                                                var afterDiscountPrice = await productService.GetProductPriceAfterDiscount(item.Id);
+                                                if (afterDiscountPrice != item.Price)
+                                                {
+                                                    <span class="price old-price">@item.Price VND</span>
+                                                }
+                                                <span class="price current-price">@afterDiscountPrice VND</span>
+                                            }
                                         </div>
                                         <div class="product-hover-action">
                                             <ul class="cart-action">

@@ -113,7 +113,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> EditCodeDiscount([Bind("Id,Type,StartDate,EndDate,Code,Quantity,Amount")] Discount discount)
+		public async Task<IActionResult> EditCodeDiscount([Bind("Id,Type,StartDate,EndDate,Code,Quantity,Amount")] Discount discount, int productId)
 		{
 			if (discount.EndDate < discount.StartDate)
 				return View(discount);
@@ -121,13 +121,14 @@ namespace DegitalDelight.Areas.Admin.Controllers
 			{
 				return View(discount);
 			}
-
 			if (ModelState.IsValid)
 			{
 				await _discountService.EditDiscount(discount);
 				return RedirectToAction("Index", "Discounts");
 			}
-			return View(discount);
+			var oldDiscount = await _discountService.GetDiscountById(discount.Id);
+			discount.Product = oldDiscount.Product;
+			return View(oldDiscount);
 		}
 
 		[HttpPost]
@@ -140,8 +141,10 @@ namespace DegitalDelight.Areas.Admin.Controllers
 			{
 				await _discountService.EditDiscount(discount);
 				return RedirectToAction("Index", "Discounts");
-			}
-			return View(discount);
+            }
+            var oldDiscount = await _discountService.GetDiscountById(discount.Id);
+            discount.Product = oldDiscount.Product;
+            return View(discount);
 		}
 	}
 }
