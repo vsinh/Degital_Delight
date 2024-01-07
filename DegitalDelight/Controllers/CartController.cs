@@ -9,6 +9,7 @@ using MimeKit.Text;
 using MimeKit;
 using DegitalDelight.Services.Interfaces;
 using System.Security.Claims;
+using Newtonsoft.Json.Linq;
 
 namespace DegitalDelight.Controllers
 {
@@ -19,9 +20,24 @@ namespace DegitalDelight.Controllers
         {
             _cartService = cartService;
         }
-        public ActionResult Index(int productId)
+        public IActionResult Cart()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId != null)
+            {
+                var cartItems = await _cartService.GetCartItems(userId);
+                return View(cartItems);
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
         }
 
         [HttpPost]
@@ -30,13 +46,13 @@ namespace DegitalDelight.Controllers
             var result = await _cartService.AddItemToCart(productId);
             if (result)
             {
-                return Ok();
+                return RedirectToAction("Homepage", "Home");
             }
             else
             {
                 return NotFound();
             }
-        }       
+        }
         [HttpGet]
         public async Task<IActionResult> ViewCart()
         {
@@ -54,7 +70,7 @@ namespace DegitalDelight.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> RemoveItemFromCart(int productId)
-        {   
+        {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (userId != null)
@@ -63,7 +79,7 @@ namespace DegitalDelight.Controllers
 
                 if (result)
                 {
-                    return Ok();
+                    return RedirectToAction("Homepage", "Home");
                 }
             }
             return NotFound();
@@ -71,3 +87,4 @@ namespace DegitalDelight.Controllers
 
     }
 }
+

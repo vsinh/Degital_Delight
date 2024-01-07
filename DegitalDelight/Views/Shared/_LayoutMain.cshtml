@@ -1,7 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
-
+@inject DegitalDelight.Services.Interfaces.IUserService userService
+@{
+    ViewData["ProductImageUrl"] = "/img/product";
+}
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -30,12 +33,11 @@
 
 </head>
 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Homepage", "Home", new { area = "" })"></form>
-<body class="sticky-header newsletter-popup-modal">
 
-    <!--[if lte IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-    <![endif]-->
-    <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
+<body class="sticky-header newsletter-popup-modal">
+    
+       
+        <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
     <header class="header axil-header header-style-1">
         <div class="axil-header-top">
             <div class="container">
@@ -128,7 +130,7 @@
                             </li>
                             <li class="shopping-cart">
                                 <a asp-action="Cart" asp-controller="Cart" class="cart-dropdown-btn">
-                                    <span class="cart-count">3</span>
+                                   
                                     <i class="flaticon-shopping-cart"></i>
                                 </a>
                             </li>
@@ -514,17 +516,6 @@
                                 <img src="~/etrade/assets/images/product/electric/product-09.png" alt="Yantiti Leather Bags">
                             </a>
                         </div>
-                        <div class="product-content">
-                            <div class="product-rating">
-                                <span class="rating-icon">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fal fa-star"></i>
-                                </span>
-                                <span class="rating-number"><span>100+</span> Reviews</span>
-                            </div>
                             <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
                             <div class="product-price-variant">
                                 <span class="price current-price">$29.99</span>
@@ -559,7 +550,7 @@
                                 <span class="price old-price">$49.99</span>
                             </div>
                             <div class="product-cart">
-                                <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
+                                <a asp-controller="Cart" asp-action="Cart" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
                                 <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
                             </div>
                         </div>
@@ -572,95 +563,56 @@
 
     <div class="cart-dropdown" id="cart-dropdown">
         <div class="cart-content-wrap">
+               @{
+                        decimal subtotal = 0;
             <div class="cart-header">
                 <h2 class="header-title">Cart review</h2>
                 <button class="cart-close sidebar-close"><i class="fas fa-times"></i></button>
             </div>
             <div class="cart-body">
                 <ul class="cart-item-list">
-                    <li class="cart-item">
-                        <div class="item-img">
-                            <a href="single-product.html"><img src="~/etrade/assets/images/product/electric/product-01.png" alt="Commodo Blown Lamp"></a>
-                            <button class="close-btn"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="item-content">
-                            <div class="product-rating">
-                                <span class="icon">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="rating-number">(64)</span>
-                            </div>
-                            <h3 class="item-title"><a href="single-product-3.html">Wireless PS Handler</a></h3>
-                            <div class="item-price"><span class="currency-symbol">$</span>155.00</div>
-                            <div class="pro-qty item-quantity">
-                                <input type="number" class="quantity-input" value="15">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="cart-item">
-                        <div class="item-img">
-                            <a href="single-product-2.html"><img src="~/etrade/assets/images/product/electric/product-02.png" alt="Commodo Blown Lamp"></a>
-                            <button class="close-btn"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="item-content">
-                            <div class="product-rating">
-                                <span class="icon">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="rating-number">(4)</span>
-                            </div>
-                            <h3 class="item-title"><a href="single-product-2.html">Gradient Light Keyboard</a></h3>
-                            <div class="item-price"><span class="currency-symbol">$</span>255.00</div>
-                            <div class="pro-qty item-quantity">
-                                <input type="number" class="quantity-input" value="5">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="cart-item">
-                        <div class="item-img">
-                            <a href="single-product-3.html"><img src="~/etrade/assets/images/product/electric/product-03.png" alt="Commodo Blown Lamp"></a>
-                            <button class="close-btn"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="item-content">
-                            <div class="product-rating">
-                                <span class="icon">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="rating-number">(6)</span>
-                            </div>
-                            <h3 class="item-title"><a href="single-product.html">HD CC Camera</a></h3>
-                            <div class="item-price"><span class="currency-symbol">$</span>200.00</div>
-                            <div class="pro-qty item-quantity">
-                                <input type="number" class="quantity-input" value="100">
-                            </div>
-                        </div>
-                    </li>
+                 
+                    @if (SignInManager.IsSignedIn(User))
+                    {                    
+                        foreach (var item in await userService.GetCartItems())
+                        {
+                            <li class="cart-item">
+                                <div class="item-img">
+                                    <a><img src="@ViewData["ProductImageUrl"]/@item.Product.Picture" alt="Commodo Blown Lamp"></a>
+                                        <form method="post" asp-action="RemoveItemFromCart" asp-controller="Cart">
+                                            <input type="hidden" name="productId" value="@item.Product.Id" />
+                                            <button type="submit" class="close-btn"><i class="fas fa-times"></i></button>
+                                        </form>
+                                </div>
+                                <div class="item-content">
+                                    <h3 class="item-title"><a href="single-product-3.html">@item.Product.Name</a></h3>
+                                    <div class="item-price"><span class="currency-symbol">$</span>@item.Product.Price</div>
+                                    <div class="pro-qty item-quantity">
+                                        <input type="number" class="quantity-input" value="@item.Amount">
+                                    </div>
+                                </div>
+                            </li>
+
+                            // Calculate subtotal for each item
+                            subtotal += item.Product.Price * item.Amount;
+                        }
+                    }
                 </ul>
             </div>
             <div class="cart-footer">
-                <h3 class="cart-subtotal">
-                    <span class="subtotal-title">Subtotal:</span>
-                    <span class="subtotal-amount">$610.00</span>
+                <h3 class="cart-subtotal">  
+                    <span class="subtotal-title">Thành tiền:</span>
+                    <span class="subtotal-amount">@subtotal VNĐ</span>
                 </h3>
                 <div class="group-btn">
-                    <a href="cart.html" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
-                    <a href="checkout.html" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
+                    <a asp-controller="Cart" asp-action="Cart" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
+                    <a asp-action="Order" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
                 </div>
             </div>
+            }
         </div>
     </div>
+
     <!-- Offer Modal End -->
     <!-- JS
     ============================================ -->
@@ -692,6 +644,7 @@
         }
     </script>
     @await RenderSectionAsync("Scripts", required: false)
+    
 </body>
 
 </html>

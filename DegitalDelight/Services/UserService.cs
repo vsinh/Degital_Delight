@@ -107,5 +107,16 @@ namespace DegitalDelight.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<List<CartItem>> GetCartItems()
+        {
+            var user = await GetCurrentUser();
+            return user.CartItems.ToList();
+        }
+        public async Task<List<Order>> GetOrderItems()
+        {
+            var user = await GetCurrentUser();
+            return user.Orders.ToList();
+        }
     }
 }
