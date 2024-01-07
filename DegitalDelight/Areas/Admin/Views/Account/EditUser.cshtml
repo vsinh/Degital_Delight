@@ -30,18 +30,15 @@
             <div class="tm-block-col tm-col-avatar">
                 <div class="tm-bg-primary-dark tm-block tm-block-avatar">
                     <h2 class="tm-block-title">Change Avatar</h2>
-                    <div class="tm-avatar-container">
+                    <div class="tm-avatar-container" id="imageContainer">
                         <img src="@ViewBag.img/@Model.ImagePath"
                              alt="Avatar"
                              class="tm-avatar img-fluid mb-4" />
-                        <a href="#" class="tm-avatar-delete-link">
-                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                        </a>
                     </div>
-                    <button id="img_button" onclick="InputImage()" class="btn btn-primary btn-block text-uppercase">
+                    <button id="img_button" onclick="document.getElementById('fileInput').click();" type="button" class="btn btn-primary btn-block text-uppercase">
                         Upload New Photo
                     </button>
-                    <input id="img" name="img" type="file" accept="img" hidden />
+                    <input name="fileInput" id="fileInput" type="file" accept="img" onchange="displayImage();" hidden />
                 </div>
             </div>
             <div class="tm-block-col tm-col-account-settings">
@@ -111,9 +108,20 @@
     </form>
 </div>
 <script>
-    function InputImage() {
-        document.getElementById('img').click();
-    };
+    function displayImage() {
+        const fileInput = document.getElementById('fileInput');
+        const imageContainer = document.getElementById('imageContainer');
+
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                imageContainer.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="tm-avatar img-fluid mb-4" style="max-height: 100%"; min-width: 340px; object-fit: cover>`;
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
 
     function RevertState(id) {
         window.location.href = "/Admin/Account/RevertState/" + id;

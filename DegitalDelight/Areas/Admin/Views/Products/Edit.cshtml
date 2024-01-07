@@ -66,7 +66,7 @@
 								<!-- Add an empty image tag to dynamically load the uploaded image -->
 								<div style="max-width: 200px; max-height: 200px; background-position: center center; background-repeat: no-repeat">
 									<img id="uploadedImage" src='@ViewData["ProductImageUrl"]/@Model.Picture' alt="Uploaded Image"
-										 style="max-width: 100%; max-height: 100%; background-position: center center; background-repeat: no-repeat">
+										 style="min-width: 100%; max-height: 100%; background-position: center center; background-repeat: no-repeat">
 								</div>
 							</div>
 							<div class="custom-file mt-3 mb-3">
@@ -162,7 +162,7 @@
 				const reader = new FileReader();
 
 				reader.onload = function (e) {
-					imageContainer.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="img-fluid" style="max-height: 100%"; width: 340px; object-fit: cover>`;
+					imageContainer.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="img-fluid" style="max-height: 100%"; min-width: 340px; object-fit: cover>`;
 				};
 
 				reader.readAsDataURL(fileInput.files[0]);

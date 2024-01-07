@@ -10,9 +10,9 @@ namespace DegitalDelight.Services
 			{
 				Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "product"));
 			}
-			if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "account")))
+			if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "user")))
 			{
-				Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "account"));
+				Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "user"));
 			}
 		}
         public string CreateProductPicture(IFormFile picture)
@@ -33,7 +33,7 @@ namespace DegitalDelight.Services
 			var fileextension = Path.GetExtension(picture.FileName);
 			var filename = Guid.NewGuid().ToString() + fileextension;
 
-			var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "account", filename);
+			var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "user", filename);
 			using (var stream = new FileStream(path, FileMode.Create))
 			{
 				picture.CopyTo(stream);
@@ -53,7 +53,7 @@ namespace DegitalDelight.Services
 
         public string DeleteAccountPicture(string url)
         {
-			var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "account", url);
+			var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "user", url);
 			if (File.Exists(path))
             {
 				File.Delete(path);

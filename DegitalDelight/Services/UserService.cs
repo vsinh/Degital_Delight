@@ -54,9 +54,15 @@ namespace DegitalDelight.Services
             return await _userManager.IsInRoleAsync(user, "Administrator");
         }
 
-        public async Task<bool> EditUser([Bind("Id, UserName, PhoneNumber, Email")] User user)
+        public async Task<bool> EditUser(User user)
         {
             var currentUser = await GetUserById(user.Id);
+
+            if(user.ImagePath != null)
+            {
+                currentUser.ImagePath = user.ImagePath;
+                await _context.SaveChangesAsync();
+            }
 
             var setPhoneResult = await _userManager.SetPhoneNumberAsync(currentUser, user.PhoneNumber);
             if (!setPhoneResult.Succeeded)

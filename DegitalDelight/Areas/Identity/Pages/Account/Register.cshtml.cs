@@ -137,7 +137,7 @@ namespace DegitalDelight.Areas.Identity.Pages.Account
 
                     /// Add created date to user
                     user.CreatedDate = DateTime.Now;
-                    user.ImagePath = "~/img/user/default-avatar-placeholder.jpg";
+                    user.ImagePath = "default-avatar-placeholder.jpg";
                     await _userStore.UpdateAsync(user, CancellationToken.None);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)

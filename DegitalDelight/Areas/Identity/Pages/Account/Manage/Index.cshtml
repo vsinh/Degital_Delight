@@ -7,27 +7,9 @@
 @{
     ViewData["Title"] = "My Account";
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    ViewData["AccountImageUrl"] = Url.Content("~/img/user");
 }
 
-@*
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-        </form>
-    </div>
-</div>*@
- 
 <main class="main-wrapper">
     <!-- Start Breadcrumb Area  -->
     <div class="axil-breadcrumb-area">
@@ -61,7 +43,7 @@
                 <div class="axil-dashboard-author">
                     <div class="media">
                         <div class="thumbnail">
-                            <img src="~/eTrade/assets/images/default-avatar-placeholder.jpg" alt="Hello Annie" style="width:70px; height:70px;">
+                            <img src='@ViewData["AccountImageUrl"]/@Model.ImagePath' alt="Hello Annie" style="width:70px; height:70px;">
                         </div>
                         <div class="media-body">
                             <h5 class="title mb-0">Hello @User.Identity.Name</h5>
@@ -76,8 +58,7 @@
                                 <div class="nav nav-tabs" role="tablist">
                                     <a class="nav-item nav-link active" data-bs-toggle="tab" href="#nav-account" role="tab" aria-selected="false"><i class="fas fa-user"></i>Account Details</a>
                                     <a class="nav-item nav-link" data-bs-toggle="tab" href="#nav-orders" role="tab" aria-selected="false"><i class="fas fa-shopping-basket"></i>Orders</a>
-@*                                     <a class="nav-item nav-link" data-bs-toggle="tab" href="#nav-address" role="tab" aria-selected="false"><i class="fas fa-home"></i>Addresses</a>
- *@                                    <a class="nav-item nav-link" href="sign-in.html"><i class="fal fa-sign-out"></i>Logout</a>
+                                    <a class="nav-item nav-link" onclick="Logout()" href="#"><i class="fal fa-sign-out"></i>Logout</a>
                                 </div>
                             </nav>
                         </aside>
@@ -138,53 +119,30 @@
                                     </div>
                                 </div>
                             </div>
-@*                             <div class="tab-pane fade" id="nav-address" role="tabpanel">
-                                <div class="axil-dashboard-address">
-                                    <p class="notice-text">The following addresses will be used on the checkout page by default.</p>
-                                    <div class="row row--30">
-                                        <div class="col-lg-6">
-                                            <div class="address-info mb--40">
-                                                <div class="addrss-header d-flex align-items-center justify-content-between">
-                                                    <h4 class="title mb-0">Shipping Address</h4>
-                                                    <a href="#" class="address-edit"><i class="far fa-edit"></i></a>
-                                                </div>
-                                                <ul class="address-details">
-                                                    <li>Name: Annie Mario</li>
-                                                    <li>Email: annie@example.com</li>
-                                                    <li>Phone: 1234 567890</li>
-                                                    <li class="mt--30">
-                                                        7398 Smoke Ranch Road <br>
-                                                        Las Vegas, Nevada 89128
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="address-info">
-                                                <div class="addrss-header d-flex align-items-center justify-content-between">
-                                                    <h4 class="title mb-0">Billing Address</h4>
-                                                    <a href="#" class="address-edit"><i class="far fa-edit"></i></a>
-                                                </div>
-                                                <ul class="address-details">
-                                                    <li>Name: Annie Mario</li>
-                                                    <li>Email: annie@example.com</li>
-                                                    <li>Phone: 1234 567890</li>
-                                                    <li class="mt--30">
-                                                        7398 Smoke Ranch Road <br>
-                                                        Las Vegas, Nevada 89128
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> *@
                             <div class="tab-pane fade show active" id="nav-account" role="tabpanel">
                                 <div class="col-lg-9">
                                     <partial name="_StatusMessage" for="StatusMessage" />
                                     <div class="axil-dashboard-account">
-                                        <form class="account-details-form" id="profile-form" method="post">
+                                        <form class="account-details-form" id="profile-form" enctype="multipart/form-data" method="post">
                                             <div class="row">
+                                                <div class="col-6">
+                                                    <h5 class="title">Avatar</h5>
+                                                    <div class="tm-product-img-dummy mx-auto" id="imageContainer" style="background-size: cover; background-position: center; height: 200px; overflow: hidden">
+                                                        <!-- Add an empty image tag to dynamically load the uploaded image -->
+                                                        <div style="max-width: 200px; max-height: 200px; background-position: center center; background-repeat: no-repeat">
+                                                            <img id="uploadedImage" src='@ViewData["AccountImageUrl"]/@Model.ImagePath' alt="Uploaded Image"
+                                                                 style="min-width: 100%; max-height: 100%; background-position: center center; background-repeat: no-repeat">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input name="inputFile" id="inputFile" type="file" style="display:none;" onchange="displayImage();" />
+                                                        <input type="button"
+                                                               class="btn btn-primary btn-block mx-auto"
+                                                               style="color:black"
+                                                               value="UPLOAD PRODUCT IMAGE"
+                                                               onclick="document.getElementById('inputFile').click();" />
+                                                    </div>
+                                                </div>
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label>UserName</label>
@@ -251,4 +209,20 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        function displayImage() {
+            const fileInput = document.getElementById('inputFile');
+            const imageContainer = document.getElementById('imageContainer');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    imageContainer.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="img-fluid" style="max-height: 100%"; min-width: 340px; object-fit: cover>`;
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    </script>
 }
