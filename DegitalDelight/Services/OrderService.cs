@@ -37,12 +37,16 @@ namespace DegitalDelight.Services
             var currentUser = await _userService.GetCurrentUser();
 
             order.User = currentUser;
+            order.Date = DateTime.Now;
+            order.IsDeleted = false;
+            order.State = "Đã đặt hàng";
 
             await _context.AddAsync(order);
             var jobSendEmailId = BackgroundJob.Enqueue(() => SendEmailConfirmOrder(order.Id));
 
             BackgroundJob.ContinueJobWith(jobSendEmailId, () => DeleteRemindOrder(currentUser.UserName));
 
+            await _context.SaveChangesAsync();
         }
         public void SendEmailConfirmOrder(int orderId)
         {

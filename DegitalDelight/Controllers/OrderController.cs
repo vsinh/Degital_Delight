@@ -39,7 +39,7 @@ namespace DegitalDelight.Controllers
         {
             Order order = new Order();
             await _orderService.CreateOrder(order);
-            return RedirectToAction("Index");
+            return RedirectToAction("Homepage","Home");
         }
     }
 }

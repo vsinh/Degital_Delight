@@ -56,10 +56,7 @@
                                             </td>
                                             <td class="product-quantity" data-title="Qty">
                                                 <div class="pro-qty">
-                                                    <input type="number" class="quantity-input" value="@item.Amount" id="quantity-@item.Product.Id">
-                                                    <div class="update-btn">
-                                                        <button type="button" onclick="updateCartItemAmount(@item.Product.Id, $('#quantity-@item.Product.Id').val())">Update</button>
-                                                    </div>
+                                                    <input type="number" class="quantity-input" value="@item.Amount" id="quantity-@item.Product.Id" disabled>
                                                 </div>
                                             </td>
                                             <td class="product-subtotal" data-title="Tổng cộng">
@@ -116,7 +113,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <a href="checkout.html" class="axil-btn btn-bg-primary checkout-btn">Thanh toán</a>
+                                <a asp-action="Order" asp-controller="Order" class="axil-btn btn-bg-primary checkout-btn">Thanh toán</a>
                             </div>
                         </div>
                     </div>

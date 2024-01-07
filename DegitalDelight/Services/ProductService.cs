@@ -21,7 +21,7 @@ namespace DegitalDelight.Services
         [HttpGet("{productId}")]
         public async Task<Product> GetProductById(int productId)
         {
-            return await _context.Products.Include(x => x.ProductType).Include(x => x.ProductDetails).Include(x => x.Comments).ThenInclude(x => x.User).Where(x => x.Id == productId && !x.IsDeleted).FirstOrDefaultAsync();
+            return await _context.Products.Include(x => x.Warranty).Include(x => x.ProductType).Include(x => x.ProductDetails).Include(x => x.Comments).ThenInclude(x => x.User).Where(x => x.Id == productId && !x.IsDeleted).FirstOrDefaultAsync();
         }
 
         public Task<Product> GetProductById(List<int> productIds)
@@ -31,7 +31,7 @@ namespace DegitalDelight.Services
 
         public async Task<List<Product>> GetProducts()
         {
-            return await _context.Products.Where(x => !x.IsDeleted).ToListAsync();
+            return await _context.Products.Where(x => !x.IsDeleted).Include(x => x.Warranty).Include(x => x.ProductType).ToListAsync();
         }
         public async Task<List<Product>> GetProductList(int productTypeId, int minPrice, int maxPrice, string sort)
         {
