@@ -101,7 +101,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Price,ProductTypeId,Description,Brand")] ProductDTO product, IFormCollection form)
+        public async Task<IActionResult> Create([Bind("Name,Price,ProductTypeId,Description,Brand")] ProductDTO product, IFormCollection form, IFormFile fileInput)
         {
             if (ModelState.IsValid)
             {
@@ -115,6 +115,9 @@ namespace DegitalDelight.Areas.Admin.Controllers
                         namevalue.Add(value);
                     }
                 }
+
+
+
 				List<ProductDetail> productDetails = new List<ProductDetail>();
 
 				for (int i = 0; i < namevalue.Count; i+=2)
