@@ -14,5 +14,6 @@ namespace DegitalDelight.Services.Interfaces
         Task<List<Product>> GetRelatedProduct(Product product);
         Task<int> GetProductDiscount(int productId);
         Task<int> GetProductPriceAfterDiscount(int productId);
+        Task<List<Product>> Search(string input);
     }
 }

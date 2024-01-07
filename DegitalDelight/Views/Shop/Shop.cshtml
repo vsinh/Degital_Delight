@@ -83,7 +83,13 @@
                                         <img src='@ViewData["ProductImageUrl"]/@item.Picture' alt="Product Images">
                                     </a>
                                     <div class="label-block label-right">
-                                        <div class="product-badget">10% OFF</div>
+                                        @{
+                                            var discount = await productService.GetProductDiscount(item.Id);
+                                            if (discount > 0)
+                                            {
+                                                <div class="product-badget">@discount%</div>
+                                            }
+                                        }
                                     </div>
                                     <div class="product-hover-action">
                                         <ul class="cart-action">
@@ -97,17 +103,20 @@
                                     <div class="inner">
                                         <h5 class="title"><a asp-action="Product" asp-controller="Product" asp-route-id="@item.Id">@item.Name</a></h5>
                                         <div class="product-price-variant">
-                                            <span class="price current-price">@item.Price.ToString("C")  VND</span>
-                                            <span class="price old-price">@item.Price.ToString("C")  VND</span>
+                                            @{
+                                                var afterDiscountPrice = await productService.GetProductPriceAfterDiscount(item.Id);
+                                                if (afterDiscountPrice != item.Price)
+                                                {
+                                                    <span class="price old-price">@item.Price.ToString("C") </span>
+                                                }
+                                                <span class="price current-price">@afterDiscountPrice.ToString("C") </span>
+                                            }
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     }
-                </div>
-                <div class="text-center pt--20">
-                    <a href="#" class="axil-btn btn-bg-lighter btn-load-more">Load more</a>
                 </div>
             </div>
         </div>
@@ -144,8 +153,8 @@
         $('#slider-range').slider({
             range: true,
             min: 0,
-            max: 100000000, // 50 million VND
-            values: [@ViewData["CurrentMinPrice"], @ViewData["CurrentMaxPrice"]], // Initial range from 0 to 40 million VND
+            max: 100000000, // 50 million 
+            values: [@ViewData["CurrentMinPrice"], @ViewData["CurrentMaxPrice"]], // Initial range from 0 to 40 million 
             slide: function (event, ui) {
                 $('#amount').val(
                     ui.values[0].toLocaleString() + ' ₫  ' + ui.values[1].toLocaleString() + '  ₫'

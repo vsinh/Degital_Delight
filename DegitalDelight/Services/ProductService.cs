@@ -61,6 +61,13 @@ namespace DegitalDelight.Services
             return products;
         }
 
+        public async Task<List<Product>> Search(string input)
+        {
+            return await _context.Products.Include(x => x.ProductType)
+                .Where(x => x.Name.Contains(input) && !x.IsDeleted
+                ).ToListAsync();
+        }
+
         public Task<List<Product>> GetProductsByCategory(int categoryId)
         {
             return _context.Products.Include(x => x.ProductType).Where(x => x.ProductType.Id == categoryId).ToListAsync();

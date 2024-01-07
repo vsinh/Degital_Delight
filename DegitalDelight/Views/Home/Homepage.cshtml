@@ -38,7 +38,7 @@
                                 <div class="single-slide slick-slide" data-sal="slide-up" data-sal-delay="600" data-sal-duration="1500">
                                     <img src="@ViewData["ProductImageUrl"]/@item.Picture" alt="Product">
                                     <div class="product-price">
-                                        <span class="price-amount">@item.Price VND</span>
+                                        <span class="price-amount">@item.Price </span>
                                     </div>
                                 </div>
                             }
@@ -204,9 +204,9 @@
                                                     var afterDiscountPrice = await productService.GetProductPriceAfterDiscount(item.Id);
                                                     if (afterDiscountPrice != item.Price)
                                                     {
-                                                        <span class="price old-price">@item.Price VND</span>
+                                                        <span class="price old-price">@item.Price.ToString("C") </span>
                                                     }
-                                                    <span class="price current-price">@afterDiscountPrice VND</span>
+                                                    <span class="price current-price">@afterDiscountPrice.ToString("C") </span>
                                                 }
                                             </div>
                                         </div>
@@ -350,9 +350,9 @@
                                                 var afterDiscountPrice = await productService.GetProductPriceAfterDiscount(item.Id);
                                                 if (afterDiscountPrice != item.Price)
                                                 {
-                                                    <span class="price old-price">@item.Price VND</span>
+                                                    <span class="price old-price">@item.Price.ToString("C") </span>
                                                 }
-                                                <span class="price current-price">@afterDiscountPrice VND</span>
+                                                <span class="price current-price">@afterDiscountPrice.ToString("C") </span>
                                             }
                                         </div>
                                         <div class="product-hover-action">
@@ -393,9 +393,9 @@
                                     </a>
                                 </div>
                                 <div class="product-content">
-                                    <h6 class="product-title"><a href="single-product.html">@item.Name</a></h6>
+                                    <h6 class="product-title"><a asp-controller="Product" asp-action="Product" asp-route-id="@item.Id">@item.Name</a></h6>
                                     <div class="product-price-variant">
-                                        <span class="price current-price">$@item.Price</span>
+                                        <span class="price current-price">@item.Price.ToString("C") </span>
 
                                     </div>
                                     <div class="product-cart">

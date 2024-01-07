@@ -35,7 +35,7 @@
                             </ul>
                         </div>
                     </div>
-                    <form asp-action="Shop" class="mt--25">
+                    <form asp-action="Shop" asp-route-id="@ViewData["CurrentId"]" class="mt--25">
                         <div class="toggle-list product-price-range active">
                             <h6 class="title">PRICE</h6>
                             <div class="shop-submenu">
@@ -45,7 +45,6 @@
                                     <input type="text" id="amount" name="amount" class="amount-range" readonly>
                                     <input id="minPrice" name="minPrice" hidden />
                                     <input id="maxPrice" name="maxPrice" hidden />
-                                    <input id="id" name="id" hidden />
                                 </div>
                             </div>
                         </div>
@@ -59,11 +58,11 @@
                     <div class="col-lg-12">
                         <div class="axil-shop-top mb--40">
                             <div class="category-select align-items-center justify-content-lg-end justify-content-between">
-                                <select class="single-select">
-                                    <option>Short by Latest</option>
-                                    <option>Short by Oldest</option>
-                                    <option>Short by Name</option>
-                                    <option>Short by Price</option>
+                                <select onchange="ChangeSort(this.value)" class="single-select" value='@ViewData["CurrentSort"]'>
+                                    <option value="Latest">Mới nhất</option>
+                                    <option value="Oldest">Cũ nhất</option>
+                                    <option value="PriceAsc">Giá tăng dần</option>
+                                    <option value="PriceDesc">Giá giảm dần</option>
                                 </select>
                                 <!-- End Single Select  -->
                             </div>
@@ -84,7 +83,13 @@
                                         <img src='@ViewData["ProductImageUrl"]/@item.Picture' alt="Product Images">
                                     </a>
                                     <div class="label-block label-right">
-                                        <div class="product-badget">10% OFF</div>
+                                        @{
+                                            var discount = await productService.GetProductDiscount(item.Id);
+                                            if (discount > 0)
+                                            {
+                                                <div class="product-badget">@discount%</div>
+                                            }
+                                        }
                                     </div>
                                     <div class="product-hover-action">
                                         <ul class="cart-action">
@@ -98,17 +103,20 @@
                                     <div class="inner">
                                         <h5 class="title"><a asp-action="Product" asp-controller="Product" asp-route-id="@item.Id">@item.Name</a></h5>
                                         <div class="product-price-variant">
-                                            <span class="price current-price">@item.Price VND</span>
-                                            <span class="price old-price">@item.Price VND</span>
+                                            @{
+                                                var afterDiscountPrice = await productService.GetProductPriceAfterDiscount(item.Id);
+                                                if (afterDiscountPrice != item.Price)
+                                                {
+                                                    <span class="price old-price">@item.Price.ToString("C") </span>
+                                                }
+                                                <span class="price current-price">@afterDiscountPrice.ToString("C") </span>
+                                            }
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     }
-                </div>
-                <div class="text-center pt--20">
-                    <a href="#" class="axil-btn btn-bg-lighter btn-load-more">Load more</a>
                 </div>
             </div>
         </div>
@@ -134,24 +142,39 @@
     </div>
     <!-- End .container -->
 </div>
+<form id="sort" asp-action="Shop" asp-route-id="@ViewData["CurrentId"]" hidden>
+    <input id="currentMinPrice" name="minPrice" value="@ViewData["CurrentMinPrice"]" />
+    <input id="currentMaxPrice" name="maxPrice" value="@ViewData["CurrentMaxPrice"]" />
+    <input id="currentSortType" name="sort" />
+</form>
 <!-- End Axil Newsletter Area  -->
 @section Scripts {
     <script defer>
         $('#slider-range').slider({
             range: true,
             min: 0,
-            max: 100000000, // 50 million VND
-            values: [0, 40000000], // Initial range from 0 to 40 million VND
+            max: 100000000, // 50 million
+            values: [@ViewData["CurrentMinPrice"], @ViewData["CurrentMaxPrice"]], // Initial range from 0 to 40 million
             slide: function (event, ui) {
                 $('#amount').val(
-                    ui.values[0].toLocaleString() + ' ₫  -  ' + ui.values[1].toLocaleString() + '  ₫'
+                    ui.values[0].toLocaleString() + ' ₫  ' + ui.values[1].toLocaleString() + '  ₫'
                 );
+                $('#minPrice').val(ui.values[0]);
+                $('#maxPrice').val(ui.values[1]);
             }
         });
 
         $('#amount').val(
             $('#slider-range').slider('values', 0).toLocaleString() +
-            ' ₫  - ' + $('#slider-range').slider('values', 1).toLocaleString() + '  ₫'
+            ' ₫  ' + $('#slider-range').slider('values', 1).toLocaleString() + '  ₫'
         );
+    </script>
+    <script>
+        function ChangeSort(sortType) {
+            var form = document.getElementById("sort");
+            var currentSortType = document.getElementById("currentSortType");
+            currentSortType.value = sortType;
+            form.submit();
+        };
     </script>
 }
