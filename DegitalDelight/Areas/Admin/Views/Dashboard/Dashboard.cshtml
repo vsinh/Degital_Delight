@@ -12,118 +12,15 @@
     <div class="row tm-content-row">
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
             <div class="tm-bg-primary-dark tm-block">
-                <h2 class="tm-block-title">Latest Hits</h2>
-                <canvas id="lineChart"></canvas>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-            <div class="tm-bg-primary-dark tm-block">
-                <h2 class="tm-block-title">Performance</h2>
+                <h2 class="tm-block-title">Doanh thu loại sản phẩm</h2>
                 <canvas id="barChart"></canvas>
             </div>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
             <div class="tm-bg-primary-dark tm-block tm-block-taller">
-                <h2 class="tm-block-title">Storage Information</h2>
+                <h2 class="tm-block-title">Thông tin sản phẩm hiện có trong cửa hàng</h2>
                 <div id="pieChartContainer">
                     <canvas id="pieChart" class="chartjs-render-monitor" width="200" height="200"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-            <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-overflow">
-                <h2 class="tm-block-title">Notification List</h2>
-                <div class="tm-notification-items">
-                    <div class="media tm-notification-item">
-                        <div class="tm-gray-circle"><img src="~/~/img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                        <div class="media-body">
-                            <p class="mb-2">
-                                <b>Jessica</b> and <b>6 others</b> sent you new <a href="#"
-                                                                                   class="tm-notification-link">product updates</a>. Check new orders.
-                            </p>
-                            <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                        </div>
-                    </div>
-                    <div class="media tm-notification-item">
-                        <div class="tm-gray-circle"><img src="~/img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                        <div class="media-body">
-                            <p class="mb-2">
-                                <b>Oliver Too</b> and <b>6 others</b> sent you existing <a href="#"
-                                                                                           class="tm-notification-link">product updates</a>. Read more reports.
-                            </p>
-                            <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                        </div>
-                    </div>
-                    <div class="media tm-notification-item">
-                        <div class="tm-gray-circle"><img src="~/img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                        <div class="media-body">
-                            <p class="mb-2">
-                                <b>Victoria</b> and <b>6 others</b> sent you <a href="#"
-                                                                                class="tm-notification-link">order updates</a>. Read order information.
-                            </p>
-                            <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                        </div>
-                    </div>
-                    <div class="media tm-notification-item">
-                        <div class="tm-gray-circle"><img src="~/img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                        <div class="media-body">
-                            <p class="mb-2">
-                                <b>Laura Cute</b> and <b>6 others</b> sent you <a href="#"
-                                                                                  class="tm-notification-link">product records</a>.
-                            </p>
-                            <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                        </div>
-                    </div>
-                    <div class="media tm-notification-item">
-                        <div class="tm-gray-circle"><img src="~/img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                        <div class="media-body">
-                            <p class="mb-2">
-                                <b>Samantha</b> and <b>6 others</b> sent you <a href="#"
-                                                                                class="tm-notification-link">order stuffs</a>.
-                            </p>
-                            <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                        </div>
-                    </div>
-                    <div class="media tm-notification-item">
-                        <div class="tm-gray-circle"><img src="~/img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                        <div class="media-body">
-                            <p class="mb-2">
-                                <b>Sophie</b> and <b>6 others</b> sent you <a href="#"
-                                                                              class="tm-notification-link">product updates</a>.
-                            </p>
-                            <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                        </div>
-                    </div>
-                    <div class="media tm-notification-item">
-                        <div class="tm-gray-circle"><img src="~/img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                        <div class="media-body">
-                            <p class="mb-2">
-                                <b>Lily A</b> and <b>6 others</b> sent you <a href="#"
-                                                                              class="tm-notification-link">product updates</a>.
-                            </p>
-                            <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                        </div>
-                    </div>
-                    <div class="media tm-notification-item">
-                        <div class="tm-gray-circle"><img src="~/img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                        <div class="media-body">
-                            <p class="mb-2">
-                                <b>Amara</b> and <b>6 others</b> sent you <a href="#"
-                                                                             class="tm-notification-link">product updates</a>.
-                            </p>
-                            <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                        </div>
-                    </div>
-                    <div class="media tm-notification-item">
-                        <div class="tm-gray-circle"><img src="~/img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                        <div class="media-body">
-                            <p class="mb-2">
-                                <b>Cinthela</b> and <b>6 others</b> sent you <a href="#"
-                                                                                class="tm-notification-link">product updates</a>.
-                            </p>
-                            <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -281,32 +178,16 @@
         </div>
     </div>
 </div>
-<footer class="tm-footer row tm-mt-small">
-    <div class="col-12 font-weight-light">
-        <p class="text-center text-white mb-0 px-4 small">
-            Copyright &copy; <b>2018</b> All rights reserved.
 
-            Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
-        </p>
-    </div>
-</footer>
 @section Scripts {
-
+    <script src="~/js/chart.min.js"></script>
+    <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/moment.min.js"></script>
-    <!-- https://momentjs.com/ -->
+
     <script>
         Chart.defaults.global.defaultFontColor = 'white';
-        let ctxLine,
-            ctxBar,
-            ctxPie,
-            optionsLine,
-            optionsBar,
-            optionsPie,
-            configLine,
-            configBar,
-            configPie,
-            lineChart;
-        barChart, pieChart;
+        let ctxLine, ctxBar, ctxPie, optionsLine, optionsBar, optionsPie, configLine, configBar, configPie, lineChart, barChart, pieChart;
+
         // DOM is ready
         $(function () {
             drawLineChart(); // Line Chart
@@ -317,6 +198,109 @@
                 updateLineChart();
                 updateBarChart();
             });
-        })
+
+
+            // Cần load data thông tin sản phẩm hiện có trong cửa hàng ở sau đây cho Pie Chart
+            // Sample data for the pie chart
+            var sampleData = [
+                { label: 'Laptop', value: 30 },
+                { label: 'Điện thoại', value: 20 },
+                { label: 'Thiết bị mạng', value: 25 },
+                { label: 'Phụ kiện gaming', value: 15 },
+                { label: 'Phụ kiện', value: 10 }
+            ];
+
+            // Function to update the pie chart with data
+            function updatePieChart(data) {
+                // Access the Chart.js instance
+                if (pieChart) {
+                    pieChart.destroy();
+                }
+                pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: data.map(item => item.label),
+                        datasets: [{
+                            data: data.map(item => item.value),
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8B4513', '#00FF7F'], // Add more colors as needed
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                    }
+                });
+            }
+
+            var sampleBarData = {
+                labels: ["Laptop", "Điện thoại", "Thiết bị mạng", "Phụ kiện gaming", "Phụ kiện"],
+                datasets: [{
+                    label: 'Doanh thu',
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8B4513', '#00FF7F'], // Add more colors as needed
+                    borderColor: '#fff',
+                    data: [3000, 2000, 2500, 1500, 1000] // Sample revenue data
+                }]
+            };
+
+            // Function to draw the initial bar chart
+            function drawBarChart() {
+                if (barChart) {
+                    barChart.destroy();
+                }
+                ctxBar = document.getElementById('barChart').getContext('2d');
+                optionsBar = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                color: 'rgba(255, 255, 255, 0.1)',
+                            },
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                color: 'rgba(255, 255, 255, 0.1)',
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                stepSize: 1000,
+                                callback: function (value) {
+                                    return value + ' VND';
+                                }
+                            }
+                        }]
+                    },
+                    legend: {
+                        labels: {
+                            fontColor: 'white'
+                        }
+                    }
+                };
+                configBar = {
+                    type: 'bar',
+                    data: sampleBarData,
+                    options: optionsBar
+                };
+                barChart = new Chart(ctxBar, configBar);
+            }
+
+            // Function to update the bar chart with data
+            function updateBarChart(data) {
+                // Access the Chart.js instance
+                if (barChart) {
+                    barChart.destroy();
+                }
+                barChart = new Chart(ctxBar, {
+                    type: 'bar',
+                    data: data,
+                    options: optionsBar
+                });
+            }
+
+            updateBarChart(sampleBarData);
+            // Update the pie chart with sample data
+            updatePieChart(sampleData);
+        });
     </script>
 }
+
