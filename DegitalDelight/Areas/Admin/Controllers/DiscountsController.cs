@@ -16,13 +16,13 @@ namespace DegitalDelight.Areas.Admin.Controllers
     [Area("Admin")]
     public class DiscountsController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IDiscount _discountService;
+        private readonly IProduct _productService;
 
-        public DiscountsController(ApplicationDbContext context, IDiscount discountService)
+        public DiscountsController(IDiscount discountService, IProduct productService)
         {
-            _context = context;
             _discountService = discountService;
+            _productService = productService;
         }
 
         // GET: Admin/Discounts
@@ -31,151 +31,116 @@ namespace DegitalDelight.Areas.Admin.Controllers
 			return View(await _discountService.GetAllDiscounts());
 		}
 
-        // GET: Admin/Discounts/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Discounts == null)
-            {
-                return NotFound();
-            }
-
-            var discount = await _context.Discounts
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (discount == null)
-            {
-                return NotFound();
-            }
-
-            return View(discount);
-        }
+		public async Task<IActionResult> SearchProductType(string input)
+		{
+			var discounts = await _discountService.SearchProductDiscounts(input);
+			return Json(discounts);
+		}
+		public async Task<IActionResult> SearchCode(string input)
+		{
+			var discounts = await _discountService.SearchCodeDiscounts(input);
+			return Json(discounts);
+		}
 
 		// GET: Admin/Discounts/Create
-		public IActionResult CreateCode()
+		public IActionResult CreateCodeDiscount()
 		{
 			return View();
 		}
 
-		// POST: Admin/Discounts/Create
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Code,Type,Amount,StartDate,EndDate,IsDeleted")] Discount discount)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(discount);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(discount);
-        }
+		public async Task<IActionResult> CreateProductDiscount(int id)
+		{
+            ViewData["Product"] = await _productService.GetProducts(id);
+			return View();
+		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CreateCode([Bind("Type,StartDate,EndDate,Code,Quantity,Amount")] Discount discount)
+		public async Task<IActionResult> CreateCodeDiscount([Bind("Type,StartDate,EndDate,Code,Quantity,Amount")] Discount discount)
 		{
             if (discount.EndDate < discount.StartDate)
                 return View(discount);
+            var discounts = await _discountService.GetAllDiscounts();
+            foreach(var item in discounts)
+            {
+                if (discount.Code == item.Code)
+                    return View(discount);
+            }
 			if (ModelState.IsValid)
 			{
-				await _discountService.CreateDisount(discount);
+				await _discountService.CreateDiscount(discount);
 				return RedirectToAction("Index", "Discounts");
 			}
 			return View(discount);
 		}
 
-		// GET: Admin/Discounts/Edit/5
-		public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Discounts == null)
-            {
-                return NotFound();
-            }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> CreateProductDiscount([Bind("Type,StartDate,EndDate,Quantity,Amount")] Discount discount, int ProductId)
+		{
+			if (discount.EndDate < discount.StartDate)
+				return View(discount);
+			if (ModelState.IsValid)
+			{
+                Product newproduct = new Product();
+                newproduct.Id = ProductId;
+                discount.Product = newproduct;
+				await _discountService.CreateProductDiscount(discount);
+				return RedirectToAction("Index", "Discounts");
+			}
+			return View(discount);
+		}
 
-            var discount = await _context.Discounts.FindAsync(id);
+		public async Task<IActionResult> EditProductDiscount(int id)
+        {
+            var discount = await _discountService.GetDiscountById(id);
             if (discount == null)
             {
                 return NotFound();
             }
             return View(discount);
         }
+		public async Task<IActionResult> EditCodeDiscount(int id)
+		{
+			var discount = await _discountService.GetDiscountById(id);
+			if (discount == null)
+			{
+				return NotFound();
+			}
+			return View(discount);
+		}
 
-        // POST: Admin/Discounts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Code,Type,Amount,StartDate,EndDate,IsDeleted")] Discount discount)
-        {
-            if (id != discount.Id)
-            {
-                return NotFound();
-            }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> EditCodeDiscount([Bind("Id,Type,StartDate,EndDate,Code,Quantity,Amount")] Discount discount)
+		{
+			if (discount.EndDate < discount.StartDate)
+				return View(discount);
+			if (await _discountService.CheckExistCode(discount))
+			{
+				return View(discount);
+			}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(discount);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DiscountExists(discount.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(discount);
-        }
+			if (ModelState.IsValid)
+			{
+				await _discountService.EditDiscount(discount);
+				return RedirectToAction("Index", "Discounts");
+			}
+			return View(discount);
+		}
 
-        // GET: Admin/Discounts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Discounts == null)
-            {
-                return NotFound();
-            }
-
-            var discount = await _context.Discounts
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (discount == null)
-            {
-                return NotFound();
-            }
-
-            return View(discount);
-        }
-
-        // POST: Admin/Discounts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Discounts == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Discounts'  is null.");
-            }
-            var discount = await _context.Discounts.FindAsync(id);
-            if (discount != null)
-            {
-                _context.Discounts.Remove(discount);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool DiscountExists(int id)
-        {
-          return (_context.Discounts?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
-    }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> EditProductDiscount([Bind("Id,Type,StartDate,EndDate,Quantity,Amount")] Discount discount)
+		{
+			if (discount.EndDate < discount.StartDate)
+				return View(discount);
+			if (ModelState.IsValid)
+			{
+				await _discountService.EditDiscount(discount);
+				return RedirectToAction("Index", "Discounts");
+			}
+			return View(discount);
+		}
+	}
 }

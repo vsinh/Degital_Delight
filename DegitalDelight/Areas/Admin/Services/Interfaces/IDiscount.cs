@@ -7,9 +7,12 @@ namespace DegitalDelight.Areas.Admin.Services.Interfaces
 	{
 		Task<List<Discount>> GetAllDiscounts();
 		Task<Discount> GetDiscountById(int id);
-		Task<List<Discount>> SearchDiscounts(string input);
-		Task CreateDisount(Discount supply);
-		Task EditDiscount(Discount supply);
+		Task<List<Discount>> SearchProductDiscounts(string input);
+		Task<List<Discount>> SearchCodeDiscounts(string input);
+		Task CreateDiscount(Discount discount);
+		Task CreateProductDiscount(Discount discount);
+		Task EditDiscount(Discount discount);
 		Task DeleteDiscount(int id);
+		Task<bool> CheckExistCode(Discount discount);
 	}
 }

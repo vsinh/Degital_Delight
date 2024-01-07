@@ -8,7 +8,7 @@
 			<div class="tm-bg-primary-dark tm-block tm-block-h-auto">
 				<h2 class="tm-block-title">Search</h2>
 				<div style="display: inline-flex; width: 100%">
-					<input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white" placeholder="Search" class="placeholder-white" onkeyup="Search()">
+					<input id="search_input" style="flex-grow: 1; background-color: #50657b; color: white">
 					<i class="fa fa-search" style="float: right; font-size: 50px; color: white; padding-left: 10px"></i>
 					</input>
 				</div>
@@ -89,8 +89,11 @@
 		})
 	}
 
-	function Search() {
-		var input = document.getElementById("search_input").value;
-		LoadComment(input);
-	};
+	var input = document.getElementById("search_input");
+	input.addEventListener("keydown", function (e) {
+		if (e.keyCode === 13) {
+			e.preventDefault();
+			LoadComment(input.value);
+		}
+	});
 </script>
