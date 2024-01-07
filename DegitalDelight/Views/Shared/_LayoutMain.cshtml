@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@inject DegitalDelight.Services.Interfaces.IUserService userService
 
 <!doctype html>
 <html class="no-js" lang="en">
@@ -31,10 +32,6 @@
 </head>
 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Homepage", "Home", new { area = "" })"></form>
 <body class="sticky-header newsletter-popup-modal">
-
-    <!--[if lte IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-    <![endif]-->
     <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
     <header class="header axil-header header-style-1">
         <div class="axil-header-top">
@@ -51,14 +48,13 @@
                                     {
                                         <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Dashboard">Admin Page</a></li>
                                     }
-                                    
+
                                     <li><a asp-area="Identity" asp-page="/Account/Manage/Index">@User.Identity?.Name</a></li>
                                     <li>
-                                        <a href="#" onclick="Logout()">Đăng xuất
+                                        <a href="#" onclick="Logout()">
+                                            Đăng xuất
                                         </a>
                                     </li>
-                                    
-
                                 }
                                 else
                                 {
@@ -578,75 +574,35 @@
             </div>
             <div class="cart-body">
                 <ul class="cart-item-list">
-                    <li class="cart-item">
-                        <div class="item-img">
-                            <a href="single-product.html"><img src="~/etrade/assets/images/product/electric/product-01.png" alt="Commodo Blown Lamp"></a>
-                            <button class="close-btn"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="item-content">
-                            <div class="product-rating">
-                                <span class="icon">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="rating-number">(64)</span>
-                            </div>
-                            <h3 class="item-title"><a href="single-product-3.html">Wireless PS Handler</a></h3>
-                            <div class="item-price"><span class="currency-symbol">$</span>155.00</div>
-                            <div class="pro-qty item-quantity">
-                                <input type="number" class="quantity-input" value="15">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="cart-item">
-                        <div class="item-img">
-                            <a href="single-product-2.html"><img src="~/etrade/assets/images/product/electric/product-02.png" alt="Commodo Blown Lamp"></a>
-                            <button class="close-btn"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="item-content">
-                            <div class="product-rating">
-                                <span class="icon">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="rating-number">(4)</span>
-                            </div>
-                            <h3 class="item-title"><a href="single-product-2.html">Gradient Light Keyboard</a></h3>
-                            <div class="item-price"><span class="currency-symbol">$</span>255.00</div>
-                            <div class="pro-qty item-quantity">
-                                <input type="number" class="quantity-input" value="5">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="cart-item">
-                        <div class="item-img">
-                            <a href="single-product-3.html"><img src="~/etrade/assets/images/product/electric/product-03.png" alt="Commodo Blown Lamp"></a>
-                            <button class="close-btn"><i class="fas fa-times"></i></button>
-                        </div>
-                        <div class="item-content">
-                            <div class="product-rating">
-                                <span class="icon">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="rating-number">(6)</span>
-                            </div>
-                            <h3 class="item-title"><a href="single-product.html">HD CC Camera</a></h3>
-                            <div class="item-price"><span class="currency-symbol">$</span>200.00</div>
-                            <div class="pro-qty item-quantity">
-                                <input type="number" class="quantity-input" value="100">
-                            </div>
-                        </div>
-                    </li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        foreach (var item in await userService.GetCartItems())
+                        {
+                            <li class="cart-item">
+                                <div class="item-img">
+                                    <a href="single-product.html"><img src="~/etrade/assets/images/product/electric/product-01.png" alt="Commodo Blown Lamp"></a>
+                                    <button class="close-btn"><i class="fas fa-times"></i></button>
+                                </div>
+                                <div class="item-content">
+                                    <div class="product-rating">
+                                        <span class="icon">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </span>
+                                        <span class="rating-number">(64)</span>
+                                    </div>
+                                    <h3 class="item-title"><a href="single-product-3.html">@item.Product.Name</a></h3>
+                                    <div class="item-price"><span class="currency-symbol">$</span>@item.Product.Price</div>
+                                    <div class="pro-qty item-quantity">
+                                        <input type="number" class="quantity-input" value="@item.Amount">
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
                 </ul>
             </div>
             <div class="cart-footer">
