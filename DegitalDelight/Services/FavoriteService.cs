@@ -29,6 +29,14 @@ namespace DegitalDelight.Services
                 favoriteItem.Product = product;
 
                 var currentUser = await _userService.GetCurrentUser();
+
+                foreach(var item in currentUser.Favorites)
+                {
+                    if (item.ProductId == productId) {
+                        return false;
+                    }
+                }
+
                 favoriteItem.User = currentUser;
                 await _context.AddAsync(favoriteItem);
                 await _context.SaveChangesAsync();
@@ -53,12 +61,10 @@ namespace DegitalDelight.Services
 
             return null;
         }
-        public async Task<bool> RemoveItemFromFavorite(int productId, string userId)
+        public async Task<bool> RemoveItemFromFavorite(int favoriteId)
         {
-            var currentUser = await _userService.GetCurrentUser();
-
             var favoriteItem = await _context.Favorites
-                .Where(f => f.ProductId == productId && f.UserId == currentUser.Id)
+                .Where(f => f.Id == favoriteId)
                 .FirstOrDefaultAsync();
 
             if (favoriteItem != null)

@@ -33,7 +33,7 @@ namespace DegitalDelight.Services
             }
             var fullUser = await _context.Users.Where(x => ! 
                                     x.IsDeleted && x.Id == currentUser.Id
-            ).Include(u => u.CartItems).ThenInclude(x => x.Product).Include(x => x.Favorites).FirstOrDefaultAsync();
+            ).Include(u => u.CartItems).ThenInclude(x => x.Product).Include(x => x.Favorites).ThenInclude(x => x.Product).FirstOrDefaultAsync();
             return fullUser;
         }
         public async Task<List<User>> GetUserList()

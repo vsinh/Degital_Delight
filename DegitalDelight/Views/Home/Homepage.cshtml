@@ -203,8 +203,8 @@
                                                     </a>
                                                 </li>
                                                 <li class="wishlist">
-                                                    <a asp-action="AddItemToFavorite" asp-controller="Favorite" asp-route-productId="@item.Id">
-                                                        <i class="far fa-heart"></i>
+                                                    <a onclick="AddToFavorite(@item.Id)" onmouseover="changeColor()" onmouseout="resetColor()">
+                                                        <i class="far fa-heart" id="heartIcon" style="color: #000;"></i>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -422,7 +422,9 @@
                                     </div>
                                     <div class="product-cart">
                                         <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
-                                        <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
+                                        <a onclick="AddToFavorite(@item.Id)" class="cart-btn">
+                                            <i class="fal fa-heart"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -565,3 +567,27 @@
 </div>
 <div class="closeMask"></div>
 
+<script>
+    function AddToFavorite(id) {
+        $.ajax({
+            type: "GET",
+            url: "/Favorite/AddItemToFavorite/" + id,
+            dataType: "json",
+            async: true,
+            success: function (data) {
+            },
+            failure: function (err) {
+            }
+        })
+    }
+</script>
+
+<script>
+    function changeColor() {
+        document.getElementById('heartIcon').style.color = '#ff0000'; // Change to your desired hover color
+    }
+
+    function resetColor() {
+        document.getElementById('heartIcon').style.color = '#000'; // Change to your desired default color
+    }
+</script>

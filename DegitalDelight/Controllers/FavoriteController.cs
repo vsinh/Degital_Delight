@@ -42,9 +42,9 @@ namespace DegitalDelight.Controllers
 
 		[HttpGet]
 		[Authorize]
-		public async Task<IActionResult> AddItemToFavorite(int productId)
+		public async Task<IActionResult> AddItemToFavorite(int id)
 		{
-			var result = await _favoriteService.AddItemToFavorite(productId);
+			var result = await _favoriteService.AddItemToFavorite(id);
 			if (result)
 			{
                 return RedirectToAction("Homepage", "Home");
@@ -54,15 +54,15 @@ namespace DegitalDelight.Controllers
 				return NotFound();
 			}
 		}
-		[HttpPost]
+
 		[Authorize]
-		public async Task<IActionResult> RemoveItemFromFavorite(int productId, string userId)
+		public async Task<IActionResult> RemoveItemFromFavorite(int id)
 		{
-			var result = await _favoriteService.RemoveItemFromFavorite(productId,userId);
+			var result = await _favoriteService.RemoveItemFromFavorite(id);
 
 			if (result)
 			{
-                return RedirectToAction("Homepage", "Home");
+                return Json(200);
             }
 
 			return NotFound();
