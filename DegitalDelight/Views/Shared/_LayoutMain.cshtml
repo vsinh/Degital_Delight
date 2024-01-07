@@ -600,6 +600,37 @@
     </script>
     @await RenderSectionAsync("Scripts", required: false)
     
+    <script>
+        function AddToFavorite(id){
+            $.ajax({
+                type: "GET",
+                url: "/Favorite/AddItemToFavorite/" + id,
+                dataType: "json",
+                async: true,
+                success: function (data) {
+                },
+                failure: function (err) {
+                }
+            })
+        }
+    </script>
+
+    <script>
+        function RemoveFavorite(id) {
+            $.ajax({
+                type: "GET",
+                url: "/Favorite/RemoveItemFromFavorite/" + id,
+                dataType: "json",
+                async: true,
+                success: function (data) {
+                    location.reload();
+                },
+                failure: function (err) {
+                }
+            })
+        }
+    </script>
 </body>
 
 </html>
+
