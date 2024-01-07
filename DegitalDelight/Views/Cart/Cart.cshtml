@@ -56,7 +56,10 @@
                                             </td>
                                             <td class="product-quantity" data-title="Qty">
                                                 <div class="pro-qty">
-                                                    <input type="number" class="quantity-input" value="@item.Amount">
+                                                    <input type="number" class="quantity-input" value="@item.Amount" id="quantity-@item.Product.Id">
+                                                    <div class="update-btn">
+                                                        <button type="button" onclick="updateCartItemAmount(@item.Product.Id, $('#quantity-@item.Product.Id').val())">Update</button>
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td class="product-subtotal" data-title="Tổng cộng">
@@ -79,9 +82,7 @@
                                 <button type="submit" class="axil-btn btn-outline">Apply</button>
                             </div>
                         </div>
-                        <div class="update-btn">
-                            <a href="#" class="axil-btn btn-outline">Update Cart</a>
-                        </div>
+                      
                     </div>
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 offset-xl-7 offset-lg-5">
@@ -123,6 +124,24 @@
                 </div>
             </div>
         </div>
+        <script>
+            function updateCartItemAmount(productId, newAmount) {
+                $.ajax({
+                    url: '@Url.Action("UpdateCartItemAmount", "Cart")',
+                    type: 'POST',
+                    data: {
+                        productId: productId,
+                        newAmount: newAmount
+                    },
+                    success: function (result) {
+                        location.reload(); 
+                    },
+                    error: function () {
+                        console.error('Error updating cart item amount.');
+                    }
+                });
+            }
+        </script>
         <!-- End Cart Area  -->
     }
 </main>

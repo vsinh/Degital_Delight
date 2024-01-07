@@ -100,6 +100,23 @@ namespace DegitalDelight.Controllers
             }
             return NotFound();
         }
+        [HttpPost]
+        public async Task<IActionResult> UpdateCartItemAmount(int productId, int newAmount)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId != null)
+            {
+                var result = await _cartService.UpdateCartItemAmount(productId, userId, newAmount);
+
+                if (result)
+                {
+                    return RedirectToAction("ViewCart", "Cart");
+                }
+            }
+
+            return NotFound();
+        }
     }
 }
 

@@ -95,5 +95,20 @@ namespace DegitalDelight.Services
 
             return false;
         }
+        public async Task<bool> UpdateCartItemAmount(int productId, string userId, int newAmount)
+        {
+            var cartItem = await _context.CartItems
+                .Where(ci => ci.Product.Id == productId && ci.User.Id == userId)
+                .FirstOrDefaultAsync();
+
+            if (cartItem != null)
+            {
+                cartItem.Amount = newAmount;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
     }
 }
