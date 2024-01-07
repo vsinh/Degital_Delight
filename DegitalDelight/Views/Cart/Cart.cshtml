@@ -1,8 +1,12 @@
-﻿@{
-    ViewData["Title"] = "CART";
-    Layout = "../Shared/_LayoutMain.cshtml";
-}
-
+﻿    @{
+        ViewData["Title"] = "CART";
+        ViewData["ProductImageUrl"] = "/img/product";
+        Layout = "../Shared/_LayoutMain.cshtml";
+    }   
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@inject DegitalDelight.Services.Interfaces.IUserService userService
 <main class="main-wrapper">
 
     <!-- Start Cart Area  -->
@@ -26,42 +30,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="product-remove"><a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a></td>
-                                <td class="product-thumbnail"><a href="single-product.html"><img src="./assets/images/product/electric/product-01.png" alt="Digital Product"></a></td>
-                                <td class="product-title"><a href="single-product.html">Wireless PS Handler</a></td>
-                                <td class="product-price" data-title="Price"><span class="currency-symbol">VND</span>124.000</td>
-                                <td class="product-quantity" data-title="Qty">
-                                    <div class="pro-qty">
-                                        <input type="number" class="quantity-input" value="1">
-                                    </div>
-                                </td>
-                                <td class="product-subtotal" data-title="Tổng cộng"><span class="currency-symbol">VND</span>275.000</td>
-                            </tr>
-                            <tr>
-                                <td class="product-remove"><a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a></td>
-                                <td class="product-thumbnail"><a href="single-product-2.html"><img src="./assets/images/product/electric/product-02.png" alt="Digital Product"></a></td>
-                                <td class="product-title"><a href="single-product-2.html">Gradient Light Keyboard</a></td>
-                                <td class="product-price" data-title="Price"><span class="currency-symbol">VND</span>124.000</td>
-                                <td class="product-quantity" data-title="Qty">
-                                    <div class="pro-qty">
-                                        <input type="number" class="quantity-input" value="1">
-                                    </div>
-                                </td>
-                                <td class="product-subtotal" data-title="Tổng cộng"><span class="currency-symbol">VND</span>275.000</td>
-                            </tr>
-                            <tr>
-                                <td class="product-remove"><a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a></td>
-                                <td class="product-thumbnail"><a href="single-product-3.html"><img src="./assets/images/product/electric/product-03.png" alt="Digital Product"></a></td>
-                                <td class="product-title"><a href="single-product-3.html">HD CC Camera</a></td>
-                                <td class="product-price" data-title="Price"><span class="currency-symbol">VND</span>124.000</td>
-                                <td class="product-quantity" data-title="Qty">
-                                    <div class="pro-qty">
-                                        <input type="number" class="quantity-input" value="1">
-                                    </div>
-                                </td>
-                                <td class="product-subtotal" data-title="Tổng cộng"><span class="currency-symbol">VND</span>275.000</td>
-                            </tr>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                foreach (var item in await userService.GetCartItems())
+                                {
+                                    <tr class="cart-item">
+                                        <td class="product-remove">
+                                            <a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a>
+                                        </td>
+                                        <td class="product-thumbnail">
+                                            <a href="single-product.html">
+                                                <img src="@ViewData["ProductImageUrl"]/@item.Product.Picture" alt="Digital Product">
+                                            </a>
+                                        </td>
+                                        <td class="product-title">
+                                            <a href="single-product-3.html">@item.Product.Name</a>
+                                        </td>
+                                        <td class="product-price" data-title="Price">
+                                            <span class="currency-symbol">@item.Product.Price</span> VNĐ
+                                        </td>
+                                        <td class="product-quantity" data-title="Qty">
+                                            <div class="pro-qty">
+                                                <input type="number" class="quantity-input" value="@item.Amount">
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal" data-title="Tổng cộng">
+                                            <span class="currency-symbol">@(item.Product.Price * item.Amount)</span>VNĐ
+                                        </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>

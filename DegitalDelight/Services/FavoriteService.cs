@@ -38,7 +38,7 @@ namespace DegitalDelight.Services
             }
             return false;
         }
-        public async Task<List<Favorite>> GetFavoriteProducts()
+        public async Task<List<Favorite>> GetFavoriteProducts(string userId)
         {
             var currentUser = await _userService.GetCurrentUser();
             if (currentUser != null)
@@ -53,7 +53,7 @@ namespace DegitalDelight.Services
 
             return null;
         }
-        public async Task<bool> RemoveItemFromFavorite(int productId)
+        public async Task<bool> RemoveItemFromFavorite(int productId, string userId)
         {
             var currentUser = await _userService.GetCurrentUser();
 

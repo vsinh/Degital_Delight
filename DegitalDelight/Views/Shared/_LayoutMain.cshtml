@@ -34,8 +34,11 @@
 
 </head>
 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Homepage", "Home", new { area = "" })"></form>
+
 <body class="sticky-header newsletter-popup-modal">
-    <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
+    
+       
+        <a href="#top" class="back-to-top" id="backto-top"><i class="fal fa-arrow-up"></i></a>
     <header class="header axil-header header-style-1">
         <div class="axil-header-top">
             <div class="container">
@@ -97,7 +100,7 @@
                                     <a asp-action="Homepage" asp-controller="Home">Home</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#">Laptop</a>
+                                    <a href="#">Danh mục</a>
                                     <ul class="axil-submenu">
                                         @foreach (var item in await productService.GetProductTypes())
                                         {
@@ -106,12 +109,14 @@
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#">Danh mục</a>
+                                    <a href="#">Hãng Laptop</a>
                                     <ul class="axil-submenu">
-                                        @foreach (var item in await productService.GetProductTypes())
-                                        {
-                                            <li><a asp-action="Shop" asp-controller="Shop" asp-route-id="@item.Id">@item.Name</a></li>
-                                        }
+                                        <li><a asp-action="Search" asp-controller="Shop" asp-route-id="Asus">Asus</a></li>
+                                        <li><a asp-action="Search" asp-controller="Shop" asp-route-id="Acer">Acer</a></li>
+                                        <li><a asp-action="Search" asp-controller="Shop" asp-route-id="DELL">DELL</a></li>
+                                        <li><a asp-action="Search" asp-controller="Shop" asp-route-id="Apple">Apple</a></li>
+                                        <li><a asp-action="Search" asp-controller="Shop" asp-route-id="HP">HP</a></li>
+
                                     </ul>
                                 </li>
                                 <li><a asp-controller="Home" asp-action="About">About</a></li>
@@ -133,7 +138,7 @@
                             </li>
                             <li class="shopping-cart">
                                 <a asp-action="Cart" asp-controller="Cart" class="cart-dropdown-btn">
-                                    <span class="cart-count">3</span>
+                                   
                                     <i class="flaticon-shopping-cart"></i>
                                 </a>
                             </li>
@@ -502,7 +507,7 @@
             <div class="card-header">
                 <form asp-action="Search" asp-controller="Shop">
                     <div class="input-group">
-                        <input type="search" class="form-control" name="prod-search" id="prod-search" placeholder="Write Something....">
+                        <input type="search" class="form-control" name="id" id="prod-search" placeholder="Write Something....">
                         <button type="submit" class="axil-btn btn-bg-primary"><i class="far fa-search"></i></button>
                     </div>
                 </form>
@@ -513,32 +518,28 @@
 
     <div class="cart-dropdown" id="cart-dropdown">
         <div class="cart-content-wrap">
+               @{
+                        decimal subtotal = 0;
             <div class="cart-header">
                 <h2 class="header-title">Cart review</h2>
                 <button class="cart-close sidebar-close"><i class="fas fa-times"></i></button>
             </div>
             <div class="cart-body">
                 <ul class="cart-item-list">
+                 
                     @if (SignInManager.IsSignedIn(User))
-                    {
+                    {                    
                         foreach (var item in await userService.GetCartItems())
                         {
                             <li class="cart-item">
                                 <div class="item-img">
-                                    <a href="single-product.html"><img src="~/etrade/assets/images/product/electric/product-01.png" alt="Commodo Blown Lamp"></a>
-                                    <button class="close-btn"><i class="fas fa-times"></i></button>
+                                    <a><img src="@ViewData["ProductImageUrl"]/@item.Product.Picture" alt="Commodo Blown Lamp"></a>
+                                        <form method="post" asp-action="RemoveItemFromCart" asp-controller="Cart">
+                                            <input type="hidden" name="productId" value="@item.Product.Id" />
+                                            <button type="submit" class="close-btn"><i class="fas fa-times"></i></button>
+                                        </form>
                                 </div>
                                 <div class="item-content">
-                                    <div class="product-rating">
-                                        <span class="icon">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </span>
-                                        <span class="rating-number">(64)</span>
-                                    </div>
                                     <h3 class="item-title"><a href="single-product-3.html">@item.Product.Name</a></h3>
                                     <div class="item-price"><span class="currency-symbol">$</span>@item.Product.Price</div>
                                     <div class="pro-qty item-quantity">
@@ -546,22 +547,27 @@
                                     </div>
                                 </div>
                             </li>
+
+                            // Calculate subtotal for each item
+                            subtotal += item.Product.Price * item.Amount;
                         }
                     }
                 </ul>
             </div>
             <div class="cart-footer">
-                <h3 class="cart-subtotal">
-                    <span class="subtotal-title">Subtotal:</span>
-                    <span class="subtotal-amount">$610.00</span>
+                <h3 class="cart-subtotal">  
+                    <span class="subtotal-title">Thành tiền:</span>
+                    <span class="subtotal-amount">@subtotal VNĐ</span>
                 </h3>
                 <div class="group-btn">
                     <a asp-controller="Cart" asp-action="Cart" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
-                    <a asp-controller="Cart" asp-action="Cart" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
+                    <a asp-action="Order" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
                 </div>
             </div>
+            }
         </div>
     </div>
+
     <!-- Offer Modal End -->
     <!-- JS
     ============================================ -->
@@ -593,6 +599,7 @@
         }
     </script>
     @await RenderSectionAsync("Scripts", required: false)
+    
 </body>
 
 </html>

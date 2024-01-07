@@ -19,7 +19,7 @@ namespace DegitalDelight.Services
         private readonly IEmailService _emailService;
         private readonly IUserService _userService;
 
-        public CartService(ApplicationDbContext applicationDbContext, 
+        public CartService(ApplicationDbContext applicationDbContext,
             IEmailService emailService,
             IUserService userService)
         {
@@ -30,20 +30,39 @@ namespace DegitalDelight.Services
         public async Task<bool> AddItemToCart(int productId)
         {
             var product = _context.Products.Find(productId);
+
             if (product != null)
             {
-                var cartItem = new CartItem();
-                cartItem.Product = product;
-
                 var currentUser = await _userService.GetCurrentUser();
 
-                cartItem.User = currentUser;
-                cartItem.Amount = 1;
+                if (currentUser != null)
+                {
+                    var existingCartItem = _context.CartItems
+                        .FirstOrDefault(ci => ci.User.Id == currentUser.Id && ci.Product.Id == productId);
 
-                BackgroundJob.Schedule(() => RemindOrder(currentUser.UserName), TimeSpan.FromHours(1));
+                    if (existingCartItem != null)
+                    {
+                        existingCartItem.Amount += 1;
+                    }
+                    else
+                    {
+                        var cartItem = new CartItem
+                        {
+                            Product = product,
+                            User = currentUser,
+                            Amount = 1
+                        };
 
-                return true;
+                        _context.CartItems.Add(cartItem);
+                    }
+
+                    BackgroundJob.Schedule(() => RemindOrder(currentUser.UserName), TimeSpan.FromHours(1));
+
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
             }
+
             return false;
         }
 

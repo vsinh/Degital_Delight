@@ -19,14 +19,14 @@ namespace DegitalDelight.Controllers
             ViewData["CurrentSort"] = maxPrice;
             return View(await _productService.GetProductList(id, minPrice,maxPrice, sort));
         }
-        public async Task<IActionResult> Search(string input)
+        public async Task<IActionResult> Search(string id)
         {
             ViewData["ProductTypes"] = await _productService.GetProductTypes();
             ViewData["CurrentId"] = 1;
             ViewData["CurrentMinPrice"] = 0;
             ViewData["CurrentMaxPrice"] = 40000000;
             ViewData["CurrentSort"] = "Latest";
-            return View(await _productService.Search(input));
+            return View(await _productService.Search(id));
         }
     }
 }
