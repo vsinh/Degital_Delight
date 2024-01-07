@@ -30,6 +30,8 @@
   <ItemGroup>
     <Folder Include="Pic\" />
     <Folder Include="wwwroot\eTrade\assets\images\product\product-thumb\" />
+    <Folder Include="wwwroot\img\product\" />
+    <Folder Include="wwwroot\img\user\" />
   </ItemGroup>
 
   <ItemGroup>

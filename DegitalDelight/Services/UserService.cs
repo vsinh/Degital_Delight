@@ -2,6 +2,8 @@
 using DegitalDelight.Models;
 using DegitalDelight.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DegitalDelight.Services
 {
@@ -27,6 +29,83 @@ namespace DegitalDelight.Services
             var currentUser = await _userManager.GetUserAsync(user);
 
             return currentUser;
+        }
+        public async Task<List<User>> GetUserList()
+        {
+            return _context.Users.ToList();
+        }
+        public async Task<User> GetUserById(string id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        }
+        public async Task<bool> IsAdmin(string id)
+        {
+            var user = await GetUserById(id);
+            if (user == null)
+            {
+                return false;
+            }
+            return await _userManager.IsInRoleAsync(user, "Administrator");
+        }
+
+        public async Task<bool> EditUser([Bind("Id, UserName, PhoneNumber, Email")] User user)
+        {
+            var currentUser = await GetUserById(user.Id);
+
+            var setPhoneResult = await _userManager.SetPhoneNumberAsync(currentUser, user.PhoneNumber);
+            if (!setPhoneResult.Succeeded)
+            {
+                return false;
+            }
+
+            var setUsernameResult = await _userManager.SetUserNameAsync(currentUser, user.UserName);
+            if (!setUsernameResult.Succeeded)
+            {
+                return false;
+            }
+
+            var setEmailResult = await _userManager.SetEmailAsync(currentUser, user.Email);
+            if (!setEmailResult.Succeeded)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> EditUserRole(User user, int role)
+        {
+            var currentUser = await GetUserById(user.Id);
+            if (role == 1)
+            {
+                var removeRoleResult = await _userManager.RemoveFromRoleAsync(currentUser, "Administrator");
+                if (!removeRoleResult.Succeeded)
+                {
+                    return false;
+                }
+            }
+            else if (role == 0)
+            {
+                var addRoleResult = await _userManager.AddToRoleAsync(currentUser, "Administrator");
+                if (!addRoleResult.Succeeded)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public async Task<bool> RevertState(string id)
+        {
+            var user = await GetUserById(id);
+            if (user == null)
+            {
+                return false;
+            }
+            user.IsDeleted = !user.IsDeleted;
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

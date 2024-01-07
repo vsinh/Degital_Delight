@@ -47,6 +47,11 @@
                             <ul class="quick-link">
                                 @if (SignInManager.IsSignedIn(User))
                                 {
+                                    if (await UserManager.IsInRoleAsync(await UserManager.FindByNameAsync(User.Identity.Name), "Administrator"))
+                                    {
+                                        <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Dashboard">Admin Page</a></li>
+                                    }
+                                    
                                     <li><a asp-area="Identity" asp-page="/Account/Manage/Index">@User.Identity?.Name</a></li>
                                     <li>
                                         <a href="#" onclick="Logout()">Đăng xuất
