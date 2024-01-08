@@ -187,9 +187,10 @@
                                             <ul class="cart-action">
                                                 <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
                                                 <li class="select-option">
-                                                    <a>
-                                                        Thêm vào giỏ
-                                                    </a>
+                                                    <form method="post" asp-controller="Cart" asp-action="AddItemToCart">
+                                                        <input type="hidden" name="productId" value="@item.Id" />
+                                                            <button type="submit">            Thêm vào giỏ</button>
+                                                    </form>
                                                 </li>
                                                 <li class="wishlist">
                                                     <a onclick="AddToFavorite(@item.Id)" onmouseover="changeColor()" onmouseout="resetColor()">
