@@ -1,6 +1,7 @@
 ﻿using DegitalDelight.Areas.Admin.Services.Interfaces;
 using DegitalDelight.Data;
 using DegitalDelight.Models;
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 
 namespace DegitalDelight.Areas.Admin.Services
@@ -22,9 +23,34 @@ namespace DegitalDelight.Areas.Admin.Services
 		{
 			Product product = _context.Products.FirstOrDefault(x => x.Id == discount.Product.Id);
 			discount.Product = product;
+
+			if (discount.StartDate > DateTime.Now)
+			{
+                discount.IsDeleted = true;
+				BackgroundJob.Schedule(() => StartDiscount(discount), discount.StartDate);
+            }
+			if (discount.EndDate < DateTime.Now)
+			{
+				BackgroundJob.Schedule(() => EndDiscount(discount), discount.EndDate);
+			}
+
 			await _context.AddAsync(discount);
 			await _context.SaveChangesAsync();
 		}
+
+		public void StartDiscount(Discount discount)
+		{
+			discount.IsDeleted = false;
+			_context.Update(discount);
+			_context.SaveChanges();
+		}
+
+		public void EndDiscount(Discount discount)
+        {
+            discount.IsDeleted = true;
+            _context.Update(discount);
+            _context.SaveChanges();
+        }
 
 		public Task DeleteDiscount(int id)
 		{

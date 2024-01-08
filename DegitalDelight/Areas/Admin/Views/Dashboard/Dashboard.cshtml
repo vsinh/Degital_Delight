@@ -3,6 +3,7 @@
     Layout = "../Shared/_LayoutAdmin.cshtml";
 }
 @inject IReportService reportService
+@inject IOrderService orderService
 
 <div class="container">
     <div class="row">
@@ -36,22 +37,21 @@
                             <th scope="col">Tình trạng</th>
                             <th scope="col">Khách hàng</th>
                             <th scope="col">Ngày bắt đầu</th>
-                            <th scope="col">Giảm giá</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row"><b>#122349</b></th>
-                            <td>
-                                <div class="tm-status-circle moving">
-                                </div>Moving
-                            </td>
-                            <td><b>Oliver Trag</b></td>
-                            <td><b>London, UK</b></td>
-                            <td><b>485 km</b></td>
-                            <td>16:00, 12 NOV 2018</td>
-                            <td>08:00, 18 NOV 2018</td>
-                        </tr>
+                        @foreach (var item in await orderService.GetAllOrders())
+                        {
+                            <tr>
+                                <th scope="row"><b>#@item.Id</b></th>
+                                <td>
+                                    <div class="tm-status-circle moving">
+                                    </div>@item.State
+                                </td>
+                                <td>@item.User.Email</td>
+                                <td>@item.Date</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

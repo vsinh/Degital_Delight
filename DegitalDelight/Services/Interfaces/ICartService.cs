@@ -9,5 +9,6 @@ namespace DegitalDelight.Services.Interfaces
         Task<List<CartItem>> GetCartItems(string userId);
         Task<bool> RemoveItemFromCart(int productId, string userId);
         Task<bool> UpdateCartItemAmount(int productId, string userId, int newAmount);
+        Task ClearCart(string userId);
     }
 }

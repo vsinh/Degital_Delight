@@ -8,39 +8,13 @@ namespace DegitalDelight.Services
     public class ReportService : IReportService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IOrderService orderService;
 
-        public ReportService(ApplicationDbContext context)
+        public ReportService(ApplicationDbContext context, IOrderService orderService)
         {
             _context = context;
+            this.orderService = orderService;
         }
-
-        //public async Task CreateMonthlyReport()
-        //{
-        //    //var report = new Report();
-        //    //report.Month = DateTime.Now.Month;
-        //    //report.Year = DateTime.Now.Year;
-        //    //foreach (var item in await _context.ProductTypes.Include(x => x.Products).ThenInclude(x => x.Supplies).ToListAsync())
-        //    //{
-        //    //    var reportDetail = new ReportDetail();
-        //    //    reportDetail.Report = report;
-        //    //    reportDetail.ProductType = item;
-        //    //    int sales = 0;
-        //    //    foreach (var product in item.Products)
-        //    //    {
-        //    //        int productSales = 0;
-        //    //        int supplyAmount = 0;
-        //    //        foreach (var supply in product.Supplies)
-        //    //        {
-        //    //            if (DateTime.Now - supply.Date > TimeSpan.FromDays(30))
-        //    //            {
-        //    //                supplyAmount += supply.Amount;
-        //    //            }
-        //    //        }
-        //    //        productSales = product.Stock - supplyAmount;
-        //    //    }
-        //    //    reportDetail.Sales = sales;
-        //    //}
-        //}
 
         public async Task<List<Tuple<string, int>>> GetInventoryReport()
         {

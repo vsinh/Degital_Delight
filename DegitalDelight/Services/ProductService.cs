@@ -64,9 +64,9 @@ namespace DegitalDelight.Services
         public async Task<List<Product>> Search(string input)
         {
             var products = await _context.Products.Include(x => x.ProductType)
-                .Where(x => (x.Name.Contains(input) 
+                .Where(x => (x.Name.Contains(input)
                 || x.ProductType.Name.Contains(input)
-                || x.Brand.Contains(input)) 
+                || x.Brand.Contains(input))
                 && !x.IsDeleted
                 ).ToListAsync();
             return products;
@@ -123,6 +123,33 @@ namespace DegitalDelight.Services
                 }
             }
             return product.Price - maxAmount;
+        }
+
+        public async Task<List<Product>> ExploreProducts()
+        {
+            var products = await _context.Products.Where(x => !x.IsDeleted).ToListAsync();
+            var random = new Random();
+            products = products.OrderBy(Id => random.NextDouble()).Take(8).ToList();
+            return products;
+        }
+
+        public async Task<List<Product>> LatestProduct()
+        {
+            var products = await _context.Products.Where(x => !x.IsDeleted).OrderByDescending(x => x.CreatedDate).Take(6).ToListAsync();
+            return products;
+        }
+
+        public async Task<List<Product>> GetLargestStockProduct()
+        {
+            var products = await _context.Products.Where(x => !x.IsDeleted).OrderByDescending(x => x.Stock).Take(8).ToListAsync();
+            return products;
+        }
+
+        public async Task<List<Product>> GetProductWithLargestDiscount()
+        {
+            var products = await _context.Products.Where(x => !x.IsDeleted).Include(x => x.Discounts).ToListAsync();
+            products = products.OrderByDescending(x => x.Discounts.Select(d => d.Amount).DefaultIfEmpty(0).Max()).Take(8).ToList();
+            return products;
         }
     }
 }

@@ -18,44 +18,6 @@
 			<form asp-action="CreateOrder" asp-controller="Order" method="post">
 				<div class="row">
 					<div class="col-lg-6">
-						<div class="axil-checkout-notice">
-							<div class="axil-toggle-box">
-								<div class="toggle-bar">
-									<i class="fas fa-user"></i> Returning customer? <a href="javascript:void(0)" class="toggle-btn">Click here to login <i class="fas fa-angle-down"></i></a>
-								</div>
-								<div class="axil-checkout-login toggle-open">
-									<p>If you didn't Logged in, Please Log in first.</p>
-									<div class="signin-box">
-										<div class="form-group">
-											<label>Email</label>
-											<input type="email" class="form-control" name="email">
-										</div>
-										<div class="form-group">
-											<label>Password</label>
-											<input type="password" class="form-control" name="password">
-										</div>
-										<div class="form-group mb--0">
-											<button type="submit" class="axil-btn btn-bg-primary submit-btn">Sign In</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="axil-toggle-box">
-								<div class="toggle-bar">
-									<i class="fas fa-pencil"></i> Have a coupon? <a href="javascript:void(0)" class="toggle-btn">Click here to enter your code <i class="fas fa-angle-down"></i></a>
-								</div>
-
-								<div class="axil-checkout-coupon toggle-open">
-									<p>If you have a coupon code, please apply it below.</p>
-									<div class="input-group">
-										<input placeholder="Enter coupon code" type="text">
-										<div class="apply-btn">
-											<button type="submit" class="axil-btn btn-bg-primary">Apply</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 						<div class="axil-checkout-billing">
 							<h4 class="title mb--40">Billing details</h4>
 							<div class="row">
@@ -206,7 +168,7 @@
 									<div class="input-group justify-content-between align-items-center">
 										<input type="radio" id="radio6" name="payment" checked>
 										<label for="radio6">Paypal</label>
-										<img src="./assets/images/others/payment.png" alt="Paypal payment">
+										<img src="~/eTrade/assets/images/others/payment.png" alt="Paypal payment">
 									</div>
 									<p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
 								</div>

@@ -15,5 +15,11 @@ namespace DegitalDelight.Services.Interfaces
         Task<int> GetProductDiscount(int productId);
         Task<int> GetProductPriceAfterDiscount(int productId);
         Task<List<Product>> Search(string input);
+        Task<List<Product>> ExploreProducts();
+        Task<List<Product>> LatestProduct();
+        Task<List<Product>> GetLargestStockProduct();
+        Task<List<Product>> GetProductWithLargestDiscount();
+
+
     }
 }

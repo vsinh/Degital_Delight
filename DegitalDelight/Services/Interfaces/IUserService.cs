@@ -13,5 +13,6 @@ namespace DegitalDelight.Services.Interfaces
         Task<bool> RevertState(string id);
         Task<List<CartItem>> GetCartItems();
         Task<List<Favorite>> GetFavorites();
+        string GetCurrentUserEmail();
     }
 }

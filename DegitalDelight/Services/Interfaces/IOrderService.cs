@@ -6,5 +6,6 @@ namespace DegitalDelight.Services.Interfaces
     {
         Task CreateOrder(Order order);
         void SendEmailConfirmOrder(int orderId);
+        Task<List<Order>> GetAllOrders();
     }
 }

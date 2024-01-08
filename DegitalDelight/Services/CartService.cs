@@ -110,5 +110,14 @@ namespace DegitalDelight.Services
 
             return false;
         }
+        public async Task ClearCart(string userId)
+        {
+            var cartItems = await _context.CartItems.Include(x => x.User)
+                .Where(ci => ci.User.Id == userId)
+                .ToListAsync();
+
+            _context.CartItems.RemoveRange(cartItems);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace DegitalDelight.Services
             }
             var fullUser = await _context.Users.Where(x => ! 
                                     x.IsDeleted && x.Id == currentUser.Id
-            ).Include(u => u.CartItems).ThenInclude(x => x.Product).Include(x => x.Favorites).ThenInclude(x => x.Product).FirstOrDefaultAsync();
+            ).Include(u => u.CartItems).ThenInclude(x => x.Product).Include(x => x.Favorites).ThenInclude(x => x.Product).Include(x => x.Orders).FirstOrDefaultAsync();
             return fullUser;
         }
         public async Task<List<User>> GetUserList()
@@ -136,6 +136,12 @@ namespace DegitalDelight.Services
         {
             var user = await GetCurrentUser();
             return user.Orders.ToList();
+        }
+        public string GetCurrentUserEmail()
+        {
+            var user = _httpContextAccessor.HttpContext?.User;
+            var currentUser = _userManager.GetUserAsync(user).Result;
+            return currentUser.Email;
         }
     }
 }

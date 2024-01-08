@@ -177,6 +177,9 @@ namespace DegitalDelight.Data.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TotalCost")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -364,6 +367,9 @@ namespace DegitalDelight.Data.Migrations
                     b.Property<int?>("ProductTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ReportId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Sales")
                         .HasColumnType("int");
 
@@ -371,37 +377,9 @@ namespace DegitalDelight.Data.Migrations
 
                     b.HasIndex("ProductTypeId");
 
+                    b.HasIndex("ReportId");
+
                     b.ToTable("ReportDetail");
-                });
-
-            modelBuilder.Entity("DegitalDelight.Models.ReportInventory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ReportInventory");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Supply", b =>
@@ -704,13 +682,13 @@ namespace DegitalDelight.Data.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d79f1df-6e2a-4e97-9a40-d7851b5570a4",
+                            ConcurrencyStamp = "22b8a10b-6a3f-46a7-aa06-b8223a66347c",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAECK3+WiFarCGqB4wYmtVRN9z/1Nr658qxrXCsUv7lWxI76BS4twmiERJo22gYOdJzg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ0LAmmWvGpK862nTCqa1+/6Qa88n+T/Asq68rdfLX+vePCWdCRARn5HM+0fHrUZmA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "782e2dac-bb54-42a8-8483-3d52bb6330d5",
+                            SecurityStamp = "c64582d7-719d-484a-b64b-8756f601c3ca",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin",
                             IsDeleted = false
@@ -803,7 +781,7 @@ namespace DegitalDelight.Data.Migrations
                         .HasForeignKey("DiscountItemId");
 
                     b.HasOne("DegitalDelight.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId");
 
                     b.HasOne("DegitalDelight.Models.Product", "Product")
@@ -849,16 +827,13 @@ namespace DegitalDelight.Data.Migrations
                         .WithMany("ReportDetails")
                         .HasForeignKey("ProductTypeId");
 
+                    b.HasOne("DegitalDelight.Models.Report", "Report")
+                        .WithMany("ReportDetails")
+                        .HasForeignKey("ReportId");
+
                     b.Navigation("ProductType");
-                });
 
-            modelBuilder.Entity("DegitalDelight.Models.ReportInventory", b =>
-                {
-                    b.HasOne("DegitalDelight.Models.Product", "Product")
-                        .WithMany("ReportInventories")
-                        .HasForeignKey("ProductId");
-
-                    b.Navigation("Product");
+                    b.Navigation("Report");
                 });
 
             modelBuilder.Entity("DegitalDelight.Models.Supply", b =>
@@ -926,6 +901,11 @@ namespace DegitalDelight.Data.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("DegitalDelight.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
             modelBuilder.Entity("DegitalDelight.Models.Product", b =>
                 {
                     b.Navigation("CartItems");
@@ -940,8 +920,6 @@ namespace DegitalDelight.Data.Migrations
 
                     b.Navigation("ProductDetails");
 
-                    b.Navigation("ReportInventories");
-
                     b.Navigation("Supplies");
                 });
 
@@ -949,6 +927,11 @@ namespace DegitalDelight.Data.Migrations
                 {
                     b.Navigation("Products");
 
+                    b.Navigation("ReportDetails");
+                });
+
+            modelBuilder.Entity("DegitalDelight.Models.Report", b =>
+                {
                     b.Navigation("ReportDetails");
                 });
 

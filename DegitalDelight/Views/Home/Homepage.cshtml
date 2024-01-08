@@ -14,7 +14,7 @@
                 <div class="col-lg-5 col-sm-6">
                     <div class="main-slider-content">
                         <div class="slider-content-activation-one">
-                            @foreach (var item in Model.Take(4))
+                            @foreach (var item in await productService.GetProductWithLargestDiscount())
                             {
                                 <div class="single-slide slick-slide" data-sal="slide-up" data-sal-delay="400" data-sal-duration="800">
                                     <span class="subtitle"><i class="fas fa-fire"></i>Deal khủng trong tuần</span>
@@ -22,17 +22,6 @@
                                     <div class="slide-action">
                                         <div class="shop-btn">
                                             <a asp-controller="Shop" asp-action="Shop" class="axil-btn btn-bg-white"><i class="fal fa-shopping-cart"></i>Mua ngay</a>
-                                        </div>
-                                        <div class="item-rating">
-                                            <div class="thumb">
-                                                <ul>
-                                                    @for (int i = 0; i < 4; i++)
-                                                    {
-                                                        <li><img src="~/etrade/assets/images/others/author@(i + 1).png" alt="Author"></li>
-                                                    }
-                                                </ul>
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -48,9 +37,9 @@
                             {
                                 <div class="single-slide slick-slide" data-sal="slide-up" data-sal-delay="600" data-sal-duration="1500">
                                     <img src="@ViewData["ProductImageUrl"]/@item.Picture" alt="Product">
-                                    <div class="product-price">
+                                    @* <div class="product-price">
                                         <span class="price-amount">@item.Price.ToString("C") </span>
-                                    </div>
+                                    </div> *@
                                 </div>
                             }
                         </div>
@@ -344,7 +333,7 @@
                             <div class="axil-product product-style-two">
                                 <div class="thumbnail">
                                     <a asp-action="Product" asp-controller="Product" asp-route-id="@item.Id">
-                                        <img data-sal="zoom-out" data-sal-delay="100" data-sal-duration="500" style="width: 276px; height: 276px;" src="@item.Picture" alt="Product Images">
+                                        <img data-sal="zoom-out" data-sal-delay="100" data-sal-duration="500" style="width: 276px; height: 276px;" src='@ViewData["ProductImageUrl"]/@item.Picture' alt="Product Images">
                                     </a>
                                     <div class="label-block label-right">
                                         @{

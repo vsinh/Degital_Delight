@@ -20,17 +20,19 @@ namespace DegitalDelight.Services
         private readonly UserManager<User> _userManager;
         private readonly IEmailService _emailService;
         private readonly IUserService _userService;
+        private readonly ICartService _cartService;
         public OrderService(ApplicationDbContext applicationDbContext,
             UserManager<User> userManager,
             IHttpContextAccessor httpContextAccessor,
             IEmailService emailService,
-            IUserService userService)
+            IUserService userService, ICartService cartService)
         {
             _context = applicationDbContext;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
             _emailService = emailService;
             _userService = userService;
+            _cartService = cartService;
         }
         public async Task CreateOrder(Order order)
         {
@@ -46,13 +48,16 @@ namespace DegitalDelight.Services
 
             BackgroundJob.ContinueJobWith(jobSendEmailId, () => DeleteRemindOrder(currentUser.UserName));
 
+            await _cartService.ClearCart(currentUser.Id);
+
             await _context.SaveChangesAsync();
         }
         public void SendEmailConfirmOrder(int orderId)
         {
+            var email = _userService.GetCurrentUserEmail();
             var order = _context.Order.Include(x => x.User).FirstOrDefault(x => x.Id == orderId);
 
-            _emailService.SendMail("sorunaito@gmail.com", "Xác nhận đơn hàng", "Bạn đã đặt hàng, đơn hàng sẽ được đưa vào vận chuyển đến bạn");
+            _emailService.SendMail(email, "Xác nhận đơn hàng", "Bạn đã đặt hàng, đơn hàng sẽ được đưa vào vận chuyển đến bạn");
         }
         public void DeleteRemindOrder(string userName)
         {
@@ -67,8 +72,11 @@ namespace DegitalDelight.Services
                     BackgroundJob.Delete(j.Key);
                 }
             }
-
-
+        }
+        public async Task<List<Order>> GetAllOrders()
+        {
+            var orders = await _context.Order.Include(x => x.User).Include(x => x.OrderItems).ThenInclude(x => x.Product).ToListAsync();
+            return orders;
         }
     }
 }
