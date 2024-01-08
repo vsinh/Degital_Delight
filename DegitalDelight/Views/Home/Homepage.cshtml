@@ -185,7 +185,6 @@
                                         </div>
                                         <div class="product-hover-action">
                                             <ul class="cart-action">
-                                                <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
                                                 <li class="select-option">
                                                     
                                                     <form method="post" asp-controller="Cart" asp-action="AddItemToCart">
@@ -367,8 +366,6 @@
                                         </div>
                                         <div class="product-hover-action">
                                             <ul class="cart-action">
-                                                <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
-
                                                 <form method="post" asp-controller="Cart" asp-action="AddItemToCart">
                                                     <input type="hidden" name="productId" value="@item.Id" />
                                                     <button type="submit">Thêm vào giỏ</button>
