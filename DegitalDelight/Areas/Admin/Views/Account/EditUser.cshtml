@@ -10,8 +10,8 @@
         <div class="row tm-content-row">
             <div class="col-12 tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
-                    <h2 class="tm-block-title">User Type</h2>
-                    <p class="text-white">Accounts</p>
+                    <h2 class="tm-block-title">Loại người dùng</h2>
+                    <p class="text-white">Tài khoản</p>
                     @if (ViewBag.SameUser)
                     {
                         <select name="role" class="custom-select" asp-items="@ViewBag.SelectType" disabled>
@@ -29,25 +29,25 @@
         <div class="row tm-content-row">
             <div class="tm-block-col tm-col-avatar">
                 <div class="tm-bg-primary-dark tm-block tm-block-avatar">
-                    <h2 class="tm-block-title">Change Avatar</h2>
+                    <h2 class="tm-block-title">Đổi ảnh đại diện</h2>
                     <div class="tm-avatar-container" id="imageContainer">
                         <img src="@ViewBag.img/@Model.ImagePath"
                              alt="Avatar"
                              class="tm-avatar img-fluid mb-4" />
                     </div>
                     <button id="img_button" onclick="document.getElementById('fileInput').click();" type="button" class="btn btn-primary btn-block text-uppercase">
-                        Upload New Photo
+                        Thêm ảnh mới
                     </button>
                     <input name="fileInput" id="fileInput" type="file" accept="img" onchange="displayImage();" hidden />
                 </div>
             </div>
             <div class="tm-block-col tm-col-account-settings">
                 <div class="tm-bg-primary-dark tm-block tm-block-settings">
-                    <h2 class="tm-block-title">Account Settings</h2>
+                    <h2 class="tm-block-title">Cài đặt tài khoản</h2>
                     <div class="tm-signup-form row">
                         <input asp-for="Id" value="@Model.Id" hidden />
                         <div class="form-group col-lg-6">
-                            <label for="name">Account Name</label>
+                            <label for="name">Tên tài khoản</label>
                             <input id="UserName"
                                    name="UserName"
                                    asp-for="UserName"
@@ -55,7 +55,7 @@
                                    class="form-control validate" />
                         </div>
                         <div class="form-group col-lg-6">
-                            <label for="Email">Account Email</label>
+                            <label for="Email">Email</label>
                             <input id="Email"
                                    name="Email"
                                    type="Email"
@@ -63,7 +63,7 @@
                                    class="form-control validate" />
                         </div>
                         <div class="form-group col-lg-6">
-                            <label for="PhoneNumber">Phone</label>
+                            <label for="PhoneNumber">Số điện thoại</label>
                             <input id="PhoneNumber"
                                    name="PhoneNumber"
                                    asp-for="PhoneNumber"
@@ -75,7 +75,7 @@
                             @if (ViewBag.SameUser)
                             {
                                 <button type="button" class="btn btn-danger btn-block text-uppercase" disabled>
-                                    Lock This Account
+                                    Khóa tài khoản
                                 </button>
 
                             }
@@ -84,13 +84,13 @@
                                 if (Model.IsDeleted)
                                 {
                                     <button type="button" onclick="RevertState('@Model.Id')" class="btn btn-success btn-block text-uppercase">
-                                        Unlock This Account
+                                        Mở khóa tài khoản
                                     </button>
                                 }
                                 else
                                 {
                                     <button type="button" onclick="RevertState('@Model.Id')" class="btn btn-danger btn-block text-uppercase">
-                                        Lock This Account
+                                        Khóa tài khoản
                                     </button>
                                 }
                             }
@@ -98,7 +98,7 @@
                         <div class="col-12">
                             <button type="submit"
                                     class="btn btn-primary btn-block text-uppercase">
-                                Save Change
+                                Lưu thay đổi
                             </button>
                         </div>
                     </div>
