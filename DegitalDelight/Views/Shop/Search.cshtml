@@ -6,6 +6,18 @@
 @inject DegitalDelight.Services.Interfaces.IProductService productService
 @model IEnumerable<Product>
 
+<head>
+    @{
+        foreach (var item in ViewBag.ProductTypes as List<ProductType>)
+        {
+            if (ViewBag.CurrentId == item.Id)
+            {
+                <title>@item.Name</title>
+            }
+        }
+    }
+</head>
+
 <!-- Start Shop Area  -->
 <div class="axil-shop-area axil-section-gap bg-color-white">
     <div class="container">

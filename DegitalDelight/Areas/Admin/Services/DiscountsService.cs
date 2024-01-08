@@ -15,6 +15,15 @@ namespace DegitalDelight.Areas.Admin.Services
 		}
 		public async Task CreateDiscount(Discount discount)
 		{
+			if (discount.StartDate > DateTime.Now)
+			{
+				discount.IsDeleted = true;
+				BackgroundJob.Schedule(() => StartDiscount(discount), discount.StartDate);
+			}
+			if (discount.EndDate < DateTime.Now)
+			{
+				BackgroundJob.Schedule(() => EndDiscount(discount), discount.EndDate);
+			}
 			await _context.AddAsync(discount);
 			await _context.SaveChangesAsync();
 		}
