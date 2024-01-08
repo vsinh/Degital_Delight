@@ -48,7 +48,12 @@
                                     <td class="product-price" data-title="Price">
                                         <span class="currency-symbol">@item.Product.Price</span> VNĐ
                                     </td>
-                                    <td class="product-add-cart"><a asp-action="AddItemToCart" asp-controller="Cart" class="axil-btn btn-outline">Thêm vào giỏ</a></td>
+                                    <td class="product-add-cart">
+                                        <form class="add-to-cart" method="post" asp-controller="Cart" asp-action="AddItemToCart">
+                                            <input type="hidden" name="productId" value="@item.Product.Id" />
+                                            <button class="axil-btn btn-outline" class="axil-btn btn-bg-primary" type="submit">Thêm vào giỏ</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             }
                         }

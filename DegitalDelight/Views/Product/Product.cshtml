@@ -67,7 +67,12 @@
                                     <!-- End Quentity Action  -->
                                     <!-- Start Product Action  -->
                                     <ul class="product-action d-flex-center mb--0">
-                                        <li class="add-to-cart"><a asp-action="Cart" asp-controller="Cart" class="axil-btn btn-bg-primary">Thêm vào giỏ</a></li>
+                                    
+                                        <form class="add-to-cart" method="post" asp-controller="Cart" asp-action="AddItemToCart">
+                                            <input type="hidden" name="productId" value="@Model.Id" />
+                                            <button class="axil-btn btn-bg-primary"  type="submit">Thêm vào giỏ</button>
+                                        </form>
+                 
                                         <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
                                     </ul>
                                     <!-- End Product Action  -->
