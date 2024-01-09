@@ -58,6 +58,7 @@ namespace DegitalDelight.Areas.Admin.Controllers
             ViewBag.SelectType = new SelectList(roles, "Value", "Name", currentRole);
             var currentUser = await _userService.GetCurrentUser();
             ViewBag.SameUser = currentUser.Id == user.Id;
+            ModelState.Remove("fileInput");
             if (ModelState.IsValid)
             {
                 if (fileInput != null)

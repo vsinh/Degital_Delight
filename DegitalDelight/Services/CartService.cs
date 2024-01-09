@@ -56,7 +56,7 @@ namespace DegitalDelight.Services
                         _context.CartItems.Add(cartItem);
                     }
 
-                    BackgroundJob.Schedule(() => RemindOrder(currentUser.UserName), TimeSpan.FromHours(1));
+                    BackgroundJob.Schedule(() => RemindOrder(currentUser.Email), TimeSpan.FromHours(1));
 
                     await _context.SaveChangesAsync();
                     return true;
@@ -66,9 +66,9 @@ namespace DegitalDelight.Services
             return false;
         }
 
-        public void RemindOrder(string userName)
+        public void RemindOrder(string email)
         {
-            _emailService.SendMail("sorunaito@gmail.com", "Bạn còn món hàng trong giỏ", "Bấm đặt hàng ngay");
+            _emailService.SendMail(email, "Bạn còn món hàng trong giỏ", "Bấm đặt hàng ngay");
         }
 
         public async Task<List<CartItem>> GetCartItems(string userId)

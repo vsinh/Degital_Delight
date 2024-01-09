@@ -20,12 +20,14 @@ namespace DegitalDelight.Controllers
 		{
 			_favoriteService = favoriteService;
 		}
+		[Authorize]
 		public ActionResult Favorite()
 		{
 			return View();
 		}
 
-		public async Task<IActionResult> Index()
+        [Authorize]
+        public async Task<IActionResult> Index()
 		{
 			var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

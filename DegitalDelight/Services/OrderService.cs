@@ -46,7 +46,7 @@ namespace DegitalDelight.Services
             await _context.AddAsync(order);
             var jobSendEmailId = BackgroundJob.Enqueue(() => SendEmailConfirmOrder(order.Id));
 
-            BackgroundJob.ContinueJobWith(jobSendEmailId, () => DeleteRemindOrder(currentUser.UserName));
+            BackgroundJob.ContinueJobWith(jobSendEmailId, () => DeleteRemindOrder(currentUser.Email));
 
             await _cartService.ClearCart(currentUser.Id);
 
@@ -59,7 +59,7 @@ namespace DegitalDelight.Services
 
             _emailService.SendMail(email, "Xác nhận đơn hàng", "Bạn đã đặt hàng, đơn hàng sẽ được đưa vào vận chuyển đến bạn");
         }
-        public void DeleteRemindOrder(string userName)
+        public void DeleteRemindOrder(string email)
         {
             var monitor = JobStorage.Current.GetMonitoringApi();
             var jobsScheduled = monitor.ScheduledJobs(0, int.MaxValue)
@@ -67,7 +67,7 @@ namespace DegitalDelight.Services
             foreach (var j in jobsScheduled)
             {
                 var t = (String)j.Value.Job.Args[0];
-                if (t == userName)
+                if (t == email)
                 {
                     BackgroundJob.Delete(j.Key);
                 }
