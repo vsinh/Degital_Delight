@@ -147,7 +147,13 @@ namespace DegitalDelight.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+
+                        var roles = await _userManager.GetRolesAsync(user);
+                        if (roles.Contains("Administrator"))
+                        {
+                            return RedirectToAction("Dashboard", "Dashboard", new { area = "Admin" });
+                        }
+                        return RedirectToAction("Homepage", "Home");
                     }
                 }
                 foreach (var error in result.Errors)
